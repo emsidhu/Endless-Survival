@@ -1,0 +1,105 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://UI/health + xp bar/health bar.png" type="Texture" id=1]
+[ext_resource path="res://UI/health + xp bar/backbar.png" type="Texture" id=2]
+[ext_resource path="res://UI/health + xp bar/xp bar.png" type="Texture" id=3]
+[ext_resource path="res://UI/PlayerUI.gd" type="Script" id=4]
+[ext_resource path="res://UI/Title.tscn" type="PackedScene" id=5]
+[ext_resource path="res://UI/ChangeSceneBtn.tscn" type="PackedScene" id=6]
+[ext_resource path="res://UI/QuitBtn.tscn" type="PackedScene" id=7]
+[ext_resource path="res://UI/ui_theme.tres" type="Theme" id=8]
+[ext_resource path="res://UI/Timer.tscn" type="PackedScene" id=9]
+
+[node name="PlayerUI" type="Control"]
+pause_mode = 2
+margin_right = 320.0
+margin_bottom = 180.0
+theme = ExtResource( 8 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Emptybar" type="TextureRect" parent="."]
+margin_left = 64.0
+margin_right = 1024.0
+margin_bottom = 182.0
+rect_scale = Vector2( 0.2, 0.15 )
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Healthbar" type="TextureRect" parent="."]
+margin_left = 64.0
+margin_right = 1024.0
+margin_bottom = 182.0
+rect_scale = Vector2( 0.2, 0.15 )
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="XPbar" type="TextureRect" parent="."]
+margin_left = 64.0
+margin_right = 313.0
+margin_bottom = 182.0
+rect_scale = Vector2( 0.2, 0.15 )
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PauseMenu" type="ColorRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.247059 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" parent="PauseMenu" instance=ExtResource( 5 )]
+margin_top = 18.0
+margin_bottom = 34.0
+text = "Paused"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -29.0
+margin_top = -29.5
+margin_right = 29.0
+margin_bottom = 29.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ResumeBtn" type="Button" parent="PauseMenu/VBoxContainer"]
+margin_right = 58.0
+margin_bottom = 17.0
+text = "Resume"
+
+[node name="ChangeSceneBtn" parent="PauseMenu/VBoxContainer" instance=ExtResource( 6 )]
+margin_top = 21.0
+margin_right = 58.0
+margin_bottom = 38.0
+text = "Menu"
+next_scene_path = "res://Menus/MainMenu.tscn"
+
+[node name="QuitBtn" parent="PauseMenu/VBoxContainer" instance=ExtResource( 7 )]
+margin_top = 42.0
+margin_right = 58.0
+margin_bottom = 59.0
+
+[node name="Label" parent="." instance=ExtResource( 9 )]
+margin_left = 2.0
+margin_right = 42.0
+
+[connection signal="button_up" from="PauseMenu/VBoxContainer/ResumeBtn" to="." method="_on_ResumeBtn_button_up"]

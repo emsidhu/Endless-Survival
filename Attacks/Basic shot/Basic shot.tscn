@@ -1,0 +1,46 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Attacks/Sprites/shot 1.png" type="Texture" id=1]
+[ext_resource path="res://Attacks/Sprites/shot 3.png" type="Texture" id=2]
+[ext_resource path="res://Attacks/Sprites/shot 2.png" type="Texture" id=3]
+[ext_resource path="res://Attacks/Sprites/shot 4.png" type="Texture" id=4]
+[ext_resource path="res://Attacks/Basic shot/Basic shot.gd" type="Script" id=5]
+[ext_resource path="res://Hit-Hurtboxes/Hitbox.tscn" type="PackedScene" id=6]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 1 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 15.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 8.0
+height = 10.0
+
+[node name="Basic shot" type="KinematicBody2D"]
+scale = Vector2( 0.3, 0.3 )
+collision_layer = 8
+collision_mask = 4
+script = ExtResource( 5 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, 1 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 1 )
+frame = 3
+playing = true
+
+[node name="Hitbox" parent="." instance=ExtResource( 6 )]
+collision_layer = 8
+collision_mask = 16
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2( 7, 0 )
+rotation = 1.5708
+shape = SubResource( 2 )
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
+
+[editable path="Hitbox"]
