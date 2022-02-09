@@ -18,6 +18,7 @@ config/icon="res://icon.png"
 
 Globals="*res://Globals.tscn"
 PlayerStats="*res://Player/PlayerStats.tscn"
+AllEnemies="*res://Enemies/AllEnemies.tscn"
 
 [display]
 

@@ -4,7 +4,7 @@
 [ext_resource path="res://Enemies/Sprites/Fuzzy/monster_01_A_walk_03.png" type="Texture" id=2]
 [ext_resource path="res://Enemies/Sprites/Fuzzy/monster_01_A_walk_02.png" type="Texture" id=3]
 [ext_resource path="res://Enemies/Sprites/Fuzzy/monster_01_A_walk_04.png" type="Texture" id=4]
-[ext_resource path="res://Enemies/Fuzzy.gd" type="Script" id=5]
+[ext_resource path="res://Enemies/Enemy.gd" type="Script" id=5]
 [ext_resource path="res://Hit-Hurtboxes/Hitbox.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Hit-Hurtboxes/Soft Collision.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Hit-Hurtboxes/Hurtbox.tscn" type="PackedScene" id=8]
@@ -18,27 +18,27 @@ animations = [ {
 } ]
 
 [sub_resource type="CircleShape2D" id=4]
-radius = 16.1245
+radius = 5.0
 
 [sub_resource type="CircleShape2D" id=3]
-radius = 17.1172
+radius = 4.12311
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 16.0
+radius = 5.09902
 
 [node name="Fuzzy" type="KinematicBody2D"]
-scale = Vector2( 0.3, 0.3 )
 script = ExtResource( 5 )
-MAX_SPEED = 37.5
+MAX_SPEED = 50.0
+SOFTPOWER = 800
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 rotation = 1.5708
-scale = Vector2( 0.3, 0.3 )
+scale = Vector2( 0.1, 0.1 )
 frames = SubResource( 1 )
+frame = 3
 playing = true
 
 [node name="Hitbox" parent="." instance=ExtResource( 6 )]
-visible = false
 collision_layer = 64
 collision_mask = 32
 
@@ -46,7 +46,6 @@ collision_mask = 32
 shape = SubResource( 4 )
 
 [node name="Hurtbox" parent="." instance=ExtResource( 8 )]
-visible = false
 collision_layer = 16
 collision_mask = 8
 
@@ -54,7 +53,6 @@ collision_mask = 8
 shape = SubResource( 3 )
 
 [node name="SoftCollision" parent="." instance=ExtResource( 7 )]
-visible = false
 collision_layer = 128
 collision_mask = 128
 

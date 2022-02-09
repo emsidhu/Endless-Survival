@@ -6,7 +6,7 @@ onready var animatedSprite = $AnimatedSprite
 export var xp = 500
 export var damage = 100
 export var health = 100
-export var MAX_SPEED = 50.0
+export var MAX_SPEED = 20.0
 export var ACCELERATION = 500
 export var FRICTION = 500
 export var SOFTPOWER = 1000
@@ -34,6 +34,9 @@ func _physics_process(delta):
 
 	velocity = move_and_slide(velocity)
 	
+	if position.distance_to(player.position) > 1000:
+		queue_free()
+	
 	if health <= 0:
 		die()
 
@@ -46,3 +49,4 @@ func _on_Hurtbox_area_entered(area):
 func die():
 	emit_signal("died", xp)
 	queue_free()
+
