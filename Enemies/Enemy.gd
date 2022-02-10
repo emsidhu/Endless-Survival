@@ -22,8 +22,12 @@ func _ready():
 
 func _physics_process(delta):
 	if is_instance_valid(player):
+		if global_position.distance_to(player.global_position) > 400:
+			print("hi")
+			queue_free()
 		direction = global_position.direction_to(player.global_position)
 		look_at(player.global_position)
+		
 		
 	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 	
@@ -34,8 +38,7 @@ func _physics_process(delta):
 
 	velocity = move_and_slide(velocity)
 	
-	if position.distance_to(player.position) > 1000:
-		queue_free()
+	
 	
 	if health <= 0:
 		die()

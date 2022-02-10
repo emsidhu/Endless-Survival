@@ -26,7 +26,7 @@ radius = 6.0
 
 [node name="Eye" type="KinematicBody2D"]
 script = ExtResource( 3 )
-SOFTPOWER = 800
+SOFTPOWER = 300
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 rotation = 1.5708
@@ -53,6 +53,8 @@ collision_mask = 128
 
 [node name="CollisionShape2D" parent="SoftCollision" index="0"]
 shape = SubResource( 4 )
+
+[node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="."]
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 
