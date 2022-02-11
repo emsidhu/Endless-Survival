@@ -13,7 +13,7 @@ export(float) var FRICTION = 400
 var velocity = Vector2.ZERO
 
 func _ready():
-	PlayerStats.connect("no_health", self, "queue_free")
+	PlayerStats.connect("no_health", self, "die")
 	Globals.set("player", self)
 
 func _physics_process(delta):
@@ -59,3 +59,6 @@ func _on_Hurtbox_area_entered(area):
 	
 func killed_enemy(xp):
 	PlayerStats.xp += xp
+
+func die():
+	get_tree().change_scene("res://Menus/GameOver.tscn")
