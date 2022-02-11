@@ -1,49 +1,57 @@
 extends Node2D
 
-onready var timer = $Timer
+onready var enemyTimer = $EnemyTimer
+onready var pickupTimer = $PickupTimer
 onready var player = $YSort/Player
 onready var ySort = $YSort
 
-export var spawn_time = 1
-export var spawn_amount = 1
+export var enemy_spawn_time = 1
+export var enemy_spawn_amount = 1
+export var pickup_spawn_time = 2
+export var pickup_spawn_amount = 2
 var can_spawn = false
 
 
 
-func _on_Timer_timeout():
+func _on_EnemyTimer_timeout():
 	if  (is_instance_valid(player)):
-		var rand_pos
 		var i = 0
-		var left_bound = player.position.x - get_viewport_rect().size.x / 2
-		var right_bound = player.position.x + get_viewport_rect().size.x / 2
-		var top_bound = player.position.y - get_viewport_rect().size.y / 2
-		var bottom_bound = player.position.y + get_viewport_rect().size.y / 2
-		print(get_viewport_rect().size)
-		
-		while (i < spawn_amount):
-			rand_pos = create_pos(left_bound, right_bound, top_bound, bottom_bound)
-			var enemy = AllEnemies.get_enemy().instance()
-			enemy.position = rand_pos
-			print("spawn")
-			add_child(enemy)
+		while (i < enemy_spawn_amount):
+			create_child(AllEnemies.get_enemy(), 50, 100)
 			i += 1
-	
-		timer.start(spawn_time)
+		enemyTimer.start(enemy_spawn_time)
+		
+func _on_PickupTimer_timeout():
+	if  (is_instance_valid(player)):
+		var i = 0
+		while (i < pickup_spawn_amount):
+			create_child(AllPickups.get_pickup(), 200, 300)
+			i += 1
+			print("orb")
+		pickupTimer.start(pickup_spawn_time)
 
-	
+func create_child(instance, x_change, y_change):
+	instance.position = create_pos(create_bounds(), x_change, y_change)
+	add_child(instance)
 
-
-func _on_VisibilityNotifier2D_screen_entered():
-	can_spawn = true
-
-func create_pos(left_bound, right_bound, top_bound, bottom_bound):
-	var x = rand_range(left_bound - 50, right_bound + 50)
-	var y = rand_range(top_bound - 100, bottom_bound + 100)
+func create_pos(bounds, x_change, y_change):
+	var x = rand_range(bounds[0] - x_change, bounds[1] + x_change)
+	var y = rand_range(bounds[2] - y_change, bounds[3] + y_change)
 	var rand_pos = Vector2(x,y)
 	
-	while (x == clamp(x, left_bound, right_bound)) and (y == clamp(y, top_bound, bottom_bound)):
-		x = rand_range(left_bound - 50, right_bound + 50)
-		y = rand_range(top_bound - 100, bottom_bound + 100)
+	while (x == clamp(x, bounds[0], bounds[1])) and (y == clamp(y, bounds[2], bounds[3])):
+		x = rand_range(bounds[0] - x_change, bounds[1] + x_change)
+		y = rand_range(bounds[2] - y_change, bounds[3] + y_change)
 		rand_pos = Vector2(x,y)
 	
 	return rand_pos
+	
+func create_bounds():
+	var left_bound = player.position.x - get_viewport_rect().size.x / 2
+	var right_bound = player.position.x + get_viewport_rect().size.x / 2
+	var top_bound = player.position.y - get_viewport_rect().size.y / 2
+	var bottom_bound = player.position.y + get_viewport_rect().size.y / 2
+	return [left_bound, right_bound, top_bound, bottom_bound]
+
+
+

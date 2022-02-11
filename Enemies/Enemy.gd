@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 onready var softCollision = $SoftCollision
 onready var animatedSprite = $AnimatedSprite
+onready var path2D = $Path2D
 
 export var xp = 500
 export var damage = 100
@@ -22,9 +23,10 @@ func _ready():
 
 func _physics_process(delta):
 	if is_instance_valid(player):
+
 		if global_position.distance_to(player.global_position) > 400:
-			print("hi")
 			queue_free()
+			
 		direction = global_position.direction_to(player.global_position)
 		look_at(player.global_position)
 		

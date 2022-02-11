@@ -7,6 +7,5 @@ const Eye = preload("res://Enemies/Eye.tscn")
 var enemy_list = [Eye, Eye, Eye, Eye, Fuzzy]
 
 func get_enemy():
-	#picks one enemy out of enemy_list
-	var choice = enemy_list[randi() % enemy_list.size()]
-	return choice
+	#returns one enemy out of enemy_list
+	return enemy_list[randi() % enemy_list.size()].instance()

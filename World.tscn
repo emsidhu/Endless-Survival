@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://UI/PlayerUI.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Pickups/XP Orb.tscn" type="PackedScene" id=3]
 [ext_resource path="res://World.gd" type="Script" id=4]
 
 [node name="World" type="Node2D"]
@@ -18,7 +17,7 @@ margin_top = -89.0
 margin_right = 160.0
 margin_bottom = 91.0
 
-[node name="Timer" type="Timer" parent="."]
+[node name="EnemyTimer" type="Timer" parent="."]
 autostart = true
 
 [node name="YSort" type="YSort" parent="."]
@@ -27,15 +26,16 @@ autostart = true
 position = Vector2( 160, 89 )
 
 [node name="AnimatedSprite" parent="YSort/Player" index="0"]
-frame = 2
+frame = 1
 
 [node name="RemoteTransform2D" parent="YSort/Player" index="5"]
 remote_path = NodePath("../../../Camera2D")
 
-[node name="XP Orb" parent="." instance=ExtResource( 3 )]
-position = Vector2( 110, 109 )
+[node name="PickupTimer" type="Timer" parent="."]
+autostart = true
 
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="EnemyTimer" to="." method="_on_EnemyTimer_timeout"]
+[connection signal="timeout" from="PickupTimer" to="." method="_on_PickupTimer_timeout"]
 
 [editable path="YSort/Player"]
 [editable path="YSort/Player/Hurtbox"]

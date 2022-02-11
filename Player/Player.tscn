@@ -78,7 +78,7 @@ tracks/0/keys = {
 radius = 7.0
 height = 6.0
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=["Player"]]
 script = ExtResource( 5 )
 MAX_SPEED = 60
 
@@ -87,6 +87,7 @@ material = SubResource( 5 )
 position = Vector2( 1, -1 )
 scale = Vector2( 0.017, 0.017 )
 frames = SubResource( 1 )
+frame = 2
 playing = true
 
 [node name="Basic shot timer" type="Timer" parent="."]
