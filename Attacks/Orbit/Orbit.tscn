@@ -188,10 +188,12 @@ position = Vector2( 20, 0 )
 scale = Vector2( 0.015, 0.015 )
 z_index = 1
 frames = SubResource( 27 )
+frame = 16
 playing = true
 
 [node name="Trail" parent="AnimatedSprite" instance=ExtResource( 4 )]
 width = 5.0
+length = 30
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "rotate"

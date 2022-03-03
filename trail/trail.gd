@@ -1,6 +1,6 @@
 extends Line2D
 
-var length = 50
+export var length = 50
 var point 
 
 func _ready():

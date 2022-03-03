@@ -25,6 +25,7 @@ var upgradeStatRef = funcref(PlayerStats, "upgradeStat")
 var upgradeAttackRef = funcref(PlayerStats, "upgradeAttack")
 
 func _ready():
+	Globals.time = 0
 	var canvas_rid = get_canvas_item()
 	# You may need to adjust these values
 	VisualServer.canvas_item_set_draw_index(canvas_rid, 100)
@@ -67,37 +68,44 @@ func level_up():
 	get_tree().paused = true
 	upgradeScreen.visible = true
 	
-	var numAttacks = range(PlayerStats.attacks.size())
-	
+	var num_attacks = range(PlayerStats.attacks.size())
+	var num_stats = range(PlayerStats.stats.size())
+	var num_skills = range(PlayerStats.skills.size())
+	print(num_stats)
 	var i = 0
 	while i < 3:
-		#chooses a random attack (will later make it randomly choose an attack, a stat, or a skill 
-		var number = numAttacks[randi() % numAttacks.size()]
-		numAttacks.erase(number)
-		var choice = PlayerStats.attacks.keys()[number]
-		var upgrade = PlayerStats.attacks[choice]
+		var upgradeInfo
+		match (randi() % 3):
+			0:
+				upgradeInfo = choose_upgrade(num_attacks, "attacks")
+				num_attacks = upgradeInfo[0]
+			1:
+				upgradeInfo = choose_upgrade(num_stats, "stats")
+				num_skills = upgradeInfo[0]
+			2:
+				upgradeInfo = choose_upgrade(num_skills, "skills")
+				num_stats = upgradeInfo[0]
 		
 		#assigns type variables to whatever type the upgrade is, an attack, a stat, or a skill
-		set("type" + str(i+1), upgrade.type)
+		set("type" + str(i+1), upgradeInfo[1].type)
 		#assigns choice variables to the key of the upgrade
-		set("choice" + str(i+1), choice)
+		set("choice" + str(i+1), upgradeInfo[2])
 		#assigns upgrade buttons text to the name of the upgrade
-		get("upgradeBtn" + str(i+1)).text = upgrade.text
+		get("upgradeBtn" + str(i+1)).text = upgradeInfo[1].text
 		
 		i += 1
 
 func _on_UpgradeBtn_button_up(number):
-	#use a type to see what function reference to use, then calls it with the correct key using choice
+	#uses type to see what function reference to use, then calls it with the correct key using choice
 	get("upgrade" + get("type" + str(number)) + "Ref").call_func(get("choice" + str(number)))
 	
 	get_tree().paused = false
 	upgradeScreen.visible = false
 	
-func choose_attack():
-	pass
+func choose_upgrade(array, type):
+	var number = array[randi() % array.size()]
+	array.erase(number)
+	var choice = PlayerStats[type].keys()[number]
+	var upgrade = PlayerStats[type][choice]
+	return [array, upgrade, choice]
 
-func choose_skill():
-	pass
-
-func choose_stat():
-	pass

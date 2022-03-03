@@ -14,24 +14,31 @@ var attacks = {
 "level": 0, "max_level": 6, "type": "Attack"}
 }
 
-var stat_upgrades = {
+var stats = {
 	"Speed": {"name": "speed", "text": "Speed", 
-"level": 0, "max_level": 6, "upgrade_amount": 0.3, "type": "Stat"}
+"level": 0, "max_level": 6, "amount": 0, "upgrade_amount": 0.3, "type": "Stat"},
+	"Defense": {"name": "defense", "text": "Defense", 
+"level": 0, "max_level": 6, "amount": 0, "upgrade_amount": 0.3, "type": "Stat"},
+	"MaxHealth": {"name": "maxhealth", "text": "Max Health", 
+"level": 0, "max_level": 6, "amount": 0, "upgrade_amount": 0.5, "type": "Stat"}
 }
 
 var skills = {
 	"Regen": {"name": "regenHealth", "text": "Regenerate Health", 
-"level": 0, "max_level": 6, "skill_amount": 0, "upgrade_amount": 1, "type": "Skill"},
+"level": 0, "max_level": 6, "amount": 0, "upgrade_amount": 1, "type": "Skill"},
+	"Ghost": {"name": "ghost", "text": "Ghost", 
+"level": 0, "max_level": 6, "type": "Skill"},
+	"Test": {"name": "test", "text": "An Upgrade", 
+"level": 0, "max_level": 6, "amount": 0, "upgrade_amount": 1, "type": "Skill"},
 }
 
 export var damage = 50
-export(int) var max_health = 1000 setget set_max_health
+export(int) var max_health = 2000 setget set_max_health
 var health = max_health setget set_health
 var base_damage = damage
 var xp = 0 setget set_xp
 var max_xp = 1000 setget set_max_xp
 var speedModifier = 1
-#var regenFuncRef = funcref(self, "Regen")
 
 
 signal no_health
@@ -73,7 +80,7 @@ func set_max_xp(value):
 func level_up():
 	emit_signal("level_up")
 	self.xp = 0
-	self.max_xp *= 1.5
+	self.max_xp *= 1.15
 
 func upgradeAttack(attack):
 
@@ -81,14 +88,15 @@ func upgradeAttack(attack):
 	emit_signal("upgradeAttack", attacks[attack])
 
 func upgradeStat(stat):
-	stat_upgrades[stat].level += 1
+	stats[stat].level += 1
+	stats[stat].amount += stats[stat].upgrade_amount
 	
 func upgradeSkill(skill):
 
 	skills[skill].level += 1
-	skills[skill].skill_amount += skills[skill].upgrade_amount
+	skills[skill].amount += skills[skill].upgrade_amount
 	
 
 
 func _on_RegenTimer_timeout():
-	self.health += skills.Regen.skill_amount
+	self.health += skills.Regen.amount
