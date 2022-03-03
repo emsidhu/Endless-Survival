@@ -5,8 +5,7 @@ onready var pickupTimer = $PickupTimer
 onready var player = $YSort/Player
 onready var ySort = $YSort
 
-export var enemy_spawn_time = 1
-export var enemy_spawn_amount = 1
+
 export var pickup_spawn_time = 2
 export var pickup_spawn_amount = 2
 var can_spawn = false
@@ -16,10 +15,10 @@ var can_spawn = false
 func _on_EnemyTimer_timeout():
 	if  (is_instance_valid(player)):
 		var i = 0
-		while (i < enemy_spawn_amount):
+		while (i < round(EnemyStats.enemySpawnAmount)):
 			create_child(AllEnemies.get_enemy(), 50, 100)
 			i += 1
-		enemyTimer.start(enemy_spawn_time)
+		enemyTimer.start(round(EnemyStats.enemySpawnTime))
 		
 func _on_PickupTimer_timeout():
 	if  (is_instance_valid(player)):
@@ -27,12 +26,11 @@ func _on_PickupTimer_timeout():
 		while (i < pickup_spawn_amount):
 			create_child(AllPickups.get_pickup(), 200, 300)
 			i += 1
-			print("orb")
 		pickupTimer.start(pickup_spawn_time)
 
 func create_child(instance, x_change, y_change):
 	instance.position = create_pos(create_bounds(), x_change, y_change)
-	add_child(instance)
+	ySort.add_child(instance)
 
 func create_pos(bounds, x_change, y_change):
 	var x = rand_range(bounds[0] - x_change, bounds[1] + x_change)

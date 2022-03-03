@@ -4,21 +4,23 @@
 [ext_resource path="res://Pickups/XP Orb.gd" type="Script" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 2.23607
+radius = 2.5
 
 [sub_resource type="CanvasItemMaterial" id=2]
 blend_mode = 1
 
 [node name="XP Orb" type="Area2D"]
+scale = Vector2( 0.8, 0.8 )
 collision_layer = 0
 collision_mask = 128
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-modulate = Color( 0, 1, 1, 0.545098 )
+modulate = Color( 0, 1, 1.74, 1 )
 material = SubResource( 2 )
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 1 )

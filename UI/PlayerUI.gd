@@ -3,11 +3,26 @@ extends Control
 onready var healthbar = $Healthbar
 onready var xpbar = $XPbar
 onready var pauseMenu = $PauseMenu
+onready var upgradeScreen = $UpgradeScreen
+onready var upgradeBtn1 = $UpgradeScreen/VBoxContainer/UpgradeBtn1
+onready var upgradeBtn2 = $UpgradeScreen/VBoxContainer/UpgradeBtn2
+onready var upgradeBtn3 = $UpgradeScreen/VBoxContainer/UpgradeBtn3
+
+var choice1
+var choice2
+var choice3
+var type1
+var type2
+var type3
 
 var max_health = 1000
 var health = 1000
 var xp = 0
 var max_xp = 1000
+var error
+var upgradeSkillRef = funcref(PlayerStats, "upgradeSkill")
+var upgradeStatRef = funcref(PlayerStats, "upgradeStat")
+var upgradeAttackRef = funcref(PlayerStats, "upgradeAttack")
 
 func _ready():
 	var canvas_rid = get_canvas_item()
@@ -17,10 +32,11 @@ func _ready():
 	max_health = PlayerStats.max_health
 	health = PlayerStats.health
 	max_xp = PlayerStats.max_xp
-	PlayerStats.connect("health_changed", self, "set_health")
-	PlayerStats.connect("max_health_changed", self, "set_max_health")
-	PlayerStats.connect("xp_changed", self, "set_xp")
-	PlayerStats.connect("max_xp_changed", self, "set_max_xp")
+	error = PlayerStats.connect("health_changed", self, "set_health")
+	error = PlayerStats.connect("max_health_changed", self, "set_max_health")
+	error = PlayerStats.connect("xp_changed", self, "set_xp")
+	error = PlayerStats.connect("max_xp_changed", self, "set_max_xp")
+	error = PlayerStats.connect("level_up", self, "level_up")
 	
 func set_health(value):
 	health = clamp(value, 0, max_health)
@@ -39,13 +55,49 @@ func set_max_xp(value):
 	max_xp = value
 
 func _unhandled_input(event):
-	if event.is_action_pressed("pause"):
+	if event.is_action_pressed("pause") and !upgradeScreen.visible:
 		get_tree().paused = !get_tree().paused
 		pauseMenu.visible = !pauseMenu.visible
 		
-
 func _on_ResumeBtn_button_up():
 	get_tree().paused = !get_tree().paused
 	pauseMenu.visible = !pauseMenu.visible
-	
 
+func level_up():
+	get_tree().paused = true
+	upgradeScreen.visible = true
+	
+	var numAttacks = range(PlayerStats.attacks.size())
+	
+	var i = 0
+	while i < 3:
+		#chooses a random attack (will later make it randomly choose an attack, a stat, or a skill 
+		var number = numAttacks[randi() % numAttacks.size()]
+		numAttacks.erase(number)
+		var choice = PlayerStats.attacks.keys()[number]
+		var upgrade = PlayerStats.attacks[choice]
+		
+		#assigns type variables to whatever type the upgrade is, an attack, a stat, or a skill
+		set("type" + str(i+1), upgrade.type)
+		#assigns choice variables to the key of the upgrade
+		set("choice" + str(i+1), choice)
+		#assigns upgrade buttons text to the name of the upgrade
+		get("upgradeBtn" + str(i+1)).text = upgrade.text
+		
+		i += 1
+
+func _on_UpgradeBtn_button_up(number):
+	#use a type to see what function reference to use, then calls it with the correct key using choice
+	get("upgrade" + get("type" + str(number)) + "Ref").call_func(get("choice" + str(number)))
+	
+	get_tree().paused = false
+	upgradeScreen.visible = false
+	
+func choose_attack():
+	pass
+
+func choose_skill():
+	pass
+
+func choose_stat():
+	pass

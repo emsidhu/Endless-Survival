@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/shot 1.png-033eb86d94b3abdf97174c01359e9f3c.stex"
+path="res://.import/background tile.png-364636c30609ea84d5b0465fc3c0c2b8.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Attacks/Sprites/shot 1.png"
-dest_files=[ "res://.import/shot 1.png-033eb86d94b3abdf97174c01359e9f3c.stex" ]
+source_file="res://World/background tile.png"
+dest_files=[ "res://.import/background tile.png-364636c30609ea84d5b0465fc3c0c2b8.stex" ]
 
 [params]
 
@@ -19,9 +19,9 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=0
+flags/repeat=1
 flags/filter=true
-flags/mipmaps=false
+flags/mipmaps=true
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true

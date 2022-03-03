@@ -87,11 +87,7 @@ material = SubResource( 5 )
 position = Vector2( 1, -1 )
 scale = Vector2( 0.017, 0.017 )
 frames = SubResource( 1 )
-frame = 2
 playing = true
-
-[node name="Basic shot timer" type="Timer" parent="."]
-autostart = true
 
 [node name="Hurtbox" parent="." instance=ExtResource( 6 )]
 collision_layer = 32
@@ -115,10 +111,31 @@ shape = SubResource( 9 )
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
 
-[connection signal="timeout" from="Basic shot timer" to="." method="basic_shot"]
+[node name="Timers" type="Node" parent="."]
+
+[node name="ShotTimer" type="Timer" parent="Timers"]
+autostart = true
+
+[node name="VortexTimer" type="Timer" parent="Timers"]
+wait_time = 2.5
+autostart = true
+
+[node name="LightningTimer" type="Timer" parent="Timers"]
+wait_time = 3.0
+autostart = true
+
+[node name="OrbitTimer" type="Timer" parent="Timers"]
+wait_time = 0.01
+one_shot = true
+autostart = true
+
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]
 [connection signal="invincibility_started" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_started"]
+[connection signal="timeout" from="Timers/ShotTimer" to="." method="attack" binds= [ "BASIC_SHOT" ]]
+[connection signal="timeout" from="Timers/VortexTimer" to="." method="attack" binds= [ "VORTEX" ]]
+[connection signal="timeout" from="Timers/LightningTimer" to="." method="attack" binds= [ "LIGHTNING" ]]
+[connection signal="timeout" from="Timers/OrbitTimer" to="." method="attack" binds= [ "ORBIT" ]]
 
 [editable path="Hurtbox"]
 [editable path="SoftCollision"]

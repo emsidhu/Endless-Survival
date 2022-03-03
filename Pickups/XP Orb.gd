@@ -5,7 +5,7 @@ var xp = 800
 
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if (Globals.player.global_position.distance_to(global_position) > 2000):
 		queue_free()
 

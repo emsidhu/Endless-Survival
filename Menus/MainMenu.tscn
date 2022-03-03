@@ -49,14 +49,14 @@ __meta__ = {
 margin_right = 87.0
 margin_bottom = 17.0
 text = "New Game"
-next_scene_path = "res://World.tscn"
+next_scene_path = "res://World/World.tscn"
 
 [node name="ChangeSceneBtn" parent="Menu" instance=ExtResource( 6 )]
 margin_top = 21.0
 margin_right = 87.0
 margin_bottom = 38.0
 text = "Tutorial"
-next_scene_path = "res://World.tscn"
+next_scene_path = "res://World/World.tscn"
 
 [node name="QuitBtn" parent="Menu" instance=ExtResource( 2 )]
 margin_top = 42.0

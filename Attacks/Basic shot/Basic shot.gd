@@ -1,19 +1,13 @@
-extends KinematicBody2D
+extends "res://Attacks/Projectile.gd"
 
-export var KNOCKBACK_POWER = 150
-export var DAMAGE = 50
-export var SPEED = 120
-onready var mouse_pos = get_global_mouse_position()
-onready var direction = position.direction_to(mouse_pos)
 
 func _ready():
-	look_at(mouse_pos)
-
-func _physics_process(delta):
-	var velocity = Vector2.ZERO
-	velocity = direction * SPEED 
-	velocity = move_and_slide(velocity)
-
-
+	damage *= (1 + (0.2 * (PlayerStats.attacks.BasicShot.level - 1)))
+	if EnemyStats.enemies:
+		get_direction(EnemyStats.get_closest_enemy_pos(global_position))
+	else:
+		queue_free()
+	
 func _on_Hitbox_area_entered(_area):
 	queue_free()
+
