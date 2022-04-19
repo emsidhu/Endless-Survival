@@ -10,7 +10,7 @@ func _ready():
 	remove_point(0)
 	set_as_toplevel(true)
 
-func _process(delta):
+func _process(_delta):
 	global_position = Vector2.ZERO
 	global_rotation = 0
 	

@@ -10,7 +10,9 @@ export var pickup_spawn_time = 2
 export var pickup_spawn_amount = 2
 var can_spawn = false
 
-
+func ready():
+	randomize()
+	PlayerStats.resetStats()
 
 func _on_EnemyTimer_timeout():
 	if  (is_instance_valid(player)):
@@ -18,7 +20,7 @@ func _on_EnemyTimer_timeout():
 		while (i < round(EnemyStats.enemySpawnAmount)):
 			create_child(AllEnemies.get_enemy(), 50, 100)
 			i += 1
-		enemyTimer.start(round(EnemyStats.enemySpawnTime))
+		enemyTimer.start(EnemyStats.enemySpawnTime)
 		
 func _on_PickupTimer_timeout():
 	if  (is_instance_valid(player)):

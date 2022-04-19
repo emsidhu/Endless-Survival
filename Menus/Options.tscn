@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://UI/background.png" type="Texture" id=1]
+[ext_resource path="res://Menus/Options.gd" type="Script" id=2]
+[ext_resource path="res://UI/ui_theme.tres" type="Theme" id=4]
+[ext_resource path="res://UI/Title.tscn" type="PackedScene" id=5]
+[ext_resource path="res://UI/ChangeSceneBtn.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Music and Sounds/333040__christopherderp__videogame-menu-button-clicking-sound-11.wav" type="AudioStream" id=8]
+
+[node name="Options" type="Control"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 1.0
+margin_bottom = 1.0
+theme = ExtResource( 4 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="background" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 1 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" parent="." instance=ExtResource( 5 )]
+text = "Options"
+
+[node name="Menu" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -47.5
+margin_top = -22.5
+margin_right = 47.5
+margin_bottom = 22.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MouseControls" type="CheckBox" parent="Menu"]
+margin_right = 95.0
+margin_bottom = 24.0
+text = "Mouse Controls"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FullScreen" type="CheckBox" parent="Menu"]
+margin_top = 28.0
+margin_right = 95.0
+margin_bottom = 52.0
+pressed = true
+text = "Full Screen"
+
+[node name="ChangeSceneBtn" parent="Menu" instance=ExtResource( 6 )]
+margin_top = 56.0
+margin_right = 95.0
+margin_bottom = 73.0
+text = "Return"
+next_scene_path = "res://Menus/MainMenu.tscn"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+
+[connection signal="toggled" from="Menu/MouseControls" to="." method="_on_MouseControls_toggled"]
+[connection signal="toggled" from="Menu/FullScreen" to="." method="_on_FullScreen_toggled"]
+[connection signal="button_down" from="Menu/ChangeSceneBtn" to="." method="_on_button_down"]
+[connection signal="finished" from="AudioStreamPlayer" to="." method="_on_AudioStreamPlayer_finished"]

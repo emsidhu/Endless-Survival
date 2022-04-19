@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Attacks/Lightning/LightningSpawner.gd" type="Script" id=1]
+
+[node name="LightningSpawner" type="Node"]
+script = ExtResource( 1 )

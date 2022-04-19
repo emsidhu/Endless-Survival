@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/wizard 4.png-35a3b278e03dee01d84f902bca2b1d2b.stex"
+path="res://.import/output-onlinepngtools (2).png-b423fb302901b17fdf6f3da2c78fb80b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/Sprite/wizard 4.png"
-dest_files=[ "res://.import/wizard 4.png-35a3b278e03dee01d84f902bca2b1d2b.stex" ]
+source_file="res://Player/Sprite/output-onlinepngtools (2).png"
+dest_files=[ "res://.import/output-onlinepngtools (2).png-b423fb302901b17fdf6f3da2c78fb80b.stex" ]
 
 [params]
 

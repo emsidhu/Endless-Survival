@@ -1,7 +1,6 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Attacks/Orbit/Orbit.gd" type="Script" id=1]
-[ext_resource path="res://trail/trail.gd" type="Script" id=2]
 [ext_resource path="res://Attacks/Sprites/orbit/orbit.png" type="Texture" id=3]
 [ext_resource path="res://Hit-Hurtboxes/Hitbox.tscn" type="PackedScene" id=4]
 [ext_resource path="res://trail/trail.tscn" type="PackedScene" id=5]
@@ -195,19 +194,14 @@ anims/rotate = SubResource( 32 )
 position = Vector2( 20, 0 )
 scale = Vector2( 0.015, 0.015 )
 frames = SubResource( 27 )
-frame = 12
+frame = 18
 playing = true
 
-[node name="Hitbox" type="Area2D" parent="Orbit" instance=ExtResource( 4 )]
+[node name="Hitbox" parent="Orbit" instance=ExtResource( 4 )]
 position = Vector2( -13.0154, -2.65015 )
-collision_layer = 8
-collision_mask = 16
 
-[node name="Trail" type="Line2D" parent="." instance=ExtResource( 5 )]
+[node name="Trail" parent="." instance=ExtResource( 5 )]
 position = Vector2( 20, 0 )
 scale = Vector2( 0.015, 0.015 )
 width_curve = SubResource( 33 )
 gradient = SubResource( 34 )
-begin_cap_mode = 2
-end_cap_mode = 2
-script = ExtResource( 2 )

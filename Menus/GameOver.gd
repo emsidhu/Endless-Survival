@@ -4,6 +4,7 @@ extends Control
 func _ready() -> void:
 	PlayerStats.damage = 50
 	PlayerStats.max_health = 1000
+	$Title.text = "Your Score Was " + str(Globals.score)
 
 
 

@@ -1,9 +1,19 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://UI/PlayerUI.tscn" type="PackedScene" id=2]
 [ext_resource path="res://World/background tile.png" type="Texture" id=3]
 [ext_resource path="res://World/World.gd" type="Script" id=4]
+
+[sub_resource type="Environment" id=1]
+background_mode = 4
+glow_enabled = true
+glow_levels/4 = true
+glow_intensity = 3.43
+glow_blend_mode = 0
+glow_hdr_threshold = 0.52
+glow_hdr_scale = 1.84
+glow_bicubic_upscale = true
 
 [node name="World" type="Node2D"]
 script = ExtResource( 4 )
@@ -12,24 +22,22 @@ script = ExtResource( 4 )
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 z_as_relative = false
-motion_mirroring = Vector2( 320, 192 )
+motion_mirroring = Vector2( 336, 192 )
 
 [node name="BackgroundTile" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
 modulate = Color( 0.423529, 0.360784, 0.360784, 1 )
 texture = ExtResource( 3 )
 centered = false
 region_enabled = true
-region_rect = Rect2( 0, 0, 320, 192 )
+region_rect = Rect2( 0, 0, 336, 192 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 160, 89 )
 current = true
 
-[node name="PlayerUI" parent="Camera2D" instance=ExtResource( 2 )]
-margin_left = -160.0
-margin_top = -89.0
-margin_right = 160.0
-margin_bottom = 91.0
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
+
+[node name="PlayerUI" parent="Camera2D/CanvasLayer" instance=ExtResource( 2 )]
 
 [node name="EnemyTimer" type="Timer" parent="."]
 autostart = true
@@ -40,7 +48,7 @@ autostart = true
 position = Vector2( 160, 89 )
 
 [node name="AnimatedSprite" parent="YSort/Player" index="0"]
-frame = 3
+frame = 2
 
 [node name="RemoteTransform2D" parent="YSort/Player" index="4"]
 remote_path = NodePath("../../../Camera2D")
@@ -48,10 +56,13 @@ remote_path = NodePath("../../../Camera2D")
 [node name="PickupTimer" type="Timer" parent="."]
 autostart = true
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
+
 [connection signal="timeout" from="EnemyTimer" to="." method="_on_EnemyTimer_timeout"]
 [connection signal="timeout" from="PickupTimer" to="." method="_on_PickupTimer_timeout"]
 
-[editable path="Camera2D/PlayerUI"]
+[editable path="Camera2D/CanvasLayer/PlayerUI"]
 [editable path="YSort/Player"]
 [editable path="YSort/Player/Hurtbox"]
 [editable path="YSort/Player/SoftCollision"]

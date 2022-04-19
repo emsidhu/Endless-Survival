@@ -20,7 +20,6 @@ var health = 1000
 var xp = 0
 var max_xp = 1000
 var error
-var upgradeSkillRef = funcref(PlayerStats, "upgradeSkill")
 var upgradeStatRef = funcref(PlayerStats, "upgradeStat")
 var upgradeAttackRef = funcref(PlayerStats, "upgradeAttack")
 
@@ -33,6 +32,8 @@ func _ready():
 	max_health = PlayerStats.max_health
 	health = PlayerStats.health
 	max_xp = PlayerStats.max_xp
+	pauseMenu.visible = false
+	upgradeScreen.visible = false
 	error = PlayerStats.connect("health_changed", self, "set_health")
 	error = PlayerStats.connect("max_health_changed", self, "set_max_health")
 	error = PlayerStats.connect("xp_changed", self, "set_xp")
@@ -59,10 +60,12 @@ func _unhandled_input(event):
 	if event.is_action_pressed("pause") and !upgradeScreen.visible:
 		get_tree().paused = !get_tree().paused
 		pauseMenu.visible = !pauseMenu.visible
+		$PauseMenu/VBoxContainer/ResumeBtn.grab_focus()
 		
 func _on_ResumeBtn_button_up():
 	get_tree().paused = !get_tree().paused
 	pauseMenu.visible = !pauseMenu.visible
+
 
 func level_up():
 	get_tree().paused = true
@@ -70,23 +73,26 @@ func level_up():
 	
 	var num_attacks = range(PlayerStats.attacks.size())
 	var num_stats = range(PlayerStats.stats.size())
-	var num_skills = range(PlayerStats.skills.size())
-	print(num_stats)
+
 	var i = 0
 	while i < 3:
 		var upgradeInfo
-		match (randi() % 3):
-			0:
-				upgradeInfo = choose_upgrade(num_attacks, "attacks")
-				num_attacks = upgradeInfo[0]
-			1:
-				upgradeInfo = choose_upgrade(num_stats, "stats")
-				num_skills = upgradeInfo[0]
-			2:
-				upgradeInfo = choose_upgrade(num_skills, "skills")
-				num_stats = upgradeInfo[0]
-		
-		#assigns type variables to whatever type the upgrade is, an attack, a stat, or a skill
+		while true:
+			match (randi() % 2):
+				0:
+					upgradeInfo = choose_upgrade(num_attacks, "attacks")
+					num_attacks.erase(upgradeInfo[0])
+					if upgradeInfo[1].level < upgradeInfo[1].max_level:	
+						break
+					
+				1:
+					upgradeInfo = choose_upgrade(num_stats, "stats")
+					num_stats.erase(upgradeInfo[0])
+					if upgradeInfo[1].level < upgradeInfo[1].max_level:	
+						break
+					
+
+		#assigns type variables to whatever type the upgrade is, an attack or a stat
 		set("type" + str(i+1), upgradeInfo[1].type)
 		#assigns choice variables to the key of the upgrade
 		set("choice" + str(i+1), upgradeInfo[2])
@@ -94,6 +100,7 @@ func level_up():
 		get("upgradeBtn" + str(i+1)).text = upgradeInfo[1].text
 		
 		i += 1
+	upgradeBtn1.grab_focus()
 
 func _on_UpgradeBtn_button_up(number):
 	#uses type to see what function reference to use, then calls it with the correct key using choice
@@ -104,8 +111,7 @@ func _on_UpgradeBtn_button_up(number):
 	
 func choose_upgrade(array, type):
 	var number = array[randi() % array.size()]
-	array.erase(number)
 	var choice = PlayerStats[type].keys()[number]
 	var upgrade = PlayerStats[type][choice]
-	return [array, upgrade, choice]
+	return [number, upgrade, choice]
 

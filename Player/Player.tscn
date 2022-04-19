@@ -1,38 +1,22 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://Player/Sprite/wizard 4.png" type="Texture" id=1]
-[ext_resource path="res://Player/Sprite/wizard 1.png" type="Texture" id=2]
-[ext_resource path="res://Player/Sprite/wizard 3.png" type="Texture" id=3]
-[ext_resource path="res://Player/Sprite/wizard 2.png" type="Texture" id=4]
+[ext_resource path="res://Player/Sprite/output-onlinepngtools.png" type="Texture" id=1]
+[ext_resource path="res://Player/Sprite/output-onlinepngtools (3).png" type="Texture" id=2]
+[ext_resource path="res://Player/Sprite/output-onlinepngtools (1).png" type="Texture" id=3]
+[ext_resource path="res://Player/Sprite/output-onlinepngtools (2).png" type="Texture" id=4]
 [ext_resource path="res://Player/Player.gd" type="Script" id=5]
 [ext_resource path="res://Hit-Hurtboxes/Hurtbox.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Hit-Hurtboxes/Soft Collision.tscn" type="PackedScene" id=7]
-
-[sub_resource type="Shader" id=4]
-code = "shader_type canvas_item;
-
-uniform bool is_white = false;
-
-
-void fragment() {
-	vec4 prev_colour = texture(TEXTURE, UV);
-	vec4 white_colour = vec4(1.0, 1.0, 1.0, prev_colour.a);
-
-	vec4 new_colour = prev_colour;
-
-	if (is_white) {
-		new_colour = white_colour;
-	}
-	COLOR = new_colour;
-}"
+[ext_resource path="res://Attacks/Shield/Shield.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Shaders/blink.gdshader" type="Shader" id=9]
 
 [sub_resource type="ShaderMaterial" id=5]
-shader = SubResource( 4 )
+shader = ExtResource( 9 )
 shader_param/is_white = false
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 1 ) ],
+"frames": [ ExtResource( 1 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 2 ) ],
 "loop": true,
 "name": "default",
 "speed": 2.0
@@ -80,16 +64,17 @@ height = 6.0
 
 [node name="Player" type="KinematicBody2D" groups=["Player"]]
 script = ExtResource( 5 )
-MAX_SPEED = 60
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 material = SubResource( 5 )
-position = Vector2( 1, -1 )
-scale = Vector2( 0.017, 0.017 )
+position = Vector2( 0.56123, 0 )
+scale = Vector2( 0.16, 0.16 )
 frames = SubResource( 1 )
+frame = 3
 playing = true
 
 [node name="Hurtbox" parent="." instance=ExtResource( 6 )]
+visible = false
 collision_layer = 32
 collision_mask = 64
 
@@ -102,7 +87,8 @@ anims/Start = SubResource( 7 )
 anims/Stop = SubResource( 8 )
 
 [node name="SoftCollision" parent="." instance=ExtResource( 7 )]
-collision_layer = 128
+visible = false
+collision_layer = 384
 collision_mask = 128
 
 [node name="CollisionShape2D" parent="SoftCollision" index="0"]
@@ -129,13 +115,26 @@ wait_time = 0.01
 one_shot = true
 autostart = true
 
+[node name="FlameTimer" type="Timer" parent="Timers"]
+wait_time = 8.0
+autostart = true
+
+[node name="LaserTimer" type="Timer" parent="Timers"]
+wait_time = 1.5
+autostart = true
+
+[node name="Shield" parent="." instance=ExtResource( 8 )]
+visible = false
+
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]
 [connection signal="invincibility_started" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_started"]
-[connection signal="timeout" from="Timers/ShotTimer" to="." method="attack" binds= [ "BASIC_SHOT" ]]
-[connection signal="timeout" from="Timers/VortexTimer" to="." method="attack" binds= [ "VORTEX" ]]
-[connection signal="timeout" from="Timers/LightningTimer" to="." method="attack" binds= [ "LIGHTNING" ]]
-[connection signal="timeout" from="Timers/OrbitTimer" to="." method="attack" binds= [ "ORBIT" ]]
+[connection signal="timeout" from="Timers/ShotTimer" to="." method="projectileAttack" binds= [ "BASICSHOT" ]]
+[connection signal="timeout" from="Timers/VortexTimer" to="." method="projectileAttack" binds= [ "VORTEX" ]]
+[connection signal="timeout" from="Timers/LightningTimer" to="." method="Spawner" binds= [ "LIGHTNINGSPAWNER" ]]
+[connection signal="timeout" from="Timers/OrbitTimer" to="." method="followAttack" binds= [ "ORBIT" ]]
+[connection signal="timeout" from="Timers/FlameTimer" to="." method="followAttack" binds= [ "FLAME" ]]
+[connection signal="timeout" from="Timers/LaserTimer" to="." method="Spawner" binds= [ "LASERSPAWNER" ]]
 
 [editable path="Hurtbox"]
 [editable path="SoftCollision"]

@@ -1,0 +1,83 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Attacks/Laser/Laser.gd" type="Script" id=1]
+[ext_resource path="res://Attacks/Sprites/Laser/glowing_circle.png" type="Texture" id=2]
+
+[sub_resource type="Gradient" id=5]
+offsets = PoolRealArray( 0.747253, 1 )
+colors = PoolColorArray( 0.945055, 0.945055, 0.945055, 1, 0.988235, 0.988235, 0.988235, 0 )
+
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.640351, 0.997727 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.00647744, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=3]
+curve = SubResource( 2 )
+
+[sub_resource type="ParticlesMaterial" id=4]
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 60.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = 45.0
+scale = 0.1
+scale_curve = SubResource( 3 )
+color = Color( 0, 3, 6, 1 )
+color_ramp = SubResource( 6 )
+
+[sub_resource type="Curve" id=7]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.634328, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=8]
+offsets = PoolRealArray( 0.747748, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[node name="Laser" type="Position2D"]
+
+[node name="Laser" type="RayCast2D" parent="." groups=["Attacks"]]
+position = Vector2( 6, 0 )
+enabled = true
+cast_to = Vector2( 1000, 0 )
+collision_mask = 16
+collide_with_areas = true
+script = ExtResource( 1 )
+
+[node name="Line2D" type="Line2D" parent="Laser"]
+points = PoolVector2Array( 0, 0, 100, 0 )
+width = 2.5
+default_color = Color( 0.5, 3, 6, 1 )
+
+[node name="Tween" type="Tween" parent="Laser"]
+
+[node name="CastingParticles2D" type="Particles2D" parent="Laser"]
+visible = false
+lifetime = 0.3
+process_material = SubResource( 4 )
+texture = ExtResource( 2 )
+
+[node name="StopTimer" type="Timer" parent="Laser"]
+wait_time = 0.75
+one_shot = true
+autostart = true
+
+[node name="DieTimer" type="Timer" parent="Laser"]
+one_shot = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Laser"]
+modulate = Color( 0.5, 3, 6, 1 )
+self_modulate = Color( 0.5, 3, 6, 1 )
+lifetime = 0.3
+texture = ExtResource( 2 )
+gravity = Vector2( 0, 0 )
+initial_velocity = 60.0
+angle = 45.0
+scale_amount = 0.1
+scale_amount_curve = SubResource( 7 )
+color = Color( 0.5, 3, 6, 1 )
+color_ramp = SubResource( 8 )
+
+[connection signal="timeout" from="Laser/StopTimer" to="Laser" method="_on_StopTimer_timeout"]
+[connection signal="timeout" from="Laser/DieTimer" to="Laser" method="_on_DieTimer_timeout"]

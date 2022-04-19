@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Enemies/Sprites/Fuzzy/monster_01_A_walk_01.png" type="Texture" id=1]
 [ext_resource path="res://Enemies/Sprites/Fuzzy/monster_01_A_walk_03.png" type="Texture" id=2]
@@ -8,6 +8,29 @@
 [ext_resource path="res://Hit-Hurtboxes/Hitbox.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Hit-Hurtboxes/Soft Collision.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Hit-Hurtboxes/Hurtbox.tscn" type="PackedScene" id=8]
+
+[sub_resource type="Shader" id=9]
+code = "shader_type canvas_item;
+
+uniform bool is_white = false;
+
+
+void fragment() {
+	vec4 prev_colour = texture(TEXTURE, UV);
+	vec4 white_colour = vec4(1.0, 1.0, 1.0, prev_colour.a);
+
+	vec4 new_colour = prev_colour;
+
+	if (is_white) {
+		new_colour = white_colour;
+	}
+	COLOR = new_colour;
+}"
+
+[sub_resource type="ShaderMaterial" id=5]
+resource_local_to_scene = true
+shader = SubResource( 9 )
+shader_param/is_white = true
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -26,16 +49,65 @@ radius = 4.12311
 [sub_resource type="CircleShape2D" id=2]
 radius = 5.09902
 
-[node name="Fuzzy" type="KinematicBody2D"]
+[sub_resource type="Animation" id=8]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:material:shader_param/is_white")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Start"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:material:shader_param/is_white")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Stop"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:material:shader_param/is_white")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[node name="Fuzzy" type="KinematicBody2D" groups=["Enemies"]]
 script = ExtResource( 5 )
-MAX_SPEED = 70.0
+minSpeed = 62
+maxSpeed = 72
 SOFTPOWER = 70
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+material = SubResource( 5 )
 rotation = 1.5708
 scale = Vector2( 0.1, 0.1 )
 frames = SubResource( 1 )
-frame = 1
+frame = 2
 playing = true
 
 [node name="Hitbox" parent="." instance=ExtResource( 6 )]
@@ -64,8 +136,15 @@ wait_time = 2.5
 autostart = true
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+visible = false
 
-[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+[node name="BlinkAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 8 )
+anims/Start = SubResource( 6 )
+anims/Stop = SubResource( 7 )
+
+[connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]
+[connection signal="invincibility_started" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_started"]
 [connection signal="timeout" from="DirectionTimer" to="." method="_on_DirectionTimer_timeout"]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 

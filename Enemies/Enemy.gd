@@ -1,15 +1,21 @@
 extends KinematicBody2D
 
+const EnemyDeathEffect = preload("res://Effects/EnemyDeathEffect.tscn")
+
 onready var softCollision = $SoftCollision
 onready var animatedSprite = $AnimatedSprite
 onready var directionTimer = $DirectionTimer
+onready var hurtbox = $Hurtbox
+onready var blinkAnimationPlayer = $BlinkAnimationPlayer
 
-
+export var pointValue = 50
 export var directionTime = 2.5
 export var xp = 50
 export var damage = 100
 export var health = 100
-export var MAX_SPEED = 20.0
+export var minSpeed = 50
+export var maxSpeed = 70
+onready var MAX_SPEED = rand_range(minSpeed, maxSpeed)
 export var ACCELERATION = 500
 export var FRICTION = 500
 export var SOFTPOWER = 1000
@@ -26,6 +32,7 @@ onready var player = Globals.get("player")
 signal died(xp)
 
 func _ready():
+	blinkAnimationPlayer.play("Stop")
 	damage *= EnemyStats.damageModifier
 	health *= EnemyStats.healthModifier
 	error = connect("died", player, "killed_enemy")
@@ -36,7 +43,7 @@ func _ready():
 func _physics_process(delta):
 	
 	if is_instance_valid(player):
-		if global_position.distance_to(player.global_position) > 400:
+		if global_position.distance_to(player.global_position) > 220:
 			queue_free()
 
 		
@@ -50,20 +57,28 @@ func _physics_process(delta):
 	knockback = move_and_slide(knockback)
 
 	velocity = move_and_slide(velocity)
-	
-	
-	
 	if health <= 0:
 		die()
 
+func _on_Hurtbox_invincibility_started():
+	blinkAnimationPlayer.play("Start")
 
-func _on_Hurtbox_area_entered(area):
-	var attack = area.get_parent()
+func _on_Hurtbox_invincibility_ended():
+	blinkAnimationPlayer.play("Stop")
+
+func hit(attack):
 	health -= attack.damage
 	knockback = attack.global_position.direction_to(global_position) * attack.knockback_power
+	hurtbox.start_invincibility(0.1)
+
+func createDeathEffect():
+	var enemyDeathEffect = EnemyDeathEffect.instance()
+	get_parent().add_child(enemyDeathEffect)
+	enemyDeathEffect.global_position = global_position
 
 func die():
-	emit_signal("died", xp)
+	emit_signal("died", xp, pointValue)
+	createDeathEffect()
 	queue_free()
 
 

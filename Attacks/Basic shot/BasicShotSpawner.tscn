@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node
+
+var BASIC_SHOT = preload(\"res://Attacks/Basic shot/Basic shot.tscn\")
+
+func _ready():
+	var amount = PlayerStats.attacks.BasicShot.stats.amount
+	var i = 0
+	EnemyStats.object_position = Globals.player.global_position
+	var enemies = EnemyStats.enemies
+	enemies.sort_custom(EnemyStats, \"sort_enemies\")
+	while(i < amount):
+		var basic_shot = BASIC_SHOT.instance()
+		if enemies.size() > i:
+			basic_shot.position = Globals.player.global_position
+			basic_shot.get_direction(enemies[i].global_position)
+			get_parent().add_child(basic_shot)
+		i += 1
+	queue_free()
+
+"
+
+[node name="BasicShotSpawner" type="Node"]
+script = SubResource( 1 )

@@ -1,19 +1,16 @@
 extends Sprite
 
-var knockback_power = 0
-export var damage = 500
+var knockback_power = PlayerStats.attacks.Lightning.stats.knockback_power
+var damage = PlayerStats.attacks.Lightning.stats.damage
 onready var animationPlayer = $AnimationPlayer
+var animation = str(randi() % 2)
 
 func ready():
-	animationPlayer.playback_speed = 4
-	animationPlayer.play(str(randi() % 5 + 1))
-	
-	damage *= (1 + (0.2 * (PlayerStats.attacks.Lightning.level - 1)))
+	if animation == 0:
+		animationPlayer.play("0")
+	else:
+		animationPlayer.play("1")
 
 
-
-
-
-
-func _on_AnimationPlayer_animation_finished(anim_name):
+func _on_AnimationPlayer_animation_finished(_anim_name):
 	queue_free()

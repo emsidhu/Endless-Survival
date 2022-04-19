@@ -55,8 +55,8 @@ next_scene_path = "res://World/World.tscn"
 margin_top = 21.0
 margin_right = 87.0
 margin_bottom = 38.0
-text = "Tutorial"
-next_scene_path = "res://World/World.tscn"
+text = "Options"
+next_scene_path = "res://Menus/Options.tscn"
 
 [node name="QuitBtn" parent="Menu" instance=ExtResource( 2 )]
 margin_top = 42.0

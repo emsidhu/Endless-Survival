@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/wizard 1.png-4bcacd06160a361fa1dbd0d47a093624.stex"
+path="res://.import/glowing_circle.png-9200345c6aa560bb3fb26e0d7afbb008.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/Sprite/wizard 1.png"
-dest_files=[ "res://.import/wizard 1.png-4bcacd06160a361fa1dbd0d47a093624.stex" ]
+source_file="res://Pickups/Sprites/glowing_circle.png"
+dest_files=[ "res://.import/glowing_circle.png-9200345c6aa560bb3fb26e0d7afbb008.stex" ]
 
 [params]
 

@@ -61,6 +61,6 @@ margin_left = -129.5
 margin_top = -45.0812
 margin_right = 129.5
 margin_bottom = -29.0812
-text = "You Died :("
+text = "Your Score Was"
 
 [connection signal="button_up" from="Menu/ChangeSceneBtn" to="." method="_on_ChangeSceneBtn_button_up"]

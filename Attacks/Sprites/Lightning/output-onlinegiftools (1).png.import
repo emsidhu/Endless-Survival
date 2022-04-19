@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/wizard 2.png-f246814043862818431ec3d8ea7267f0.stex"
+path="res://.import/output-onlinegiftools (1).png-e4d105cbe3bbfaf35f4ef8d63d5afc07.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/Sprite/wizard 2.png"
-dest_files=[ "res://.import/wizard 2.png-f246814043862818431ec3d8ea7267f0.stex" ]
+source_file="res://Attacks/Sprites/Lightning/output-onlinegiftools (1).png"
+dest_files=[ "res://.import/output-onlinegiftools (1).png-e4d105cbe3bbfaf35f4ef8d63d5afc07.stex" ]
 
 [params]
 

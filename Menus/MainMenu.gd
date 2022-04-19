@@ -9,6 +9,7 @@ func _ready():
 	PlayerStats.health = PlayerStats.max_health
 	PlayerStats.xp = 0
 	PlayerStats.max_xp = 1000
+	$Menu/PlayBtn.grab_focus()
 
 
 func _on_AudioStreamPlayer_finished():

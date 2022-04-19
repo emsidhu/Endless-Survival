@@ -1,9 +1,11 @@
 extends KinematicBody2D
 
-const BASIC_SHOT = preload("res://Attacks/Basic shot/Basic shot.tscn")
+const BASICSHOT = preload("res://Attacks/Basic shot/Basic shot.tscn")
 const VORTEX = preload("res://Attacks/Vortex/Vortex.tscn")
-const LIGHTNING = preload("res://Attacks/Lightning/Lightning.tscn")
+const LIGHTNINGSPAWNER = preload("res://Attacks/Lightning/LightningSpawner.tscn")
 const ORBIT = preload("res://Attacks/Orbit/Orbit.tscn")
+const FLAME = preload("res://Attacks/Flame/Flame.tscn")
+const LASERSPAWNER = preload("res://Attacks/Laser/LaserSpawner.tscn")
 
 onready var blinkAnimationPlayer = $BlinkAnimationPlayer
 onready var hurtbox = $Hurtbox
@@ -12,11 +14,15 @@ onready var vortexTimer = $Timers/VortexTimer
 onready var basicShotTimer = $Timers/ShotTimer
 onready var lightningTimer = $Timers/LightningTimer
 onready var orbitTimer = $Timers/OrbitTimer
+onready var flameTimer = $Timers/FlameTimer
+onready var laserTimer = $Timers/LaserTimer
+onready var shield = $Shield
 
 export var SOFTPOWER = 700
-export var ACCELERATION = 400
-export var MAX_SPEED = 80
-export(float) var FRICTION = 400
+export var ACCELERATION = 700
+
+var hasShield = false setget setShield
+
 
 var error
 
@@ -24,14 +30,19 @@ var velocity = Vector2.ZERO
 
 func _ready():
 	#pause the timers for attacks player doesn't start with
-	vortexTimer.paused = true
+	#basicShotTimer.paused = true
 	lightningTimer.paused = true
+	vortexTimer.paused = true
+	flameTimer.paused = true
 	orbitTimer.paused = true
+	laserTimer.paused = true
+	shield.visible = false
 
-	
+
 	
 	error = PlayerStats.connect("no_health", self, "die")
 	error = PlayerStats.connect("upgradeAttack", self, "can_shoot")
+	error = PlayerStats.connect("cooldownChange", self, "changeCooldown")
 	
 	Globals.set("player", self)
 
@@ -49,51 +60,68 @@ func move(delta):
 	
 	if input_vector != Vector2.ZERO:
 		#move player in direction of movement inputs
-		velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
+		velocity = velocity.move_toward(input_vector * PlayerStats.stats.Speed.amount, ACCELERATION * delta)
 	else:
 		#slow player down if no movement inputs
-		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+		velocity = velocity.move_toward(Vector2.ZERO, PlayerStats.stats.Speed.amount * 5 * delta)
 
 	if softCollision.is_colliding():
 			velocity += softCollision.get_push_vector() * delta * SOFTPOWER
 
 	velocity = move_and_slide(velocity)
 	
-
-
 	
-func attack(ATTACK):
+
+func followAttack(ATTACK):
 	var attack = get(ATTACK).instance()
-	#if the attack is a projectile spawn it on the player
-	if attack.is_in_group("PlayerSpawn"):
-		attack.position = position
-	#otherwise, spawn it directly on the enemy
-	else:
-		attack.position = EnemyStats.get_closest_enemy_pos(global_position)
-		
+	add_child(attack)
+
+func projectileAttack(ATTACK):
+	var attack = get(ATTACK).instance()
+	attack.position = position
 	get_parent().get_parent().add_child(attack)
 
+func Spawner(SPAWNER):
+	var spawner = get(SPAWNER).instance()
+	add_child(spawner)
+	
 #make player flash white when hit
 func _on_Hurtbox_invincibility_started():
 	blinkAnimationPlayer.play("Start")
-
 
 func _on_Hurtbox_invincibility_ended():
 	blinkAnimationPlayer.play("Stop")
 
 #make player take damage when touched by an enemy
 func _on_Hurtbox_area_entered(area):
-	PlayerStats.health -= area.get_parent().damage
+	if hasShield and shield.charges > 0:
+		shield.charges -= 1
+	else:
+		PlayerStats.health -= area.get_parent().damage * PlayerStats.stats.Defense.amount
 	hurtbox.start_invincibility(0.5)
 	
 #give player xp when they kill an enemy
-func killed_enemy(xp):
+func killed_enemy(xp, pointValue):
 	PlayerStats.xp += xp
+	Globals.score += pointValue
 
 func die():
+	if PlayerStats.stats.Revive.canRevive:
+		PlayerStats.health = PlayerStats.max_health
+		PlayerStats.stats.Revive.canRevive = false
+		return
 	error = get_tree().change_scene("res://Menus/GameOver.tscn")
 
 #allows player to start using an attack when it's unlocked
 func can_shoot(attack):
-	get(attack.name + "Timer").paused = false
+	if attack.name != "shield":
+		get(attack.name + "Timer").paused = false
+	else:
+		self.hasShield = true
 
+func changeCooldown(dict):
+	get_node("Timers/" + dict.timer).wait_time = dict.cooldown
+	
+func setShield(value):
+	hasShield = value
+	shield.visible = value

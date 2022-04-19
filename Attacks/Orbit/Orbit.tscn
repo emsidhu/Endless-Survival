@@ -176,22 +176,22 @@ tracks/0/keys = {
 }
 
 [sub_resource type="CircleShape2D" id=30]
-radius = 2.0
+radius = 5.0
 
-[node name="Orbit" type="Node2D" groups=["PlayerSpawn"]]
+[node name="Orbit" type="Node2D" groups=["Attacks"]]
 rotation = 3.14159
 script = ExtResource( 2 )
-damage = 150
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 20, 0 )
-scale = Vector2( 0.015, 0.015 )
+position = Vector2( 33, 3.29574e-05 )
+scale = Vector2( 0.03, 0.03 )
 z_index = 1
 frames = SubResource( 27 )
-frame = 16
+frame = 12
 playing = true
 
 [node name="Trail" parent="AnimatedSprite" instance=ExtResource( 4 )]
+visible = false
 width = 5.0
 length = 30
 
@@ -201,7 +201,7 @@ anims/RESET = SubResource( 28 )
 anims/rotate = SubResource( 29 )
 
 [node name="Hitbox" parent="." instance=ExtResource( 3 )]
-position = Vector2( 20, 0 )
+position = Vector2( 33, 0 )
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
 shape = SubResource( 30 )
