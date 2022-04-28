@@ -2,8 +2,9 @@ extends Control
 
 
 func _ready() -> void:
-	PlayerStats.resetStats()
+	
 	$Title.text = "Your Score Was " + str(Globals.score)
+	PlayerStats.resetStats()
 
 
 
