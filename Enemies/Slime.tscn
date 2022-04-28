@@ -1,0 +1,182 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://Enemies/Slime.gd" type="Script" id=1]
+[ext_resource path="res://Enemies/Sprites/Slime/monster_02_B_walk_05.png" type="Texture" id=2]
+[ext_resource path="res://Enemies/Sprites/Slime/monster_02_B_walk_06.png" type="Texture" id=3]
+[ext_resource path="res://Enemies/Sprites/Slime/monster_02_B_walk_03.png" type="Texture" id=4]
+[ext_resource path="res://Enemies/Sprites/Slime/monster_02_B_walk_01.png" type="Texture" id=5]
+[ext_resource path="res://Enemies/Sprites/Slime/monster_02_B_walk_02.png" type="Texture" id=6]
+[ext_resource path="res://Enemies/Sprites/Slime/monster_02_B_walk_04.png" type="Texture" id=7]
+[ext_resource path="res://Hit-Hurtboxes/Hurtbox.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Hit-Hurtboxes/Soft Collision.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Hit-Hurtboxes/Hitbox.tscn" type="PackedScene" id=10]
+
+[sub_resource type="Shader" id=10]
+code = "shader_type canvas_item;
+
+uniform bool is_white = false;
+
+
+void fragment() {
+	vec4 prev_colour = texture(TEXTURE, UV);
+	vec4 white_colour = vec4(1.0, 1.0, 1.0, prev_colour.a);
+
+	vec4 new_colour = prev_colour;
+
+	if (is_white) {
+		new_colour = white_colour;
+	}
+	COLOR = new_colour;
+}"
+
+[sub_resource type="ShaderMaterial" id=11]
+resource_local_to_scene = true
+shader = SubResource( 10 )
+shader_param/is_white = false
+
+[sub_resource type="SpriteFrames" id=12]
+animations = [ {
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 2 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 3.93738
+height = 6.45878
+
+[sub_resource type="CapsuleShape2D" id=7]
+radius = 4.18802
+height = 5.27278
+
+[sub_resource type="CapsuleShape2D" id=8]
+radius = 3.42416
+height = 7.57597
+
+[sub_resource type="CapsuleShape2D" id=9]
+radius = 4.20987
+height = 5.55168
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:material:shader_param/is_white")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Start"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:material:shader_param/is_white")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Stop"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:material:shader_param/is_white")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[node name="Slime" type="KinematicBody2D" groups=["Enemies"]]
+script = ExtResource( 1 )
+minSpeed = 20
+maxSpeed = 35
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+material = SubResource( 11 )
+rotation = 1.5708
+scale = Vector2( 0.1, 0.1 )
+frames = SubResource( 12 )
+frame = 4
+playing = true
+
+[node name="Hitbox" parent="." instance=ExtResource( 10 )]
+rotation = 1.5708
+collision_layer = 64
+collision_mask = 32
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2( 1.416, 0.649 )
+rotation = 0.694641
+shape = SubResource( 6 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2( -1.416, 0.649 )
+rotation = -0.694641
+shape = SubResource( 7 )
+
+[node name="Hurtbox" parent="." instance=ExtResource( 8 )]
+visible = false
+rotation = 1.5708
+collision_layer = 16
+collision_mask = 8
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2( 1.12104, 0.590008 )
+rotation = 0.694641
+shape = SubResource( 8 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2( -1.416, 0.649 )
+rotation = -0.694641
+shape = SubResource( 7 )
+
+[node name="SoftCollision" parent="." instance=ExtResource( 9 )]
+visible = false
+rotation = 1.5708
+
+[node name="CollisionShape2D" parent="SoftCollision" index="0"]
+position = Vector2( 1.41581, 0.648912 )
+rotation = 0.694641
+shape = SubResource( 9 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="SoftCollision"]
+position = Vector2( -1.416, 0.649 )
+rotation = -0.694641
+shape = SubResource( 7 )
+
+[node name="BlinkAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 3 )
+anims/Start = SubResource( 4 )
+anims/Stop = SubResource( 5 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+rotation = 1.5708
+polygon = PoolVector2Array( -4.76455, -4.46069, -5.82641, -3.22185, -6.59331, -1.3931, -4.88254, 2.3824, -3.05378, 4.97805, -0.635101, 5.80394, 1.96055, 5.62697, 3.02241, 4.38813, 4.02528, 1.20256, 5.91302, -2.27798, 4.67419, -4.04774, 3.02241, -4.63766, 0.544743, -3.92976, -2.8768, -4.63766 )
+disabled = true
+
+[connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]
+[connection signal="invincibility_started" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_started"]
+
+[editable path="Hitbox"]
+[editable path="Hurtbox"]
+[editable path="SoftCollision"]

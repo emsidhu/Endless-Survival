@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Player/Sprite/output-onlinepngtools.png" type="Texture" id=1]
 [ext_resource path="res://Player/Sprite/output-onlinepngtools (3).png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Hit-Hurtboxes/Soft Collision.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Attacks/Shield/Shield.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Shaders/blink.gdshader" type="Shader" id=9]
+[ext_resource path="res://Attacks/Orbit/Orbit.tscn" type="PackedScene" id=10]
 
 [sub_resource type="ShaderMaterial" id=5]
 shader = ExtResource( 9 )
@@ -59,8 +60,8 @@ tracks/0/keys = {
 }
 
 [sub_resource type="CapsuleShape2D" id=9]
-radius = 7.0
-height = 6.0
+radius = 8.71833
+height = 4.73106
 
 [node name="Player" type="KinematicBody2D" groups=["Player"]]
 script = ExtResource( 5 )
@@ -70,7 +71,7 @@ material = SubResource( 5 )
 position = Vector2( 0.56123, 0 )
 scale = Vector2( 0.16, 0.16 )
 frames = SubResource( 1 )
-frame = 3
+frame = 1
 playing = true
 
 [node name="Hurtbox" parent="." instance=ExtResource( 6 )]
@@ -87,12 +88,11 @@ anims/Start = SubResource( 7 )
 anims/Stop = SubResource( 8 )
 
 [node name="SoftCollision" parent="." instance=ExtResource( 7 )]
-visible = false
 collision_layer = 384
 collision_mask = 128
 
 [node name="CollisionShape2D" parent="SoftCollision" index="0"]
-position = Vector2( 1, 0 )
+position = Vector2( 0.662163, 0 )
 shape = SubResource( 9 )
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
@@ -110,11 +110,6 @@ autostart = true
 wait_time = 3.0
 autostart = true
 
-[node name="OrbitTimer" type="Timer" parent="Timers"]
-wait_time = 0.01
-one_shot = true
-autostart = true
-
 [node name="FlameTimer" type="Timer" parent="Timers"]
 wait_time = 8.0
 autostart = true
@@ -126,13 +121,14 @@ autostart = true
 [node name="Shield" parent="." instance=ExtResource( 8 )]
 visible = false
 
+[node name="Orbit" parent="." instance=ExtResource( 10 )]
+
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]
 [connection signal="invincibility_started" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_started"]
 [connection signal="timeout" from="Timers/ShotTimer" to="." method="projectileAttack" binds= [ "BASICSHOT" ]]
 [connection signal="timeout" from="Timers/VortexTimer" to="." method="projectileAttack" binds= [ "VORTEX" ]]
 [connection signal="timeout" from="Timers/LightningTimer" to="." method="Spawner" binds= [ "LIGHTNINGSPAWNER" ]]
-[connection signal="timeout" from="Timers/OrbitTimer" to="." method="followAttack" binds= [ "ORBIT" ]]
 [connection signal="timeout" from="Timers/FlameTimer" to="." method="followAttack" binds= [ "FLAME" ]]
 [connection signal="timeout" from="Timers/LaserTimer" to="." method="Spawner" binds= [ "LASERSPAWNER" ]]
 

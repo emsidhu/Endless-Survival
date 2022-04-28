@@ -1,27 +1,33 @@
 extends Node
 
 var attacks = {
-	"BasicShot": {"name": "basicShot","text": "Basic Shot", 
+	"BasicShot": {"name": "basicShot",
+"upgradeInfo": {"title": "Basic Shot", "upgradeText": "Upgrades your basic shot", "icon": "icon"}, 
 "level": 1, "max_level": 6, "funcRef": funcref(self, "upgradeBasicShot"), 
 "stats": {"damage": 120, "knockback_power": 150, "speed": 180},  "type": "Attack"},
- 
-	"Vortex": {"name": "vortex","text": "Vortex", 
+
+	"Vortex": {"name": "vortex",
+"upgradeInfo": {"title": "Vortex", "upgradeText": "A spinning blade cuts through all in it's path", "icon": "icon"},  
 "level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeVortex"), "scale": 1,
 "stats": {"damage": 125, "knockback_power": 150, "speed": 150}, "type": "Attack"}, 
 
-	"Lightning": {"name": "lightning","text": "Lightning", 
+	"Lightning": {"name": "lightning",
+"upgradeInfo": {"title": "Lightning", "upgradeText": "Lightning strikes the enemies nearest you", "icon": "icon"},  
 "level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeLightning"), 
 "stats": {"damage": 500, "knockback_power": 0, "amount": 2, "cooldown": 3}, "type": "Attack"},
 
-	"Orbit": {"name": "orbit", "text": "Orbit", 
+	"Orbit": {"name": "orbit",
+"upgradeInfo": {"title": "Orbit", "upgradeText": "A damaging orb revolves around you", "icon": "icon"},  
 "level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeOrbit"), 
-"stats": {"damage": 200, "knockback_power": 0}, "type": "Attack"},
+"stats": {"damage": 200, "knockback_power": 0, "amount": 0}, "type": "Attack"},
 
-	"Flame": {"name": "flame", "text": "Flame", 
+	"Flame": {"name": "flame", 
+"upgradeInfo": {"title": "Flame", "upgradeText": "Flames spew forth from your body", "icon": "icon"},  
 "level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeFlame"), 
 "stats": {"damage": 120, "knockback_power": 175, "length": 4, "cooldown": 8}, "type": "Attack"},
 
-	"Laser": {"name": "laser", "text": "Laser",
+	"Laser": {"name": "laser",
+"upgradeInfo": {"title": "Laser", "upgradeText": "words", "icon": "icon"},  
 "level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeLaser"),
 "stats": {"damage": 150, "knockback_power": 0, "length": 5, "cooldown": 5, "amount": 1}, "type": "Attack"},
 
@@ -29,28 +35,35 @@ var attacks = {
 #"level": 0, "max_level": 1, "funcRef": funcref(self, "upgradeArmageddon"), "cooldown": 80, "type": "Attack"},
 #https://www.youtube.com/watch?v=usLIlbk9P88 circle timer tutorial for armageddon use
 
-	"Shield": {"name": "shield", "text": "Shield",
+	"Shield": {"name": "shield", 
+"upgradeInfo": {"title": "Shield", "upgradeText": "An energy shield protects you from harm", "icon": "icon"},  
 "level": 0, "max_level": 3, "funcRef": funcref(self, "upgradeShield"), 
 "stats": {"rechargeTime": 5, "maxCharges": 0}, "type": "Attack"}
 }
 
 onready var stats = {
-	"Regen": {"name": "regenHealth", "text": "Regenerate", "level": 0, "max_level": 6, 
-"amount": 0, "upgrade_amount": base_max_health * 0.01, "type": "Stat"},
+	"Regen": {"name": "regenHealth", "level": 0, "max_level": 6,
+"upgradeInfo": {"title": "Regenerate", "upgradeText": "+1% regen/sec", "icon": "icon"}, 
+ "amount": 0, "upgrade_amount": base_max_health * 0.01, "type": "Stat"},
 
-	"Ghost": {"name": "ghost", "text": "Ghost", "level": 0, "max_level": 1,
+	"Ghost": {"name": "ghost", "level": 0, "max_level": 1,
+"upgradeInfo": {"title": "Ghost", "upgradeText": "Move through enemies", "icon": "icon"},  
 "funcRef": funcref(self, "upgradeGhost"), "type": "Stat"},
 
-	"Speed": {"name": "speed", "text": "Speed", "level": 0, "max_level": 5, 
+	"Speed": {"name": "speed", "level": 0, "max_level": 5, 
+"upgradeInfo": {"title": "Speed", "upgradeText": "+10% movement speed", "icon": "icon"},  
 "amount": base_max_speed, "upgrade_amount": base_max_speed * 0.1, "type": "Stat"},
 
-	"Defense": {"name": "defense", "text": "Defense", "level": 0, "max_level": 5, 
+	"Defense": {"name": "defense", "level": 0, "max_level": 5, 
+"upgradeInfo": {"title": "Defense", "upgradeText": "Take 10% less damage", "icon": "icon"},  
 "amount": 1, "upgrade_amount": -0.1, "type": "Stat"},
 
-	"MaxHealth": {"name": "maxhealth", "text": "Max Health", "level": 0, "max_level": 5, 
+	"MaxHealth": {"name": "maxhealth", "level": 0, "max_level": 5, 
+"upgradeInfo": {"title": "Max Health", "upgradeText": "Max Health increases by 20%", "icon": "icon"},  
 "funcRef": funcref(self, "upgradeMaxHealth"), "upgrade_amount": base_max_health * 0.2, "type": "Stat"},
 
-	"Revive": {"name": "revive", "text": "Revive", "level": 0, "max_level": 1, 
+	"Revive": {"name": "revive", "level": 0, "max_level": 1, 
+"upgradeInfo": {"title": "Revive", "upgradeText": "Defy death one time", "icon": "icon"},  
 "funcRef": funcref(self, "upgradeRevive"),"canRevive": false, "type": "Stat"}
 }
 
@@ -67,10 +80,6 @@ var max_xp = 2000 setget set_max_xp
 var level = 0
 
 export var base_max_speed = 65
-
-
-
-
 
 signal no_health
 signal health_changed(value)
@@ -101,6 +110,8 @@ func resetStats():
 	self.health = max_health
 	self.xp = 0
 	self.max_xp = base_max_xp
+	Globals.score = 0
+	Globals.time = 0
 	
 
 func set_max_health(value):
@@ -134,7 +145,7 @@ func level_up():
 	for key in stats:
 		if stats[key].level >= stats[key].max_level:
 			num_max += 1
-			
+
 	if num_max <= attacks.size() + stats.size():
 		emit_signal("level_up")
 		
@@ -189,7 +200,9 @@ func upgradeLightning():
 "cooldown": lightningStats.cooldown})
 
 func upgradeOrbit():
-	attacks.Orbit.stats.damage *= 1.1
+	var orbitStats = attacks.Orbit.stats
+	orbitStats.damage *= 1.1
+	orbitStats.amount += 1
 
 func upgradeFlame():
 	var flameStats = attacks.Flame.stats

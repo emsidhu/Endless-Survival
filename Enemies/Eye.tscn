@@ -44,8 +44,8 @@ radius = 6.0
 [sub_resource type="CircleShape2D" id=3]
 radius = 6.08743
 
-[sub_resource type="CircleShape2D" id=4]
-radius = 6.0
+[sub_resource type="CircleShape2D" id=11]
+radius = 6.87165
 
 [sub_resource type="Animation" id=6]
 length = 0.001
@@ -109,9 +109,11 @@ material = SubResource( 5 )
 rotation = 1.5708
 scale = Vector2( 0.1, 0.1 )
 frames = SubResource( 1 )
+frame = 1
 playing = true
 
 [node name="Hitbox" parent="." instance=ExtResource( 4 )]
+visible = false
 collision_layer = 64
 collision_mask = 32
 
@@ -119,6 +121,7 @@ collision_mask = 32
 shape = SubResource( 2 )
 
 [node name="Hurtbox" parent="." instance=ExtResource( 6 )]
+visible = false
 collision_layer = 16
 collision_mask = 8
 
@@ -126,14 +129,12 @@ collision_mask = 8
 shape = SubResource( 3 )
 
 [node name="SoftCollision" parent="." instance=ExtResource( 5 )]
+visible = false
 collision_layer = 128
 collision_mask = 128
 
 [node name="CollisionShape2D" parent="SoftCollision" index="0"]
-shape = SubResource( 4 )
-
-[node name="DirectionTimer" type="Timer" parent="."]
-wait_time = 2.5
+shape = SubResource( 11 )
 
 [node name="BlinkAnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 6 )
@@ -141,11 +142,11 @@ anims/Start = SubResource( 7 )
 anims/Stop = SubResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 10 )
 
 [connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]
 [connection signal="invincibility_started" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_started"]
-[connection signal="timeout" from="DirectionTimer" to="." method="_on_DirectionTimer_timeout"]
 
 [editable path="Hitbox"]
 [editable path="Hurtbox"]

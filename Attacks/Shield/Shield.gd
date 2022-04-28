@@ -1,7 +1,7 @@
 extends Sprite
 
 var charges = 0 setget setCharges
-var maxCharges = PlayerStats.attacks.Shield.stats.maxCharges setget setMaxCharges
+var maxCharges = 0 setget setMaxCharges
 onready var rechargeTimer = $RechargeTimer
 
 func _physics_process(delta):
@@ -17,13 +17,14 @@ func _on_RechargeTimer_timeout():
 func setCharges(value):
 	charges = value
 	visible = true
-	if charges == 3:
+	if charges == maxCharges:
 		modulate = Color(0, 1.16, 1.16)
-	elif charges == 2:
+	elif charges == maxCharges - 1:
 		modulate = Color(3, .3, 0)
-	elif charges == 1:
+	elif charges == maxCharges - 2:
 		modulate = Color(3, 0, 0)
-	elif charges == 0:
+	
+	if charges == 0:
 		visible = false
 
 	charges = clamp(charges, 0, maxCharges)

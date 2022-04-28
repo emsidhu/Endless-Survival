@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://UI/Buttons/FullScreen.gd" type="Script" id=1]
+
+[node name="FullScreenBtn" type="CheckBox"]
+margin_top = 28.0
+margin_right = 95.0
+margin_bottom = 52.0
+pressed = true
+text = "Full Screen"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="toggled" from="." to="." method="_on_FullScreen_toggled"]

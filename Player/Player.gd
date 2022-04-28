@@ -3,7 +3,6 @@ extends KinematicBody2D
 const BASICSHOT = preload("res://Attacks/Basic shot/Basic shot.tscn")
 const VORTEX = preload("res://Attacks/Vortex/Vortex.tscn")
 const LIGHTNINGSPAWNER = preload("res://Attacks/Lightning/LightningSpawner.tscn")
-const ORBIT = preload("res://Attacks/Orbit/Orbit.tscn")
 const FLAME = preload("res://Attacks/Flame/Flame.tscn")
 const LASERSPAWNER = preload("res://Attacks/Laser/LaserSpawner.tscn")
 
@@ -13,16 +12,17 @@ onready var softCollision = $SoftCollision
 onready var vortexTimer = $Timers/VortexTimer
 onready var basicShotTimer = $Timers/ShotTimer
 onready var lightningTimer = $Timers/LightningTimer
-onready var orbitTimer = $Timers/OrbitTimer
 onready var flameTimer = $Timers/FlameTimer
 onready var laserTimer = $Timers/LaserTimer
 onready var shield = $Shield
+onready var orbit = $Orbit
 
 export var SOFTPOWER = 700
 export var ACCELERATION = 700
 
 var hasShield = false setget setShield
-
+onready var attacks = PlayerStats.attacks
+onready var stats = PlayerStats.stats
 
 var error
 
@@ -34,7 +34,6 @@ func _ready():
 	lightningTimer.paused = true
 	vortexTimer.paused = true
 	flameTimer.paused = true
-	orbitTimer.paused = true
 	laserTimer.paused = true
 	shield.visible = false
 
@@ -60,10 +59,10 @@ func move(delta):
 	
 	if input_vector != Vector2.ZERO:
 		#move player in direction of movement inputs
-		velocity = velocity.move_toward(input_vector * PlayerStats.stats.Speed.amount, ACCELERATION * delta)
+		velocity = velocity.move_toward(input_vector * stats.Speed.amount, ACCELERATION * delta)
 	else:
 		#slow player down if no movement inputs
-		velocity = velocity.move_toward(Vector2.ZERO, PlayerStats.stats.Speed.amount * 5 * delta)
+		velocity = velocity.move_toward(Vector2.ZERO, stats.Speed.amount * 5 * delta)
 
 	if softCollision.is_colliding():
 			velocity += softCollision.get_push_vector() * delta * SOFTPOWER
@@ -97,7 +96,7 @@ func _on_Hurtbox_area_entered(area):
 	if hasShield and shield.charges > 0:
 		shield.charges -= 1
 	else:
-		PlayerStats.health -= area.get_parent().damage * PlayerStats.stats.Defense.amount
+		PlayerStats.health -= area.get_parent().damage * stats.Defense.amount
 	hurtbox.start_invincibility(0.5)
 	
 #give player xp when they kill an enemy
@@ -106,18 +105,20 @@ func killed_enemy(xp, pointValue):
 	Globals.score += pointValue
 
 func die():
-	if PlayerStats.stats.Revive.canRevive:
+	if stats.Revive.canRevive:
 		PlayerStats.health = PlayerStats.max_health
-		PlayerStats.stats.Revive.canRevive = false
+		stats.Revive.canRevive = false
 		return
 	error = get_tree().change_scene("res://Menus/GameOver.tscn")
 
 #allows player to start using an attack when it's unlocked
 func can_shoot(attack):
-	if attack.name != "shield":
-		get(attack.name + "Timer").paused = false
-	else:
+	if attack.name == "shield":
 		self.hasShield = true
+	elif attack.name == "orbit":
+		orbit.amount = attacks.Orbit.stats.amount
+	else:
+		get(attack.name + "Timer").paused = false
 
 func changeCooldown(dict):
 	get_node("Timers/" + dict.timer).wait_time = dict.cooldown
@@ -125,3 +126,4 @@ func changeCooldown(dict):
 func setShield(value):
 	hasShield = value
 	shield.visible = value
+	shield.maxCharges = attacks.Shield.stats.maxCharges

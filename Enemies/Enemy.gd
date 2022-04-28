@@ -4,7 +4,6 @@ const EnemyDeathEffect = preload("res://Effects/EnemyDeathEffect.tscn")
 
 onready var softCollision = $SoftCollision
 onready var animatedSprite = $AnimatedSprite
-onready var directionTimer = $DirectionTimer
 onready var hurtbox = $Hurtbox
 onready var blinkAnimationPlayer = $BlinkAnimationPlayer
 
@@ -19,6 +18,8 @@ onready var MAX_SPEED = rand_range(minSpeed, maxSpeed)
 export var ACCELERATION = 500
 export var FRICTION = 500
 export var SOFTPOWER = 1000
+export var turnSpeed = 0.03
+
 
 var velocity = Vector2.ZERO
 var knockback = Vector2.ZERO
@@ -45,9 +46,9 @@ func _physics_process(delta):
 	if is_instance_valid(player):
 		if global_position.distance_to(player.global_position) > 220:
 			queue_free()
+		direction = lerp(direction, global_position.direction_to(player.global_position), turnSpeed)
+		direction = direction.normalized()
 
-		
-	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 	rotation = 0
 	rotate(velocity.angle())
 	
@@ -83,7 +84,5 @@ func die():
 
 
 
-func _on_DirectionTimer_timeout():
-	directionTimer.start(directionTime)
-	dirChange = rand_range(-PI / 3, PI / 3)
+
 

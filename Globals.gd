@@ -1,7 +1,7 @@
 extends Node
 
 var player
-var mouseControls = false
+var mouseControls = true
 
 var time = 0.0
 var score = 0 setget set_score

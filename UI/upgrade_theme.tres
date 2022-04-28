@@ -1,0 +1,48 @@
+[gd_resource type="Theme" load_steps=11 format=2]
+
+[ext_resource path="res://UI/Fonts/font_default.tres" type="DynamicFont" id=1]
+[ext_resource path="res://UI/Fonts/montserrat_extrabold.otf" type="DynamicFontData" id=2]
+[ext_resource path="res://UI/Buttons/upgradeButton.tres" type="StyleBox" id=3]
+[ext_resource path="res://UI/Buttons/upgradeButtonHover.tres" type="StyleBox" id=4]
+[ext_resource path="res://UI/Buttons/upgradeButtonPressed.tres" type="StyleBox" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 8
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 7
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 4
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 2
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 2
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[resource]
+default_font = ExtResource( 1 )
+Button/fonts/font = SubResource( 1 )
+Button/styles/hover = ExtResource( 4 )
+Button/styles/normal = ExtResource( 3 )
+Button/styles/pressed = ExtResource( 5 )
+CheckBox/fonts/font = SubResource( 2 )
+Label/fonts/font = SubResource( 5 )
+RichTextLabel/fonts/normal_font = SubResource( 6 )
+UpgradeText/fonts/font = SubResource( 7 )

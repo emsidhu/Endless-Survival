@@ -9,7 +9,7 @@
 background_mode = 4
 glow_enabled = true
 glow_levels/4 = true
-glow_intensity = 3.43
+glow_intensity = 0.03
 glow_blend_mode = 0
 glow_hdr_threshold = 0.52
 glow_hdr_scale = 1.84
@@ -48,7 +48,7 @@ autostart = true
 position = Vector2( 160, 89 )
 
 [node name="AnimatedSprite" parent="YSort/Player" index="0"]
-frame = 2
+frame = 3
 
 [node name="RemoteTransform2D" parent="YSort/Player" index="4"]
 remote_path = NodePath("../../../Camera2D")

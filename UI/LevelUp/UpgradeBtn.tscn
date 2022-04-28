@@ -1,12 +1,85 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://UI/LevelUp/UpgradeBtn.gd" type="Script" id=1]
+[ext_resource path="res://UI/upgrade_theme.tres" type="Theme" id=2]
+[ext_resource path="res://UI/Fonts/montserrat_extrabold.otf" type="DynamicFontData" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 2
+use_mipmaps = true
+use_filter = true
+extra_spacing_top = -1
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 2
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 4 )
 
 [node name="UpgradeBtn" type="Button"]
-margin_right = 12.0
+margin_right = 55.0
 margin_bottom = 20.0
-text = "Choice"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 2 )
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UpgradeIcon" type="TextureRect" parent="."]
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_right = 21.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="."]
+anchor_left = 1.0
+anchor_top = 0.05
+anchor_right = 1.0
+anchor_bottom = 0.05
+margin_left = -32.0
+margin_bottom = 5.0
+text = "Regenerate"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UpgradeText" type="Label" parent="."]
+anchor_left = 0.982
+anchor_top = 0.575
+anchor_right = 0.982
+anchor_bottom = 0.575
+margin_left = -31.01
+margin_top = -5.5
+margin_right = -0.0100021
+margin_bottom = 5.5
+custom_fonts/font = SubResource( 1 )
+text = "+1% regen/sec
++10% max_health"
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Level" type="Label" parent="."]
+anchor_left = 0.964
+anchor_top = 0.95
+anchor_right = 0.964
+anchor_bottom = 0.95
+margin_left = -8.02
+margin_top = -3.0
+margin_right = -0.0200043
+custom_fonts/font = SubResource( 2 )
+text = "Lv 1"
+align = 2
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }

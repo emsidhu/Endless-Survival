@@ -7,6 +7,13 @@ onready var upgradeScreen = $UpgradeScreen
 onready var upgradeBtn1 = $UpgradeScreen/VBoxContainer/UpgradeBtn1
 onready var upgradeBtn2 = $UpgradeScreen/VBoxContainer/UpgradeBtn2
 onready var upgradeBtn3 = $UpgradeScreen/VBoxContainer/UpgradeBtn3
+onready var vBoxContainer = $PauseMenu/VBoxContainer
+onready var resumeBtn = $PauseMenu/VBoxContainer/ResumeBtn
+onready var optionsBtn = $PauseMenu/VBoxContainer/OptionsBtn
+#onready var changeSceneBtn = $PauseMenu/VBoxContainer/ChangeSceneBtn
+#onready var quitBtn = $PauseMenu/VBoxContainer/QuitBtn
+#onready var fullScreenBtn = $PauseMenu/VBoxContainer/FullScreenBtn
+onready var mouseControlsBtn = $PauseMenu/VBoxContainer/MouseControlsBtn
 
 var choice1
 var choice2
@@ -60,7 +67,7 @@ func _unhandled_input(event):
 	if event.is_action_pressed("pause") and !upgradeScreen.visible:
 		get_tree().paused = !get_tree().paused
 		pauseMenu.visible = !pauseMenu.visible
-		$PauseMenu/VBoxContainer/ResumeBtn.grab_focus()
+		resumeBtn.grab_focus()
 		
 func _on_ResumeBtn_button_up():
 	get_tree().paused = !get_tree().paused
@@ -96,8 +103,12 @@ func level_up():
 		set("type" + str(i+1), upgradeInfo[1].type)
 		#assigns choice variables to the key of the upgrade
 		set("choice" + str(i+1), upgradeInfo[2])
-		#assigns upgrade buttons text to the name of the upgrade
-		get("upgradeBtn" + str(i+1)).text = upgradeInfo[1].text
+		
+		var upgradeBtn = get("upgradeBtn" + str(i+1))
+		upgradeBtn.title.text = upgradeInfo[1].upgradeInfo.title
+		upgradeBtn.upgradeText.text = upgradeInfo[1].upgradeInfo.upgradeText
+		upgradeBtn.level.text = "LV " + str(upgradeInfo[1].level)
+	#	upgradeBtn.upgradeIcon.texture = upgradeInfo[1].upgradeInfo.icon
 		
 		i += 1
 	upgradeBtn1.grab_focus()
@@ -115,3 +126,15 @@ func choose_upgrade(array, type):
 	var upgrade = PlayerStats[type][choice]
 	return [number, upgrade, choice]
 
+
+
+func _on_OptionsBtn_button_up():
+	for child in vBoxContainer.get_children():
+		child.visible = !child.visible
+	optionsBtn.visible = true
+	if resumeBtn.visible == true:
+		optionsBtn.text = "Options"
+		resumeBtn.grab_focus()
+	else:
+		optionsBtn.text = "Return"
+		mouseControlsBtn.grab_focus()

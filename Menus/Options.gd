@@ -17,13 +17,3 @@ func input(event):
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().change_scene("res://Menus/MainMenu.tscn")
 
-
-
-
-func _on_MouseControls_toggled(button_pressed):
-	Globals.mouseControls = button_pressed
-
-
-
-func _on_FullScreen_toggled(button_pressed):
-	OS.window_fullscreen = button_pressed
