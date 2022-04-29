@@ -44,8 +44,6 @@ glow_enabled = true
 glow_levels/1 = true
 glow_levels/2 = true
 glow_levels/4 = true
-glow_levels/6 = true
-glow_levels/7 = true
 glow_intensity = 8.0
 glow_strength = 1.05
 glow_blend_mode = 0
@@ -87,14 +85,14 @@ position = Vector2( -11, 47 )
 
 [node name="AnimatedSprite" parent="Orb" index="0"]
 modulate = Color( 0.921569, 0.921569, 0.921569, 1 )
-frame = 10
+frame = 7
 
 [node name="Flame" parent="." instance=ExtResource( 11 )]
 position = Vector2( -11, 47 )
 
 [node name="Flame" parent="Flame" index="0"]
 modulate = Color( 0.909804, 0.909804, 0.909804, 1 )
-frame = 15
+frame = 3
 
 [node name="Laser" parent="." instance=ExtResource( 10 )]
 position = Vector2( 64, 50 )
