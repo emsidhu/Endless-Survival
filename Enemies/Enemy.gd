@@ -50,14 +50,15 @@ func _physics_process(delta):
 		direction = direction.normalized()
 
 	rotation = 0
-	rotate(velocity.angle())
+	if (velocity != Vector2.ZERO):
+		rotate(velocity.angle())
 	
 	if softCollision.is_colliding():
 		velocity += softCollision.get_push_vector() * delta * SOFTPOWER
 	knockback = knockback.move_toward(Vector2.ZERO, FRICTION*delta)
 	knockback = move_and_slide(knockback)
 
-	velocity = move_and_slide(velocity)
+	move_and_collide(velocity * delta)
 	if health <= 0:
 		die()
 

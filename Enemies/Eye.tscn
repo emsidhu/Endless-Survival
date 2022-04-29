@@ -100,8 +100,9 @@ radius = 6.0
 
 [node name="Eye" type="KinematicBody2D" groups=["Enemies"]]
 script = ExtResource( 3 )
-minSpeed = 28
-maxSpeed = 42
+minSpeed = 55
+maxSpeed = 80
+FRICTION = 100
 SOFTPOWER = 900
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]

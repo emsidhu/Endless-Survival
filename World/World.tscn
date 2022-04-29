@@ -48,7 +48,7 @@ autostart = true
 position = Vector2( 160, 89 )
 
 [node name="AnimatedSprite" parent="YSort/Player" index="0"]
-frame = 3
+frame = 2
 
 [node name="RemoteTransform2D" parent="YSort/Player" index="4"]
 remote_path = NodePath("../../../Camera2D")
