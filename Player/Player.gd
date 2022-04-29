@@ -97,7 +97,7 @@ func _on_Hurtbox_area_entered(area):
 		shield.charges -= 1
 	else:
 		PlayerStats.health -= area.get_parent().damage * stats.Defense.amount
-	hurtbox.start_invincibility(0.5)
+	hurtbox.start_invincibility(0.3)
 	
 #give player xp when they kill an enemy
 func killed_enemy(xp, pointValue):

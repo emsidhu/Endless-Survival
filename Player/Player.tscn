@@ -67,6 +67,7 @@ height = 4.73106
 script = ExtResource( 5 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+modulate = Color( 0.99, 0.99, 0.99, 1 )
 material = SubResource( 5 )
 position = Vector2( 0.56123, 0 )
 scale = Vector2( 0.16, 0.16 )

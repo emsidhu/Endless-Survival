@@ -193,14 +193,16 @@ __meta__ = {
 }
 
 [node name="Flame" type="AnimatedSprite" parent="."]
+modulate = Color( 0.89, 0.89, 0.89, 1 )
 position = Vector2( 53.8598, -1.70943 )
 rotation = 1.5708
 scale = Vector2( 0.283, 0.283 )
 frames = SubResource( 35 )
-frame = 12
+frame = 2
 playing = true
 
 [node name="Hitbox" parent="." instance=ExtResource( 2 )]
+visible = false
 position = Vector2( 28.1907, 0 )
 rotation = 1.5708
 scale = Vector2( 0.025, 0.025 )

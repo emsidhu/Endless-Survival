@@ -94,6 +94,7 @@ radius = 60.4629
 height = 118.512
 
 [node name="Lightning" type="Sprite" groups=["Attacks"]]
+modulate = Color( 0.92, 0.92, 0.92, 1 )
 scale = Vector2( 0.06, 0.06 )
 texture = ExtResource( 1 )
 offset = Vector2( 0, -180 )
@@ -108,6 +109,7 @@ anims/1 = SubResource( 9 )
 anims/RESET = SubResource( 10 )
 
 [node name="Hitbox" parent="." instance=ExtResource( 3 )]
+visible = false
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Hitbox"]
 rotation = 1.5708

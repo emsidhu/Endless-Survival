@@ -106,6 +106,7 @@ FRICTION = 100
 SOFTPOWER = 900
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+self_modulate = Color( 0.94, 0.94, 0.94, 1 )
 material = SubResource( 5 )
 rotation = 1.5708
 scale = Vector2( 0.1, 0.1 )

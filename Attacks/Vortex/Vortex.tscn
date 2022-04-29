@@ -11,10 +11,12 @@ radius = 8.06226
 blend_mode = 1
 
 [node name="vortex" type="KinematicBody2D" groups=["Attacks"]]
+modulate = Color( 0.48, 0.48, 0.48, 0.647059 )
 script = ExtResource( 2 )
 damage = 100
 
 [node name="Hitbox" parent="." instance=ExtResource( 3 )]
+visible = false
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
 shape = SubResource( 7 )

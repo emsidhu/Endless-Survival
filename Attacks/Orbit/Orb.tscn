@@ -156,11 +156,12 @@ radius = 5.0
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+self_modulate = Color( 0.92, 0.92, 0.92, 1 )
 position = Vector2( -33, -3.58423e-05 )
 scale = Vector2( 0.03, 0.03 )
 z_index = 1
 frames = SubResource( 27 )
-frame = 6
+frame = 25
 playing = true
 
 [node name="Trail" parent="AnimatedSprite" instance=ExtResource( 3 )]
@@ -171,6 +172,7 @@ gradient = SubResource( 29 )
 length = 30
 
 [node name="Hitbox" parent="." instance=ExtResource( 4 )]
+visible = false
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
 position = Vector2( -33, 0 )

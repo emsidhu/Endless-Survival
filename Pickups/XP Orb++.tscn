@@ -23,7 +23,8 @@ shape = SubResource( 1 )
 [node name="Sprite" type="Sprite" parent="."]
 self_modulate = Color( 21.97, 0.1, 28.9, 1 )
 material = SubResource( 2 )
-scale = Vector2( 0.007, 0.007 )
+position = Vector2( 0, 0.0195313 )
+scale = Vector2( 0.007, 0.00594256 )
 texture = ExtResource( 1 )
 
 [connection signal="area_entered" from="." to="." method="_on_XP_Orb_area_entered"]

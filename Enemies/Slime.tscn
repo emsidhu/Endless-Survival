@@ -112,14 +112,16 @@ minSpeed = 20
 maxSpeed = 35
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+self_modulate = Color( 0.89, 0.89, 0.89, 1 )
 material = SubResource( 11 )
 rotation = 1.5708
 scale = Vector2( 0.1, 0.1 )
 frames = SubResource( 12 )
-frame = 4
+frame = 1
 playing = true
 
 [node name="Hitbox" parent="." instance=ExtResource( 10 )]
+visible = false
 rotation = 1.5708
 collision_layer = 64
 collision_mask = 32
@@ -170,6 +172,7 @@ anims/Start = SubResource( 4 )
 anims/Stop = SubResource( 5 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
 rotation = 1.5708
 polygon = PoolVector2Array( -4.76455, -4.46069, -5.82641, -3.22185, -6.59331, -1.3931, -4.88254, 2.3824, -3.05378, 4.97805, -0.635101, 5.80394, 1.96055, 5.62697, 3.02241, 4.38813, 4.02528, 1.20256, 5.91302, -2.27798, 4.67419, -4.04774, 3.02241, -4.63766, 0.544743, -3.92976, -2.8768, -4.63766 )
 

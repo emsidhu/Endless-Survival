@@ -16,12 +16,14 @@ collision_mask = 256
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 self_modulate = Color( 0.18, 7.56, 15.03, 1 )
 material = SubResource( 2 )
-scale = Vector2( 0.007, 0.007 )
+position = Vector2( 0, 0.031004 )
+scale = Vector2( 0.007, 0.00590881 )
 texture = ExtResource( 1 )
 
 [connection signal="area_entered" from="." to="." method="_on_XP_Orb_area_entered"]
