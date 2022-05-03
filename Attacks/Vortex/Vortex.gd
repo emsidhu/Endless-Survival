@@ -19,3 +19,4 @@ func _ready():
 	knockback_power = PlayerStats.attacks.Vortex.stats.knockback_power
 	speed = PlayerStats.attacks.Vortex.stats.speed
 
+
