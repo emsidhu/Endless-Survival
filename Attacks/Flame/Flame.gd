@@ -4,6 +4,7 @@ var knockback_power = PlayerStats.attacks.Flame.stats.knockback_power
 var damage = PlayerStats.attacks.Flame.stats.damage
 
 func _on_Timer_timeout():
+	get_parent().flameTimer.start(PlayerStats.attacks.Flame.stats.cooldown)
 	queue_free()
 
 func _physics_process(_delta):
