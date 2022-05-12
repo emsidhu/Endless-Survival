@@ -36,7 +36,7 @@ offsets = PoolRealArray( 0.747748, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
 
 [node name="Laser" type="Position2D"]
-modulate = Color( 1, 1, 1, 0.913725 )
+modulate = Color( 1, 1, 1, 0.968627 )
 
 [node name="Laser" type="RayCast2D" parent="." groups=["Attacks"]]
 position = Vector2( 6, 0 )

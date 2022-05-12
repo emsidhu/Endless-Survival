@@ -194,7 +194,7 @@ anims/rotate = SubResource( 32 )
 position = Vector2( 20, 0 )
 scale = Vector2( 0.015, 0.015 )
 frames = SubResource( 27 )
-frame = 18
+frame = 17
 playing = true
 
 [node name="Hitbox" parent="Orbit" instance=ExtResource( 4 )]

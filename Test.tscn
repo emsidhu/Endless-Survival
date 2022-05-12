@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Pickups/XP Orb+.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Pickups/XP Orb.tscn" type="PackedScene" id=2]
@@ -14,6 +14,8 @@
 [ext_resource path="res://Attacks/Orbit/Orb.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Attacks/Vortex/Vortex.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Shaders/HueShift.gdshader" type="Shader" id=15]
+[ext_resource path="res://Pickups/Life Potion.tscn" type="PackedScene" id=16]
 
 [sub_resource type="Shader" id=9]
 code = "shader_type canvas_item;
@@ -38,6 +40,52 @@ resource_local_to_scene = true
 shader = SubResource( 9 )
 shader_param/is_white = false
 
+[sub_resource type="Shader" id=13]
+code = "shader_type canvas_item;
+
+uniform bool is_white = false;
+
+
+void fragment() {
+	vec4 prev_colour = texture(TEXTURE, UV);
+	vec4 white_colour = vec4(1.0, 1.0, 1.0, prev_colour.a);
+
+	vec4 new_colour = prev_colour;
+
+	if (is_white) {
+		new_colour = white_colour;
+	}
+	COLOR = new_colour;
+}"
+
+[sub_resource type="ShaderMaterial" id=14]
+resource_local_to_scene = true
+shader = SubResource( 13 )
+shader_param/is_white = false
+
+[sub_resource type="Shader" id=15]
+code = "shader_type canvas_item;
+
+uniform bool is_white = false;
+
+
+void fragment() {
+	vec4 prev_colour = texture(TEXTURE, UV);
+	vec4 white_colour = vec4(1.0, 1.0, 1.0, prev_colour.a);
+
+	vec4 new_colour = prev_colour;
+
+	if (is_white) {
+		new_colour = white_colour;
+	}
+	COLOR = new_colour;
+}"
+
+[sub_resource type="ShaderMaterial" id=16]
+resource_local_to_scene = true
+shader = SubResource( 15 )
+shader_param/is_white = false
+
 [sub_resource type="Environment" id=11]
 background_mode = 4
 glow_enabled = true
@@ -51,21 +99,36 @@ glow_hdr_threshold = 0.93
 glow_hdr_scale = 0.49
 glow_high_quality = true
 
+[sub_resource type="ShaderMaterial" id=12]
+resource_local_to_scene = true
+shader = ExtResource( 15 )
+shader_param/Shift_Hue = null
+
 [node name="Test" type="Node2D"]
 
 [node name="Eye" parent="." instance=ExtResource( 6 )]
 position = Vector2( -7, 67 )
 
 [node name="AnimatedSprite" parent="Eye" index="0"]
-modulate = Color( 0.960784, 0.960784, 0.960784, 1 )
+modulate = Color( 0.89, 0.89, 0.89, 1 )
 material = SubResource( 10 )
 frame = 0
 
 [node name="Fuzzy" parent="." instance=ExtResource( 5 )]
 position = Vector2( 21, 69 )
 
+[node name="AnimatedSprite" parent="Fuzzy" index="0"]
+modulate = Color( 0.89, 0.89, 0.89, 1 )
+material = SubResource( 14 )
+frame = 1
+
 [node name="Slime" parent="." instance=ExtResource( 4 )]
 position = Vector2( 63, 70 )
+
+[node name="AnimatedSprite" parent="Slime" index="0"]
+modulate = Color( 0.890196, 0.890196, 0.890196, 1 )
+material = SubResource( 16 )
+frame = 2
 
 [node name="XP Orb" parent="." instance=ExtResource( 2 )]
 position = Vector2( -8, 90 )
@@ -92,7 +155,7 @@ position = Vector2( -11, 47 )
 
 [node name="Flame" parent="Flame" index="0"]
 modulate = Color( 0.909804, 0.909804, 0.909804, 1 )
-frame = 3
+frame = 16
 
 [node name="Laser" parent="." instance=ExtResource( 10 )]
 position = Vector2( 64, 50 )
@@ -116,13 +179,29 @@ position = Vector2( 3, 21 )
 [node name="Player" parent="." instance=ExtResource( 14 )]
 position = Vector2( -45.695, 84.4908 )
 
-[node name="SoftCollision" parent="Player" index="3"]
+[node name="AnimatedSprite" parent="Player" index="0"]
+material = SubResource( 12 )
+
+[node name="Life Potion" parent="." instance=ExtResource( 16 )]
+
+[node name="AnimatedSprite" parent="Life Potion" index="0"]
+self_modulate = Color( 0.91, 0.91, 0.91, 1 )
+
+[node name="CollisionShape2D" parent="Life Potion" index="1"]
 visible = false
 
 [editable path="Eye"]
 [editable path="Eye/Hitbox"]
 [editable path="Eye/Hurtbox"]
 [editable path="Eye/SoftCollision"]
+[editable path="Fuzzy"]
+[editable path="Fuzzy/Hitbox"]
+[editable path="Fuzzy/Hurtbox"]
+[editable path="Fuzzy/SoftCollision"]
+[editable path="Slime"]
+[editable path="Slime/Hitbox"]
+[editable path="Slime/Hurtbox"]
+[editable path="Slime/SoftCollision"]
 [editable path="XP Orb"]
 [editable path="Orb"]
 [editable path="Orb/Hitbox"]
@@ -132,3 +211,4 @@ visible = false
 [editable path="Player"]
 [editable path="Player/Hurtbox"]
 [editable path="Player/SoftCollision"]
+[editable path="Life Potion"]

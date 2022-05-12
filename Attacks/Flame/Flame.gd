@@ -1,5 +1,6 @@
 extends Position2D
 
+var status = "burn"
 var knockback_power = PlayerStats.attacks.Flame.stats.knockback_power
 var damage = PlayerStats.attacks.Flame.stats.damage
 

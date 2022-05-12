@@ -43,12 +43,12 @@ func set_is_casting(cast):
 	
 func appear():
 	tween.stop_all()
-	tween.interpolate_property($Line2D, "width", 0, 2.5, 0.1)
+	tween.interpolate_property(line2D, "width", 0, 2.5, 0.1)
 	tween.start()
 	
 func disappear():
 	tween.stop_all()
-	tween.interpolate_property($Line2D, "width", 2.5, 0, 0.05)
+	tween.interpolate_property(line2D, "width", 2.5, 0, 0.05)
 	tween.start()
 
 

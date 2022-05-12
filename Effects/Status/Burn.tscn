@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Effects/Status/Burn.gd" type="Script" id=1]
+
+[sub_resource type="Gradient" id=1]
+colors = PoolColorArray( 1, 0, 0, 1, 1, 0.94043, 0, 1 )
+
+[node name="Burn" type="CPUParticles2D"]
+rotation = -1.5708
+amount = 20
+lifetime = 0.5
+emission_shape = 2
+emission_rect_extents = Vector2( 3.5, 3.5 )
+gravity = Vector2( 0, 0 )
+initial_velocity = 20.0
+initial_velocity_random = 0.09
+scale_amount = 0.61
+color_ramp = SubResource( 1 )
+script = ExtResource( 1 )

@@ -19,7 +19,11 @@ func set_amount(value):
 	var i = 0
 	while i < amount:
 		var orb = ORB.instance()
-		var angle = 2 * PI / amount
+		var angle = (2 * PI) / amount
 		orb.rotation = angle * (i-1)
 		i += 1
-		add_child(orb)
+		orbs.add_child(orb)
+
+
+func _on_Timer_timeout():
+	self.amount += 1

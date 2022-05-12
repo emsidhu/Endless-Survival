@@ -25,12 +25,12 @@ void fragment() {
 	COLOR = new_colour;
 }"
 
-[sub_resource type="ShaderMaterial" id=5]
+[sub_resource type="ShaderMaterial" id=12]
 resource_local_to_scene = true
 shader = SubResource( 9 )
 shader_param/is_white = false
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=13]
 animations = [ {
 "frames": [ ExtResource( 1 ), ExtResource( 2 ) ],
 "loop": true,
@@ -102,15 +102,14 @@ radius = 6.0
 script = ExtResource( 3 )
 minSpeed = 55
 maxSpeed = 80
-FRICTION = 100
 SOFTPOWER = 900
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-self_modulate = Color( 0.94, 0.94, 0.94, 1 )
-material = SubResource( 5 )
+modulate = Color( 0.94, 0.94, 0.94, 1 )
+material = SubResource( 12 )
 rotation = 1.5708
 scale = Vector2( 0.1, 0.1 )
-frames = SubResource( 1 )
+frames = SubResource( 13 )
 frame = 1
 playing = true
 

@@ -1,6 +1,5 @@
 [gd_scene load_steps=21 format=2]
 
-[ext_resource path="res://Enemies/Slime.gd" type="Script" id=1]
 [ext_resource path="res://Enemies/Sprites/Slime/monster_02_B_walk_05.png" type="Texture" id=2]
 [ext_resource path="res://Enemies/Sprites/Slime/monster_02_B_walk_06.png" type="Texture" id=3]
 [ext_resource path="res://Enemies/Sprites/Slime/monster_02_B_walk_03.png" type="Texture" id=4]
@@ -11,7 +10,15 @@
 [ext_resource path="res://Hit-Hurtboxes/Soft Collision.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Hit-Hurtboxes/Hitbox.tscn" type="PackedScene" id=10]
 
-[sub_resource type="Shader" id=10]
+[sub_resource type="GDScript" id=13]
+script/source = "extends \"res://Enemies/Enemy.gd\"
+
+
+func _physics_process(delta):
+	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
+"
+
+[sub_resource type="Shader" id=15]
 code = "shader_type canvas_item;
 
 uniform bool is_white = false;
@@ -31,7 +38,7 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id=11]
 resource_local_to_scene = true
-shader = SubResource( 10 )
+shader = SubResource( 15 )
 shader_param/is_white = false
 
 [sub_resource type="SpriteFrames" id=12]
@@ -107,17 +114,18 @@ tracks/0/keys = {
 }
 
 [node name="Slime" type="KinematicBody2D" groups=["Enemies"]]
-script = ExtResource( 1 )
+script = SubResource( 13 )
+damage = 200
 minSpeed = 20
 maxSpeed = 35
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-self_modulate = Color( 0.89, 0.89, 0.89, 1 )
+modulate = Color( 0.89, 0.89, 0.89, 1 )
 material = SubResource( 11 )
 rotation = 1.5708
 scale = Vector2( 0.1, 0.1 )
 frames = SubResource( 12 )
-frame = 1
+frame = 5
 playing = true
 
 [node name="Hitbox" parent="." instance=ExtResource( 10 )]

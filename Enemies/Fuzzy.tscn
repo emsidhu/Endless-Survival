@@ -4,12 +4,22 @@
 [ext_resource path="res://Enemies/Sprites/Fuzzy/monster_01_A_walk_03.png" type="Texture" id=2]
 [ext_resource path="res://Enemies/Sprites/Fuzzy/monster_01_A_walk_02.png" type="Texture" id=3]
 [ext_resource path="res://Enemies/Sprites/Fuzzy/monster_01_A_walk_04.png" type="Texture" id=4]
-[ext_resource path="res://Enemies/Fuzzy.gd" type="Script" id=5]
 [ext_resource path="res://Hit-Hurtboxes/Hitbox.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Hit-Hurtboxes/Soft Collision.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Hit-Hurtboxes/Hurtbox.tscn" type="PackedScene" id=8]
 
-[sub_resource type="Shader" id=9]
+[sub_resource type="GDScript" id=11]
+script/source = "extends \"res://Enemies/Enemy.gd\"
+
+func _on_VisibilityNotifier2D_screen_exited():
+	queue_free()
+
+
+func _physics_process(delta):
+	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
+"
+
+[sub_resource type="Shader" id=13]
 code = "shader_type canvas_item;
 
 uniform bool is_white = false;
@@ -29,7 +39,7 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id=5]
 resource_local_to_scene = true
-shader = SubResource( 9 )
+shader = SubResource( 13 )
 shader_param/is_white = false
 
 [sub_resource type="SpriteFrames" id=1]
@@ -97,14 +107,13 @@ tracks/0/keys = {
 }
 
 [node name="Fuzzy" type="KinematicBody2D" groups=["Enemies"]]
-script = ExtResource( 5 )
+script = SubResource( 11 )
 minSpeed = 62
 maxSpeed = 72
-SOFTPOWER = 70
 turnSpeed = 0.001
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-modulate = Color( 0.91, 0.91, 0.91, 1 )
+modulate = Color( 1, 1, 1, 0.858824 )
 material = SubResource( 5 )
 rotation = 1.5708
 scale = Vector2( 0.1, 0.1 )

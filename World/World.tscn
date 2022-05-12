@@ -1,9 +1,33 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://UI/PlayerUI.tscn" type="PackedScene" id=2]
 [ext_resource path="res://World/background tile.png" type="Texture" id=3]
 [ext_resource path="res://World/World.gd" type="Script" id=4]
+
+[sub_resource type="Shader" id=2]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+uniform bool is_white = false;
+
+
+void fragment() {
+	vec4 prev_colour = texture(TEXTURE, UV);
+	vec4 white_colour = vec4(0.92, 0.92, 0.92, prev_colour.a);
+
+	vec4 new_colour = prev_colour;
+
+	if (is_white) {
+		new_colour = white_colour;
+	}
+	COLOR = new_colour;
+}"
+
+[sub_resource type="ShaderMaterial" id=3]
+resource_local_to_scene = true
+shader = SubResource( 2 )
+shader_param/is_white = false
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -35,7 +59,6 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 336, 192 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 160, 89 )
 current = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
@@ -48,9 +71,9 @@ autostart = true
 [node name="YSort" type="YSort" parent="."]
 
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
-position = Vector2( 160, 89 )
 
 [node name="AnimatedSprite" parent="YSort/Player" index="0"]
+material = SubResource( 3 )
 frame = 3
 
 [node name="RemoteTransform2D" parent="YSort/Player" index="4"]

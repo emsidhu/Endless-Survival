@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Effects/Status/Untitled-3.png" type="Texture" id=1]
+[ext_resource path="res://Effects/Status/Poison.gd" type="Script" id=2]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0.531532, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[node name="Poison" type="CPUParticles2D"]
+modulate = Color( 0.0313726, 1, 0, 1 )
+amount = 6
+lifetime = 0.5
+texture = ExtResource( 1 )
+emission_shape = 2
+emission_rect_extents = Vector2( 4.5, 4.5 )
+gravity = Vector2( 0, -80 )
+initial_velocity_random = 0.35
+angular_velocity = 10.0
+angular_velocity_random = 0.46
+linear_accel = 10.0
+scale_amount = 0.03
+color_ramp = SubResource( 1 )
+script = ExtResource( 2 )
