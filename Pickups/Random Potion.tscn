@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Pickups/Random Potion.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+[node name="Random Potion" type="Area2D"]
+collision_layer = 0
+collision_mask = 256
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+
+[connection signal="area_entered" from="." to="." method="_on_Random_Potion_area_entered"]
