@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Player/Sprite/output-onlinepngtools.png" type="Texture" id=1]
 [ext_resource path="res://Player/Sprite/output-onlinepngtools (3).png" type="Texture" id=2]
@@ -10,12 +10,14 @@
 [ext_resource path="res://Attacks/Shield/Shield.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Shaders/blink.gdshader" type="Shader" id=9]
 [ext_resource path="res://Attacks/Orbit/Orbit.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Attacks/Chain shot/LightningGenerator.tscn" type="PackedScene" id=11]
 
-[sub_resource type="ShaderMaterial" id=5]
+[sub_resource type="ShaderMaterial" id=10]
+resource_local_to_scene = true
 shader = ExtResource( 9 )
 shader_param/is_white = false
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=11]
 animations = [ {
 "frames": [ ExtResource( 1 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 2 ) ],
 "loop": true,
@@ -68,11 +70,11 @@ script = ExtResource( 5 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 modulate = Color( 0.99, 0.99, 0.99, 1 )
-material = SubResource( 5 )
+material = SubResource( 10 )
 position = Vector2( 0.56123, 0 )
 scale = Vector2( 0.16, 0.16 )
-frames = SubResource( 1 )
-frame = 1
+frames = SubResource( 11 )
+frame = 2
 playing = true
 
 [node name="Hurtbox" parent="." instance=ExtResource( 6 )]
@@ -89,6 +91,7 @@ anims/Start = SubResource( 7 )
 anims/Stop = SubResource( 8 )
 
 [node name="SoftCollision" parent="." instance=ExtResource( 7 )]
+visible = false
 collision_layer = 384
 collision_mask = 128
 
@@ -112,7 +115,8 @@ wait_time = 3.0
 autostart = true
 
 [node name="FlameTimer" type="Timer" parent="Timers"]
-wait_time = 8.0
+wait_time = 4.0
+one_shot = true
 autostart = true
 
 [node name="LaserTimer" type="Timer" parent="Timers"]
@@ -123,6 +127,8 @@ autostart = true
 visible = false
 
 [node name="Orbit" parent="." instance=ExtResource( 10 )]
+
+[node name="LightningGenerator" parent="." instance=ExtResource( 11 )]
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]
@@ -135,3 +141,4 @@ visible = false
 
 [editable path="Hurtbox"]
 [editable path="SoftCollision"]
+[editable path="LightningGenerator"]

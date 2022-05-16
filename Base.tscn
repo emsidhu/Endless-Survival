@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Attacks/Chain shot/LightningGenerator.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Base.gd" type="Script" id=2]
+
+[sub_resource type="Environment" id=1]
+background_mode = 4
+glow_enabled = true
+glow_intensity = 1.0
+glow_strength = 1.2
+
+[node name="Base" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+
+[node name="Flash" type="Control" parent="Camera2D"]
+visible = false
+grow_horizontal = 2
+grow_vertical = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Camera2D/Flash"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -165.0
+margin_top = -95.0
+margin_right = 165.0
+margin_bottom = 95.0
+rect_min_size = Vector2( 330, 190 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
+
+[node name="LightningGenerator" parent="." instance=ExtResource( 1 )]

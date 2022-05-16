@@ -35,7 +35,6 @@ tracks/0/keys = {
 }
 
 [node name="Orbit" type="Node2D" groups=["Attacks"]]
-position = Vector2( 72, 35 )
 rotation = 3.14159
 script = ExtResource( 2 )
 

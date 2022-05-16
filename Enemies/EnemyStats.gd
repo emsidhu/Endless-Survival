@@ -25,15 +25,15 @@ func sort_enemies(a, b):
 				return true
 	return false
 	
-func get_closest_enemy_pos(global_position):
+func get_closest_enemy_pos(position):
 	if self.enemies:
 		var closest_enemy = self.enemies[0]
 		
 		for enemy in enemies:
-			if enemy.global_position.distance_to(global_position) < closest_enemy.global_position.distance_to(global_position):
+			if enemy.global_position.distance_to(position) < closest_enemy.global_position.distance_to(position):
 				closest_enemy = enemy
 		
-		return closest_enemy.position
+		return closest_enemy.global_position
 
 func get_enemies():
 	enemies = get_tree().get_nodes_in_group("Enemies")

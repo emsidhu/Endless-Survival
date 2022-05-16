@@ -24,10 +24,10 @@ var attacks = {
 	"Flame": {"name": "flame", 
 "upgradeInfo": {"title": "Flame", "upgradeText": "Flames spew forth from your body", "icon": "icon"},  
 "level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeFlame"), 
-"stats": {"damage": 120, "knockback_power": 175, "length": 4, "cooldown": 8}, "type": "Attack"},
+"stats": {"damage": 120, "knockback_power": 175, "length": 4, "cooldown": 4, "burn": false}, "type": "Attack"},
 
 	"Laser": {"name": "laser",
-"upgradeInfo": {"title": "Laser", "upgradeText": "words", "icon": "icon"},  
+"upgradeInfo": {"title": "Laser", "upgradeText": "A penetrating laser cuts through your enemies", "icon": "icon"},  
 "level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeLaser"),
 "stats": {"damage": 150, "knockback_power": 0, "length": 5, "cooldown": 5, "amount": 1}, "type": "Attack"},
 
@@ -38,7 +38,12 @@ var attacks = {
 	"Shield": {"name": "shield", 
 "upgradeInfo": {"title": "Shield", "upgradeText": "An energy shield protects you from harm", "icon": "icon"},  
 "level": 0, "max_level": 3, "funcRef": funcref(self, "upgradeShield"), 
-"stats": {"rechargeTime": 5, "maxCharges": 0}, "type": "Attack"}
+"stats": {"rechargeTime": 5, "maxCharges": 0, "damage": 0}, "type": "Attack"},
+
+		"ChainShot": {"name": "chainShot",
+"upgradeInfo": {"title": "Chain Shot", "upgradeText": "Shoots lightning that chains between enemies", "icon": "icon"},  
+"level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeChainShot"), 
+"stats": {"damage": 100, "knockback_power": 0, "cooldown": 4}, "type": "Attack"},
 }
 
 onready var stats = {
@@ -70,6 +75,7 @@ onready var stats = {
 onready var regenTimer = $RegenTimer
 
 var damage = 50
+var damageUp = false
 export var base_max_health = 2000
 var max_health = 2000 setget set_max_health
 var health = max_health setget set_health
@@ -183,39 +189,50 @@ func upgradeMaxHealth():
 	stats.Regen.amount += stats.Regen.upgrade_amount / 7
 	
 func upgradeBasicShot():
-	var shotStats = attacks.BasicShot.stats
-	shotStats.damage *= 1.2
-	shotStats.speed *= 1.05
+	var basicShot = attacks.BasicShot
+	basicShot.stats.damage *= 1.2
+	basicShot.stats.speed *= 1.05
+	basicShot.upgradeInfo.upgradeText = "+20% Damage \n +1.05% Speed"
 
 func upgradeVortex():
 	attacks.Vortex.stats.damage *= 1.1
 	attacks.Vortex.scale *= 1.1
 
 func upgradeLightning():
-	var lightningStats = attacks.Lightning.stats
-	lightningStats.damage *= 1.1
-	lightningStats.amount += 1
-	lightningStats.cooldown *= 0.9
+	var lightning = attacks.Lightning
+	lightning.stats.damage *= 1.1
+	lightning.stats.amount += 1
+	lightning.stats.cooldown *= 0.9
+	lightning.upgradeInfo.upgradeText = "+10% Damage \n +1 strike \n -10% Cooldown"
 	emit_signal("cooldownChange", {"timer": "LightningTimer", 
-"cooldown": lightningStats.cooldown})
+"cooldown": lightning.stats.cooldown})
 
 func upgradeOrbit():
-	var orbitStats = attacks.Orbit.stats
-	orbitStats.damage *= 1.1
-	orbitStats.amount += 1
+	var orbit = attacks.Orbit
+	orbit.stats.damage *= 1.1
+	orbit.stats.amount += 1
+	orbit.upgradeInfo.upgradeText = "+1 orb \n +10% Damage"
 
 func upgradeFlame():
-	var flameStats = attacks.Flame.stats
-	flameStats.damage *= 1.1
-	flameStats.cooldown *= 0.9
-	emit_signal("cooldownChange", {"timer": "FlameTimer", 
-"cooldown": flameStats.cooldown})
+	var flame = attacks.Flame
+	flame.stats.damage *= 1.1
+	flame.stats.cooldown *= 0.9
+	flame.upgradeInfo.upgradeText = "+10% Damage \n -10% Cooldown"
+	
+	if flame.level == 6:
+		flame.stats.burn = true
+	
+
 
 func upgradeLaser():
 	var laser = attacks.Laser
-	laser.stats.damage *= 1.1
 	if laser.level == 3 or laser.level == 5:
 		laser.stats.amount += 1
+		laser.upgradeInfo.upgradeText = "+1 laser"
+	else:
+		laser.stats.damage *= 1.1
+		laser.upgradeInfo.upgradeText = "+10% Damage"
+
 
 func upgradeArmageddon():
 	pass
@@ -224,3 +241,7 @@ func upgradeShield():
 	var shield = attacks.Shield
 	shield.stats.rechargeTime *= 0.9
 	shield.stats.maxCharges += 1
+	shield.upgradeInfo.upgradeText = "-10% Recharge Time \n +1 Max Charges"
+	
+func upgradeChainShot():
+	pass

@@ -31,7 +31,6 @@ damage = 80
 position = Vector2( 0, 1 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 1 )
-frame = 3
 playing = true
 
 [node name="Hitbox" parent="." instance=ExtResource( 6 )]
