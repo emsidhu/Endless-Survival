@@ -1,8 +1,9 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://Attacks/Sprites/Flame/output-onlinegiftools.png" type="Texture" id=1]
 [ext_resource path="res://Hit-Hurtboxes/Hitbox.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Attacks/Flame/Flame.gd" type="Script" id=3]
+[ext_resource path="res://Music and Sounds/Flamethrower Idle Loop 1 - QuickSounds.com.mp3" type="AudioStream" id=4]
 
 [sub_resource type="AtlasTexture" id=1]
 flags = 4
@@ -186,11 +187,37 @@ animations = [ {
 radius = 241.161
 height = 1519.59
 
+[sub_resource type="CapsuleShape2D" id=37]
+radius = 278.402
+height = 1134.22
+
 [node name="Flame" type="Position2D" groups=["Attacks"]]
 script = ExtResource( 3 )
 __meta__ = {
 "_gizmo_extents_": 1.0
 }
+
+[node name="Flame2" type="AnimatedSprite" parent="."]
+visible = false
+modulate = Color( 0.89, 0.89, 0.89, 1 )
+position = Vector2( 6.99939, 1.50194 )
+rotation = 1.15533
+scale = Vector2( 0.283, 0.283 )
+frames = SubResource( 35 )
+frame = 6
+playing = true
+offset = Vector2( -5.01447, -167.726 )
+
+[node name="Flame3" type="AnimatedSprite" parent="."]
+visible = false
+modulate = Color( 0.89, 0.89, 0.89, 1 )
+position = Vector2( 6.8121, -1.86926 )
+rotation = 2.02354
+scale = Vector2( 0.283, 0.283 )
+frames = SubResource( 35 )
+frame = 5
+playing = true
+offset = Vector2( -5.01447, -167.726 )
 
 [node name="Flame" type="AnimatedSprite" parent="."]
 modulate = Color( 0.89, 0.89, 0.89, 1 )
@@ -198,11 +225,10 @@ position = Vector2( 53.8598, -1.70943 )
 rotation = 1.5708
 scale = Vector2( 0.283, 0.283 )
 frames = SubResource( 35 )
-frame = 23
+frame = 6
 playing = true
 
 [node name="Hitbox" parent="." instance=ExtResource( 2 )]
-visible = false
 position = Vector2( 28.1907, 0 )
 rotation = 1.5708
 scale = Vector2( 0.025, 0.025 )
@@ -211,10 +237,26 @@ scale = Vector2( 0.025, 0.025 )
 position = Vector2( -6.30005, -125.992 )
 shape = SubResource( 36 )
 
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2( -272.154, -80.8359 )
+rotation = -0.421691
+shape = SubResource( 37 )
+disabled = true
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2( 297.846, -0.837891 )
+rotation = 0.42237
+shape = SubResource( 37 )
+disabled = true
+
 [node name="Timer" type="Timer" parent="."]
 wait_time = 4.0
 one_shot = true
 autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -10.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 

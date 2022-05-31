@@ -49,17 +49,18 @@ script = ExtResource( 4 )
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 z_as_relative = false
-motion_mirroring = Vector2( 336, 192 )
+motion_mirroring = Vector2( 432.95, 250.383 )
 
 [node name="BackgroundTile" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
 modulate = Color( 0.423529, 0.360784, 0.360784, 1 )
 texture = ExtResource( 3 )
 centered = false
 region_enabled = true
-region_rect = Rect2( 0, 0, 336, 192 )
+region_rect = Rect2( 0, 0, 432.95, 250.383 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
+zoom = Vector2( 1.3, 1.3 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
 
@@ -74,7 +75,7 @@ autostart = true
 
 [node name="AnimatedSprite" parent="YSort/Player" index="0"]
 material = SubResource( 3 )
-frame = 0
+frame = 3
 
 [node name="RemoteTransform2D" parent="YSort/Player" index="4"]
 remote_path = NodePath("../../../Camera2D")

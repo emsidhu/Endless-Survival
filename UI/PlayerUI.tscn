@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://UI/health + xp bar/health bar.png" type="Texture" id=1]
 [ext_resource path="res://UI/health + xp bar/backbar.png" type="Texture" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://UI/Buttons/FullScreen.tscn" type="PackedScene" id=12]
 [ext_resource path="res://UI/Buttons/MouseControls.tscn" type="PackedScene" id=13]
 [ext_resource path="res://UI/upgrade_theme.tres" type="Theme" id=14]
+[ext_resource path="res://Music and Sounds/333040__christopherderp__videogame-menu-button-clicking-sound-11.wav" type="AudioStream" id=15]
 
 [node name="PlayerUI" type="Control"]
 pause_mode = 2
@@ -183,8 +184,19 @@ margin_top = 55.0
 margin_right = 56.0
 margin_bottom = 79.0
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 15 )
+
+[connection signal="button_down" from="PauseMenu/VBoxContainer/ResumeBtn" to="." method="_on_button_down"]
 [connection signal="button_up" from="PauseMenu/VBoxContainer/ResumeBtn" to="." method="_on_ResumeBtn_button_up"]
+[connection signal="button_down" from="PauseMenu/VBoxContainer/OptionsBtn" to="." method="_on_button_down"]
 [connection signal="button_up" from="PauseMenu/VBoxContainer/OptionsBtn" to="." method="_on_OptionsBtn_button_up"]
+[connection signal="button_down" from="PauseMenu/VBoxContainer/ChangeSceneBtn" to="." method="_on_button_down"]
+[connection signal="button_down" from="PauseMenu/VBoxContainer/QuitBtn" to="." method="_on_button_down"]
+[connection signal="button_down" from="UpgradeScreen/VBoxContainer/UpgradeBtn1" to="." method="_on_button_down"]
 [connection signal="button_up" from="UpgradeScreen/VBoxContainer/UpgradeBtn1" to="." method="_on_UpgradeBtn_button_up" binds= [ 1 ]]
+[connection signal="button_down" from="UpgradeScreen/VBoxContainer/UpgradeBtn2" to="." method="_on_button_down"]
 [connection signal="button_up" from="UpgradeScreen/VBoxContainer/UpgradeBtn2" to="." method="_on_UpgradeBtn_button_up" binds= [ 2 ]]
+[connection signal="button_down" from="UpgradeScreen/VBoxContainer/UpgradeBtn3" to="." method="_on_button_down"]
 [connection signal="button_up" from="UpgradeScreen/VBoxContainer/UpgradeBtn3" to="." method="_on_UpgradeBtn_button_up" binds= [ 3 ]]
+[connection signal="finished" from="AudioStreamPlayer" to="." method="_on_AudioStreamPlayer_finished"]

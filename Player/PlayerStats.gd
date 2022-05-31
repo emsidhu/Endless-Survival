@@ -23,7 +23,7 @@ var attacks = {
 
 	"Flame": {"name": "flame", 
 "upgradeInfo": {"title": "Flame", "upgradeText": "Flames spew forth from your body", "icon": "icon"},  
-"level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeFlame"), 
+"level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeFlame"), "isTripled": false,
 "stats": {"damage": 120, "knockback_power": 175, "length": 4, "cooldown": 4, "burn": false}, "type": "Attack"},
 
 	"Laser": {"name": "laser",
@@ -43,7 +43,7 @@ var attacks = {
 		"ChainShot": {"name": "chainShot",
 "upgradeInfo": {"title": "Chain Shot", "upgradeText": "Shoots lightning that chains between enemies", "icon": "icon"},  
 "level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeChainShot"), 
-"stats": {"damage": 100, "knockback_power": 0, "cooldown": 4}, "type": "Attack"},
+"stats": {"damage": 100, "knockback_power": 0, "cooldown": 4, "redirects": 4}, "type": "Attack"},
 }
 
 onready var stats = {
@@ -81,8 +81,8 @@ var max_health = 2000 setget set_max_health
 var health = max_health setget set_health
 export var base_damage = 50
 var xp = 0 setget set_xp
-var base_max_xp = 2000
-var max_xp = 2000 setget set_max_xp
+var base_max_xp = 1000
+var max_xp = 1000 setget set_max_xp
 var level = 0
 
 export var base_max_speed = 65
@@ -155,7 +155,7 @@ func level_up():
 	if num_max <= attacks.size() + stats.size():
 		emit_signal("level_up")
 		
-		self.max_xp = base_max_xp * (level+2.3)/(2.3-level*.04)
+		self.max_xp = base_max_xp * (level+2)/(2.3-level*.04)
 		level += 1
 		self.xp -= used_xp
 		
@@ -219,8 +219,11 @@ func upgradeFlame():
 	flame.stats.cooldown *= 0.9
 	flame.upgradeInfo.upgradeText = "+10% Damage \n -10% Cooldown"
 	
-	if flame.level == 6:
+	if flame.level >= 3:
 		flame.stats.burn = true
+	if flame.level == 6:
+		flame.isTripled = true
+
 	
 
 
@@ -244,4 +247,8 @@ func upgradeShield():
 	shield.upgradeInfo.upgradeText = "-10% Recharge Time \n +1 Max Charges"
 	
 func upgradeChainShot():
-	pass
+	var chainShot = attacks.ChainShot
+	chainShot.stats.damage *= 1.1
+	chainShot.stats.cooldown *= 0.9
+	chainShot.stats.redirects += 1
+	chainShot.upgradeInfo.upgradeText = "+10% Damage \n -10% Cooldown Timer \n +1 Redirects"

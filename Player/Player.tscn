@@ -74,7 +74,7 @@ material = SubResource( 10 )
 position = Vector2( 0.56123, 0 )
 scale = Vector2( 0.16, 0.16 )
 frames = SubResource( 11 )
-frame = 2
+frame = 3
 playing = true
 
 [node name="Hurtbox" parent="." instance=ExtResource( 6 )]
@@ -129,6 +129,9 @@ visible = false
 [node name="Orbit" parent="." instance=ExtResource( 10 )]
 
 [node name="LightningGenerator" parent="." instance=ExtResource( 11 )]
+
+[node name="Timer" parent="LightningGenerator" index="0"]
+autostart = false
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]

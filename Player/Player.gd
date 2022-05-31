@@ -37,10 +37,10 @@ func _ready():
 	#basicShotTimer.paused = true
 	lightningTimer.paused = true
 	vortexTimer.paused = true
-	flameTimer.paused = true
+	#flameTimer.paused = true
 	laserTimer.paused = true
 	shield.visible = false
-
+	#$LightningGenerator/Timer.start(PlayerStats.attacks.ChainShot.stats.cooldown)
 
 	
 	error = PlayerStats.connect("no_health", self, "die")
@@ -134,6 +134,3 @@ func setShield(value):
 	hasShield = value
 	shield.visible = value
 	shield.maxCharges = attacks.Shield.stats.maxCharges
-
-
-

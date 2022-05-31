@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/sound_design_effect_electricity_spark_002.mp3-47c56e60172c47444187257519890a3d.mp3str"
+
+[deps]
+
+source_file="res://Music and Sounds/sound_design_effect_electricity_spark_002.mp3"
+dest_files=[ "res://.import/sound_design_effect_electricity_spark_002.mp3-47c56e60172c47444187257519890a3d.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

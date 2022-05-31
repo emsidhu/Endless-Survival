@@ -17,3 +17,8 @@ func input(event):
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().change_scene("res://Menus/MainMenu.tscn")
 
+
+
+
+func _on_checkbox_pressed():
+	audioStreamPlayer.playing = true

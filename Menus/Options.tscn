@@ -47,7 +47,6 @@ __meta__ = {
 }
 
 [node name="MouseControls" parent="Menu" instance=ExtResource( 3 )]
-pressed = true
 
 [node name="FullScreen" parent="Menu" instance=ExtResource( 7 )]
 
@@ -61,5 +60,7 @@ next_scene_path = "res://Menus/MainMenu.tscn"
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
 
+[connection signal="pressed" from="Menu/MouseControls" to="." method="_on_checkbox_pressed"]
+[connection signal="pressed" from="Menu/FullScreen" to="." method="_on_checkbox_pressed"]
 [connection signal="button_down" from="Menu/ChangeSceneBtn" to="." method="_on_button_down"]
 [connection signal="finished" from="AudioStreamPlayer" to="." method="_on_AudioStreamPlayer_finished"]

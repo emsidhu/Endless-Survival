@@ -12,7 +12,7 @@ var can_spawn = false
 
 func ready():
 	randomize()
-	PlayerStats.resetStats()
+
 
 func _on_EnemyTimer_timeout():
 	if  (is_instance_valid(player)):
@@ -47,10 +47,10 @@ func create_pos(bounds, x_change, y_change):
 	return rand_pos
 	
 func create_bounds():
-	var left_bound = player.position.x - get_viewport_rect().size.x / 2
-	var right_bound = player.position.x + get_viewport_rect().size.x / 2
-	var top_bound = player.position.y - get_viewport_rect().size.y / 2
-	var bottom_bound = player.position.y + get_viewport_rect().size.y / 2
+	var left_bound = player.position.x - (get_viewport_rect().size.x / 2) * 1.3
+	var right_bound = player.position.x + (get_viewport_rect().size.x / 2) * 1.3
+	var top_bound = player.position.y - (get_viewport_rect().size.y / 2) * 1.3
+	var bottom_bound = player.position.y + (get_viewport_rect().size.y / 2) * 1.3
 	return [left_bound, right_bound, top_bound, bottom_bound]
 
 

@@ -14,6 +14,7 @@ onready var optionsBtn = $PauseMenu/VBoxContainer/OptionsBtn
 #onready var quitBtn = $PauseMenu/VBoxContainer/QuitBtn
 #onready var fullScreenBtn = $PauseMenu/VBoxContainer/FullScreenBtn
 onready var mouseControlsBtn = $PauseMenu/VBoxContainer/MouseControlsBtn
+onready var audioStreamPlayer = $AudioStreamPlayer
 
 var choice1
 var choice2
@@ -70,8 +71,8 @@ func _unhandled_input(event):
 		resumeBtn.grab_focus()
 		
 func _on_ResumeBtn_button_up():
-	get_tree().paused = !get_tree().paused
-	pauseMenu.visible = !pauseMenu.visible
+	get_tree().paused = false
+	pauseMenu.visible = false
 
 
 func level_up():
@@ -138,3 +139,13 @@ func _on_OptionsBtn_button_up():
 	else:
 		optionsBtn.text = "Return"
 		mouseControlsBtn.grab_focus()
+
+
+func _on_AudioStreamPlayer_finished():
+	audioStreamPlayer.playing = false
+	
+
+
+
+func _on_button_down():
+	audioStreamPlayer.playing = true

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Flamethrower Idle Loop 1 - QuickSounds.com.mp3-a7c409dfbd9fe53d4224d03b09f79066.mp3str"
+
+[deps]
+
+source_file="res://Music and Sounds/Flamethrower Idle Loop 1 - QuickSounds.com.mp3"
+dest_files=[ "res://.import/Flamethrower Idle Loop 1 - QuickSounds.com.mp3-a7c409dfbd9fe53d4224d03b09f79066.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

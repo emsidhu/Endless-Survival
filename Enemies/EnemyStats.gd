@@ -11,9 +11,9 @@ func _process(_delta):
 	damageModifier = 1 
 	healthModifier = 1 
 	enemySpawnAmount = 1
-	damageModifier += (0.005 * Globals.time)
-	healthModifier += (0.005 * Globals.time)
-	enemySpawnAmount += (0.05 * Globals.time)
+	damageModifier += (0.003 * Globals.time)
+	healthModifier += (0.009 * Globals.time)
+	enemySpawnAmount += 20 * atan((Globals.time/60) - 2) + 22.2
 #	if enemySpawnAmount > 5:
 #		enemySpawnTime /= 5
 #		enemySpawnAmount /= 5
@@ -25,14 +25,23 @@ func sort_enemies(a, b):
 				return true
 	return false
 	
-func get_closest_enemy_pos(position):
+func get_closest_enemy_pos(position, exceptions = []):
 	if self.enemies:
 		var closest_enemy = self.enemies[0]
 		
 		for enemy in enemies:
+			var is_exception = false
+	
 			if enemy.global_position.distance_to(position) < closest_enemy.global_position.distance_to(position):
-				closest_enemy = enemy
-		
+				for exception in exceptions:
+					if enemy == exception:
+						is_exception = true
+						break
+				if !is_exception:
+					closest_enemy = enemy
+		for exception in exceptions:
+			if closest_enemy == exception:
+				return false
 		return closest_enemy.global_position
 
 func get_enemies():

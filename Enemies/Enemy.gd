@@ -52,7 +52,7 @@ func _ready():
 func _physics_process(delta):
 	
 	if is_instance_valid(player):
-		if global_position.distance_to(player.global_position) > 220:
+		if global_position.distance_to(player.global_position) > 600:
 			queue_free()
 		direction = lerp(direction, global_position.direction_to(player.global_position), turnSpeed)
 		direction = direction.normalized()
@@ -67,8 +67,7 @@ func _physics_process(delta):
 	knockback = move_and_slide(knockback)
 
 	velocity = move_and_slide(velocity)
-	if health <= 0:
-		die()
+
 	
 	if status:
 		get(status + "Ref").call_func()
@@ -82,9 +81,12 @@ func _on_Hurtbox_invincibility_ended():
 
 func hit(attack):
 	health -= attack.damage
+	if health <= 0:
+		die()
 	knockback = attack.global_position.direction_to(global_position) * attack.knockback_power
 	if attack.get("status"):
 		self.status = attack.status
+
 	
 
 	

@@ -1,7 +1,10 @@
 extends "res://Attacks/Projectile.gd"
 
+onready var hitbox = $Hitbox
+
 
 func _ready():
+
 	damage = PlayerStats.attacks.BasicShot.stats.damage
 	knockback_power = PlayerStats.attacks.BasicShot.stats.knockback_power
 	speed = PlayerStats.attacks.BasicShot.stats.speed
@@ -11,5 +14,16 @@ func _ready():
 		queue_free()
 	
 func _on_Hitbox_area_entered(_area):
+	visible = false
+	hitbox.set_deferred("monitoring", false)
+	$HitSound.playing = true
+
+
+
+
+
+func _on_HitSound_finished():
 	queue_free()
+
+
 

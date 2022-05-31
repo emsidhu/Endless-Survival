@@ -9,9 +9,9 @@ const LifePotion = preload("res://Pickups/Life Potion.tscn")
 
 func get_pickup():
 	var choice = rand_range(0, 100)
-	if choice < 50:
+	if choice < 70:
 		choice = XPOrb
-	elif choice < 75:
+	elif choice < 80:
 		choice = LifePotion
 	elif choice < 90:
 		choice = ExtraXPOrb
