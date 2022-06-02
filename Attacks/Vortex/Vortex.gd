@@ -1,8 +1,8 @@
 extends "res://Attacks/Projectile.gd"
 
-
+onready var softCollision = $SoftCollision
 onready var mouse_pos = get_global_mouse_position()
-
+export var SUCKPOWER = 400
 
 func _ready():
 	$CPUParticles2D.scale *= PlayerStats.attacks.Vortex.scale
@@ -20,3 +20,10 @@ func _ready():
 	speed = PlayerStats.attacks.Vortex.stats.speed
 
 
+func _physics_process(delta):
+	if PlayerStats.attacks.Vortex.canSuck:
+		var enemies = softCollision.get_overlapping_areas()
+		
+		for enemy in enemies:
+			var push_vector = enemy.global_position.direction_to(global_position)
+			enemy.get_parent().velocity += push_vector * delta * SUCKPOWER

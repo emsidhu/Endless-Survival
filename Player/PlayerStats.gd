@@ -8,7 +8,7 @@ var attacks = {
 
 	"Vortex": {"name": "vortex",
 "upgradeInfo": {"title": "Vortex", "upgradeText": "A spinning blade cuts through all in it's path", "icon": "icon"},  
-"level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeVortex"), "scale": 1,
+"level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeVortex"), "scale": 1, "canSuck": false,
 "stats": {"damage": 125, "knockback_power": 150, "speed": 150}, "type": "Attack"}, 
 
 	"Lightning": {"name": "lightning",
@@ -195,8 +195,12 @@ func upgradeBasicShot():
 	basicShot.upgradeInfo.upgradeText = "+20% Damage \n +1.05% Speed"
 
 func upgradeVortex():
-	attacks.Vortex.stats.damage *= 1.1
-	attacks.Vortex.scale *= 1.1
+	var vortex = attacks.Vortex
+	vortex.stats.damage *= 1.1
+	vortex.scale *= 1.1
+	
+	if vortex.level == 6:
+		vortex.canSuck = true
 
 func upgradeLightning():
 	var lightning = attacks.Lightning

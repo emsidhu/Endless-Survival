@@ -1,17 +1,21 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Attacks/Sprites/Vortex/effect_4.png" type="Texture" id=1]
 [ext_resource path="res://Attacks/Vortex/Vortex.gd" type="Script" id=2]
 [ext_resource path="res://Hit-Hurtboxes/Hitbox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Hit-Hurtboxes/Soft Collision.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CircleShape2D" id=7]
 radius = 8.06226
+
+[sub_resource type="CircleShape2D" id=9]
+radius = 31.0644
 
 [sub_resource type="CanvasItemMaterial" id=8]
 blend_mode = 1
 
 [node name="vortex" type="KinematicBody2D" groups=["Attacks"]]
-modulate = Color( 0.66, 0.66, 0.66, 0.705882 )
+modulate = Color( 0.7, 0.7, 0.7, 0.705882 )
 script = ExtResource( 2 )
 damage = 100
 
@@ -20,6 +24,13 @@ visible = false
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
 shape = SubResource( 7 )
+
+[node name="SoftCollision" parent="." instance=ExtResource( 4 )]
+collision_layer = 512
+collision_mask = 20
+
+[node name="CollisionShape2D" parent="SoftCollision" index="0"]
+shape = SubResource( 9 )
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 modulate = Color( 1, 21.5, 100, 1 )
@@ -31,8 +42,9 @@ speed_scale = 14.96
 explosiveness = 1.0
 texture = ExtResource( 1 )
 gravity = Vector2( 0, 0 )
-angular_velocity = -100.0
+angular_velocity = 89.66
 angle = 360.0
 angle_random = 1.0
 
 [editable path="Hitbox"]
+[editable path="SoftCollision"]
