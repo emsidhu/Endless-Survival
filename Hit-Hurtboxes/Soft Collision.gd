@@ -14,3 +14,4 @@ func get_push_vector():
 		push_vector = area.global_position.direction_to(global_position)
 	
 	return push_vector
+

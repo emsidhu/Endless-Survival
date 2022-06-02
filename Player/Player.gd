@@ -16,8 +16,8 @@ onready var lightningTimer = $Timers/LightningTimer
 onready var flameTimer = $Timers/FlameTimer
 onready var laserTimer = $Timers/LaserTimer
 
-onready var shield = $Shield
-onready var orbit = $Orbit
+onready var shield = get_node("../Smoothing2D/Shield")
+onready var orbit = get_node("../Smoothing2D/Orbit")
 
 
 export var SOFTPOWER = 700
@@ -37,7 +37,7 @@ func _ready():
 	#basicShotTimer.paused = true
 	lightningTimer.paused = true
 	vortexTimer.paused = true
-	#flameTimer.paused = true
+	flameTimer.paused = true
 	laserTimer.paused = true
 	shield.visible = false
 	#$LightningGenerator/Timer.start(PlayerStats.attacks.ChainShot.stats.cooldown)
@@ -51,6 +51,7 @@ func _ready():
 
 func _physics_process(delta):
 	move(delta)
+
 
 func move(delta):
 	var input_vector = Vector2.ZERO

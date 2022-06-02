@@ -112,7 +112,7 @@ position = Vector2( -7, 67 )
 [node name="AnimatedSprite" parent="Eye" index="0"]
 modulate = Color( 0.89, 0.89, 0.89, 1 )
 material = SubResource( 10 )
-frame = 0
+frame = 1
 
 [node name="Fuzzy" parent="." instance=ExtResource( 5 )]
 position = Vector2( 21, 69 )
@@ -120,7 +120,7 @@ position = Vector2( 21, 69 )
 [node name="AnimatedSprite" parent="Fuzzy" index="0"]
 modulate = Color( 0.89, 0.89, 0.89, 1 )
 material = SubResource( 14 )
-frame = 1
+frame = 2
 
 [node name="Slime" parent="." instance=ExtResource( 4 )]
 position = Vector2( 63, 70 )
@@ -128,7 +128,7 @@ position = Vector2( 63, 70 )
 [node name="AnimatedSprite" parent="Slime" index="0"]
 modulate = Color( 0.890196, 0.890196, 0.890196, 1 )
 material = SubResource( 16 )
-frame = 2
+frame = 3
 
 [node name="XP Orb" parent="." instance=ExtResource( 2 )]
 position = Vector2( -8, 90 )
@@ -148,14 +148,20 @@ position = Vector2( -11, 47 )
 
 [node name="AnimatedSprite" parent="Orb" index="0"]
 modulate = Color( 0.921569, 0.921569, 0.921569, 1 )
-frame = 7
+frame = 14
 
 [node name="Flame" parent="." instance=ExtResource( 11 )]
 position = Vector2( -11, 47 )
 
-[node name="Flame" parent="Flame" index="0"]
+[node name="Flame2" parent="Flame" index="0"]
+frame = 21
+
+[node name="Flame3" parent="Flame" index="1"]
+frame = 20
+
+[node name="Flame" parent="Flame" index="2"]
 modulate = Color( 0.909804, 0.909804, 0.909804, 1 )
-frame = 16
+frame = 31
 
 [node name="Laser" parent="." instance=ExtResource( 10 )]
 position = Vector2( 64, 50 )
@@ -173,7 +179,7 @@ position = Vector2( 84, 31 )
 environment = SubResource( 11 )
 
 [node name="vortex" parent="." instance=ExtResource( 13 )]
-modulate = Color( 0.478431, 0.478431, 0.478431, 0.647059 )
+modulate = Color( 0.78, 0.78, 0.78, 1 )
 position = Vector2( 3, 21 )
 
 [node name="Player" parent="." instance=ExtResource( 14 )]
@@ -181,11 +187,9 @@ position = Vector2( -45.695, 84.4908 )
 
 [node name="AnimatedSprite" parent="Player" index="0"]
 material = SubResource( 12 )
+frame = 3
 
 [node name="Life Potion" parent="." instance=ExtResource( 16 )]
-
-[node name="AnimatedSprite" parent="Life Potion" index="0"]
-self_modulate = Color( 0.91, 0.91, 0.91, 1 )
 
 [node name="CollisionShape2D" parent="Life Potion" index="1"]
 visible = false
@@ -211,4 +215,5 @@ visible = false
 [editable path="Player"]
 [editable path="Player/Hurtbox"]
 [editable path="Player/SoftCollision"]
+[editable path="Player/LightningGenerator"]
 [editable path="Life Potion"]

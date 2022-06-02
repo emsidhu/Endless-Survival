@@ -2,7 +2,7 @@ extends Node2D
 
 onready var enemyTimer = $EnemyTimer
 onready var pickupTimer = $PickupTimer
-onready var player = $YSort/Player
+onready var player = $YSort/PlayerContainer/Player
 onready var ySort = $YSort
 
 
@@ -35,6 +35,8 @@ func create_child(instance, x_change, y_change):
 	ySort.add_child(instance)
 
 func create_pos(bounds, x_change, y_change):
+	
+	print(bounds)
 	var x = rand_range(bounds[0] - x_change, bounds[1] + x_change)
 	var y = rand_range(bounds[2] - y_change, bounds[3] + y_change)
 	var rand_pos = Vector2(x,y)
@@ -47,10 +49,10 @@ func create_pos(bounds, x_change, y_change):
 	return rand_pos
 	
 func create_bounds():
-	var left_bound = player.position.x - (get_viewport_rect().size.x / 2) * 1.3
-	var right_bound = player.position.x + (get_viewport_rect().size.x / 2) * 1.3
-	var top_bound = player.position.y - (get_viewport_rect().size.y / 2) * 1.3
-	var bottom_bound = player.position.y + (get_viewport_rect().size.y / 2) * 1.3
+	var left_bound = player.position.x - ((get_viewport_rect().size.x / 2) * 1.3)
+	var right_bound = player.position.x + ((get_viewport_rect().size.x / 2) * 1.3)
+	var top_bound = player.position.y - ((get_viewport_rect().size.y / 2) * 1.3)
+	var bottom_bound = player.position.y + ((get_viewport_rect().size.y / 2) * 1.3)
 	return [left_bound, right_bound, top_bound, bottom_bound]
 
 

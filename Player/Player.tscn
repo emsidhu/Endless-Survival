@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Player/Sprite/output-onlinepngtools.png" type="Texture" id=1]
 [ext_resource path="res://Player/Sprite/output-onlinepngtools (3).png" type="Texture" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Shaders/blink.gdshader" type="Shader" id=9]
 [ext_resource path="res://Attacks/Orbit/Orbit.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Attacks/Chain shot/LightningGenerator.tscn" type="PackedScene" id=11]
+[ext_resource path="res://addons/smoothing/smoothing_2d.gd" type="Script" id=12]
 
 [sub_resource type="ShaderMaterial" id=10]
 resource_local_to_scene = true
@@ -33,7 +34,7 @@ height = 6.0
 resource_name = "Start"
 length = 0.2
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimatedSprite:material:shader_param/is_white")
+tracks/0/path = NodePath("../Smoothing2D/AnimatedSprite:material:shader_param/is_white")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -49,7 +50,7 @@ tracks/0/keys = {
 resource_name = "Stop"
 length = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("AnimatedSprite:material:shader_param/is_white")
+tracks/0/path = NodePath("../Smoothing2D/AnimatedSprite:material:shader_param/is_white")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -65,83 +66,88 @@ tracks/0/keys = {
 radius = 8.71833
 height = 4.73106
 
-[node name="Player" type="KinematicBody2D" groups=["Player"]]
-script = ExtResource( 5 )
+[node name="PlayerContainer" type="Node2D"]
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="Smoothing2D" type="Node2D" parent="."]
+script = ExtResource( 12 )
+target = NodePath("../Player")
+flags = 7
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Smoothing2D"]
 modulate = Color( 0.99, 0.99, 0.99, 1 )
 material = SubResource( 10 )
 position = Vector2( 0.56123, 0 )
 scale = Vector2( 0.16, 0.16 )
 frames = SubResource( 11 )
-frame = 3
+frame = 1
 playing = true
 
-[node name="Hurtbox" parent="." instance=ExtResource( 6 )]
+[node name="Shield" parent="Smoothing2D" instance=ExtResource( 8 )]
+
+[node name="Orbit" parent="Smoothing2D" instance=ExtResource( 10 )]
+
+[node name="Player" type="KinematicBody2D" parent="." groups=["Player"]]
+script = ExtResource( 5 )
+
+[node name="Hurtbox" parent="Player" instance=ExtResource( 6 )]
 visible = false
 collision_layer = 32
 collision_mask = 64
 
-[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+[node name="CollisionShape2D" parent="Player/Hurtbox" index="0"]
 position = Vector2( 1, 0 )
 shape = SubResource( 2 )
 
-[node name="BlinkAnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="BlinkAnimationPlayer" type="AnimationPlayer" parent="Player"]
 anims/Start = SubResource( 7 )
 anims/Stop = SubResource( 8 )
 
-[node name="SoftCollision" parent="." instance=ExtResource( 7 )]
+[node name="SoftCollision" parent="Player" instance=ExtResource( 7 )]
 visible = false
 collision_layer = 384
-collision_mask = 128
 
-[node name="CollisionShape2D" parent="SoftCollision" index="0"]
+[node name="CollisionShape2D" parent="Player/SoftCollision" index="0"]
 position = Vector2( 0.662163, 0 )
 shape = SubResource( 9 )
 
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
 
-[node name="Timers" type="Node" parent="."]
+[node name="Timers" type="Node" parent="Player"]
 
-[node name="ShotTimer" type="Timer" parent="Timers"]
+[node name="ShotTimer" type="Timer" parent="Player/Timers"]
 autostart = true
 
-[node name="VortexTimer" type="Timer" parent="Timers"]
+[node name="VortexTimer" type="Timer" parent="Player/Timers"]
 wait_time = 2.5
 autostart = true
 
-[node name="LightningTimer" type="Timer" parent="Timers"]
+[node name="LightningTimer" type="Timer" parent="Player/Timers"]
 wait_time = 3.0
 autostart = true
 
-[node name="FlameTimer" type="Timer" parent="Timers"]
+[node name="FlameTimer" type="Timer" parent="Player/Timers"]
 wait_time = 4.0
 one_shot = true
 autostart = true
 
-[node name="LaserTimer" type="Timer" parent="Timers"]
+[node name="LaserTimer" type="Timer" parent="Player/Timers"]
 wait_time = 1.5
 autostart = true
 
-[node name="Shield" parent="." instance=ExtResource( 8 )]
-visible = false
+[node name="LightningGenerator" parent="Player" instance=ExtResource( 11 )]
 
-[node name="Orbit" parent="." instance=ExtResource( 10 )]
-
-[node name="LightningGenerator" parent="." instance=ExtResource( 11 )]
-
-[node name="Timer" parent="LightningGenerator" index="0"]
+[node name="Timer" parent="Player/LightningGenerator" index="0"]
 autostart = false
 
-[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
-[connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]
-[connection signal="invincibility_started" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_started"]
-[connection signal="timeout" from="Timers/ShotTimer" to="." method="projectileAttack" binds= [ "BASICSHOT" ]]
-[connection signal="timeout" from="Timers/VortexTimer" to="." method="projectileAttack" binds= [ "VORTEX" ]]
-[connection signal="timeout" from="Timers/LightningTimer" to="." method="Spawner" binds= [ "LIGHTNINGSPAWNER" ]]
-[connection signal="timeout" from="Timers/FlameTimer" to="." method="followAttack" binds= [ "FLAME" ]]
-[connection signal="timeout" from="Timers/LaserTimer" to="." method="Spawner" binds= [ "LASERSPAWNER" ]]
+[connection signal="area_entered" from="Player/Hurtbox" to="Player" method="_on_Hurtbox_area_entered"]
+[connection signal="invincibility_ended" from="Player/Hurtbox" to="Player" method="_on_Hurtbox_invincibility_ended"]
+[connection signal="invincibility_started" from="Player/Hurtbox" to="Player" method="_on_Hurtbox_invincibility_started"]
+[connection signal="timeout" from="Player/Timers/ShotTimer" to="Player" method="projectileAttack" binds= [ "BASICSHOT" ]]
+[connection signal="timeout" from="Player/Timers/VortexTimer" to="Player" method="projectileAttack" binds= [ "VORTEX" ]]
+[connection signal="timeout" from="Player/Timers/LightningTimer" to="Player" method="Spawner" binds= [ "LIGHTNINGSPAWNER" ]]
+[connection signal="timeout" from="Player/Timers/FlameTimer" to="Player" method="followAttack" binds= [ "FLAME" ]]
+[connection signal="timeout" from="Player/Timers/LaserTimer" to="Player" method="Spawner" binds= [ "LASERSPAWNER" ]]
 
-[editable path="Hurtbox"]
-[editable path="SoftCollision"]
-[editable path="LightningGenerator"]
+[editable path="Player/Hurtbox"]
+[editable path="Player/SoftCollision"]
+[editable path="Player/LightningGenerator"]

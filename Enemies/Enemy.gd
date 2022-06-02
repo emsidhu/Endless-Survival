@@ -2,8 +2,7 @@ extends KinematicBody2D
 
 const EnemyDeathEffect = preload("res://Effects/EnemyDeathEffect.tscn")
 
-onready var softCollision = $SoftCollision
-onready var animatedSprite = $AnimatedSprite
+onready var animatedSprite = get_node("../Smoothing2D/AnimatedSprite")
 onready var hurtbox = $Hurtbox
 onready var blinkAnimationPlayer = $BlinkAnimationPlayer
 onready var MAX_SPEED = rand_range(minSpeed, maxSpeed)
@@ -52,8 +51,8 @@ func _ready():
 func _physics_process(delta):
 	
 	if is_instance_valid(player):
-		if global_position.distance_to(player.global_position) > 600:
-			queue_free()
+		if abs(global_position.x - player.global_position.x) > 250 or abs(global_position.y - player.global_position.y) > 150:
+			get_parent().queue_free()
 		direction = lerp(direction, global_position.direction_to(player.global_position), turnSpeed)
 		direction = direction.normalized()
 
@@ -61,8 +60,7 @@ func _physics_process(delta):
 	if (velocity != Vector2.ZERO):
 		rotate(velocity.angle())
 	
-	if softCollision.is_colliding():
-		velocity += softCollision.get_push_vector() * delta * SOFTPOWER
+
 	knockback = knockback.move_toward(Vector2.ZERO, FRICTION*delta)
 	knockback = move_and_slide(knockback)
 
@@ -100,7 +98,7 @@ func createDeathEffect():
 func die():
 	emit_signal("died", xp, pointValue)
 	createDeathEffect()
-	queue_free()
+	get_parent().queue_free()
 
 
 func set_status(value):

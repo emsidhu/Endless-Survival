@@ -1,23 +1,76 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Enemies/Sprites/Fuzzy/monster_01_A_walk_01.png" type="Texture" id=1]
 [ext_resource path="res://Enemies/Sprites/Fuzzy/monster_01_A_walk_03.png" type="Texture" id=2]
 [ext_resource path="res://Enemies/Sprites/Fuzzy/monster_01_A_walk_02.png" type="Texture" id=3]
 [ext_resource path="res://Enemies/Sprites/Fuzzy/monster_01_A_walk_04.png" type="Texture" id=4]
+[ext_resource path="res://addons/smoothing/smoothing_2d.gd" type="Script" id=5]
 [ext_resource path="res://Hit-Hurtboxes/Hitbox.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Hit-Hurtboxes/Soft Collision.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Hit-Hurtboxes/Hurtbox.tscn" type="PackedScene" id=8]
 
 [sub_resource type="GDScript" id=11]
 script/source = "extends \"res://Enemies/Enemy.gd\"
 
 func _on_VisibilityNotifier2D_screen_exited():
-	queue_free()
+	get_parent().queue_free()
 
 
 func _physics_process(delta):
 	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 "
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 5.0
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 4.12311
+
+[sub_resource type="Animation" id=8]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Smoothing2D/AnimatedSprite:material:shader_param/is_white")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Start"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Smoothing2D/AnimatedSprite:material:shader_param/is_white")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Stop"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Smoothing2D/AnimatedSprite:material:shader_param/is_white")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Shader" id=13]
 code = "shader_type canvas_item;
@@ -50,112 +103,51 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="CircleShape2D" id=4]
-radius = 5.0
+[node name="FuzzyContainer" type="Node2D"]
 
-[sub_resource type="CircleShape2D" id=3]
-radius = 4.12311
-
-[sub_resource type="CircleShape2D" id=10]
-radius = 5.66409
-
-[sub_resource type="Animation" id=8]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("AnimatedSprite:material:shader_param/is_white")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ false ]
-}
-
-[sub_resource type="Animation" id=6]
-resource_name = "Start"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/path = NodePath("AnimatedSprite:material:shader_param/is_white")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ true, false ]
-}
-
-[sub_resource type="Animation" id=7]
-resource_name = "Stop"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("AnimatedSprite:material:shader_param/is_white")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-
-[node name="Fuzzy" type="KinematicBody2D" groups=["Enemies"]]
+[node name="Fuzzy" type="KinematicBody2D" parent="." groups=["Enemies"]]
 script = SubResource( 11 )
 minSpeed = 62
 maxSpeed = 72
 turnSpeed = 0.001
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="Hitbox" parent="Fuzzy" instance=ExtResource( 6 )]
+visible = false
+collision_layer = 64
+collision_mask = 32
+
+[node name="CollisionShape2D" parent="Fuzzy/Hitbox" index="0"]
+shape = SubResource( 4 )
+
+[node name="Hurtbox" parent="Fuzzy" instance=ExtResource( 8 )]
+visible = false
+collision_layer = 16
+collision_mask = 8
+
+[node name="CollisionShape2D" parent="Fuzzy/Hurtbox" index="0"]
+shape = SubResource( 3 )
+
+[node name="BlinkAnimationPlayer" type="AnimationPlayer" parent="Fuzzy"]
+anims/RESET = SubResource( 8 )
+anims/Start = SubResource( 6 )
+anims/Stop = SubResource( 7 )
+
+[node name="Smoothing2D" type="Node2D" parent="."]
+script = ExtResource( 5 )
+target = NodePath("../Fuzzy")
+flags = 15
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Smoothing2D"]
 modulate = Color( 1, 1, 1, 0.858824 )
 material = SubResource( 5 )
 rotation = 1.5708
 scale = Vector2( 0.1, 0.1 )
 frames = SubResource( 1 )
+frame = 3
 playing = true
 
-[node name="Hitbox" parent="." instance=ExtResource( 6 )]
-visible = false
-collision_layer = 64
-collision_mask = 32
+[connection signal="invincibility_ended" from="Fuzzy/Hurtbox" to="Fuzzy" method="_on_Hurtbox_invincibility_ended"]
+[connection signal="invincibility_started" from="Fuzzy/Hurtbox" to="Fuzzy" method="_on_Hurtbox_invincibility_started"]
 
-[node name="CollisionShape2D" parent="Hitbox" index="0"]
-shape = SubResource( 4 )
-
-[node name="Hurtbox" parent="." instance=ExtResource( 8 )]
-visible = false
-collision_layer = 16
-collision_mask = 8
-
-[node name="CollisionShape2D" parent="Hurtbox" index="0"]
-shape = SubResource( 3 )
-
-[node name="SoftCollision" parent="." instance=ExtResource( 7 )]
-visible = false
-collision_layer = 128
-collision_mask = 128
-
-[node name="CollisionShape2D" parent="SoftCollision" index="0"]
-shape = SubResource( 10 )
-
-[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
-visible = false
-
-[node name="BlinkAnimationPlayer" type="AnimationPlayer" parent="."]
-anims/RESET = SubResource( 8 )
-anims/Start = SubResource( 6 )
-anims/Stop = SubResource( 7 )
-
-[connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]
-[connection signal="invincibility_started" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_started"]
-[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
-
-[editable path="Hitbox"]
-[editable path="Hurtbox"]
-[editable path="SoftCollision"]
+[editable path="Fuzzy/Hitbox"]
+[editable path="Fuzzy/Hurtbox"]

@@ -11,10 +11,10 @@ func _ready():
 	if EnemyStats.enemies:
 		get_direction(EnemyStats.get_closest_enemy_pos(global_position))
 	else:
-		queue_free()
+		get_parent().queue_free()
 	
 func _on_Hitbox_area_entered(_area):
-	visible = false
+	get_parent().visible = false
 	hitbox.set_deferred("monitoring", false)
 	$HitSound.playing = true
 
@@ -23,7 +23,7 @@ func _on_Hitbox_area_entered(_area):
 
 
 func _on_HitSound_finished():
-	queue_free()
+	get_parent().queue_free()
 
 
 

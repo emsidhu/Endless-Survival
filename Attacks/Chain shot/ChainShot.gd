@@ -31,7 +31,7 @@ func segmentize(from_to, start_pos):
 	sway = distance/sway_divider
 	sway = clamp(sway, 0, 3)
 	var segment_count = distance/divider
-	for point in range(0,segment_count):
+	for _point in range(0,segment_count):
 		points_lerp.append(randf())
 	points_lerp.sort()
 	var point_index = 1
@@ -68,7 +68,7 @@ func clear_all_shape(keep_segments = false):
 	if not keep_segments:
 		segments.clear()
 
-func create_segment(p1 : Vector2, p2 : Vector2, shorten : int = 0) -> CollisionShape2D:
+func create_segment(p1 : Vector2, p2 : Vector2) -> CollisionShape2D:
 	var collision = CollisionShape2D.new()
 	collision.shape = SegmentShape2D.new()
 	collision.shape.a = p1

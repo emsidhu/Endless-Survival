@@ -204,7 +204,7 @@ position = Vector2( 6.99939, 1.50194 )
 rotation = 1.15533
 scale = Vector2( 0.283, 0.283 )
 frames = SubResource( 35 )
-frame = 6
+frame = 3
 playing = true
 offset = Vector2( -5.01447, -167.726 )
 
@@ -215,7 +215,7 @@ position = Vector2( 6.8121, -1.86926 )
 rotation = 2.02354
 scale = Vector2( 0.283, 0.283 )
 frames = SubResource( 35 )
-frame = 5
+frame = 2
 playing = true
 offset = Vector2( -5.01447, -167.726 )
 
@@ -225,7 +225,7 @@ position = Vector2( 53.8598, -1.70943 )
 rotation = 1.5708
 scale = Vector2( 0.283, 0.283 )
 frames = SubResource( 35 )
-frame = 6
+frame = 3
 playing = true
 
 [node name="Hitbox" parent="." instance=ExtResource( 2 )]

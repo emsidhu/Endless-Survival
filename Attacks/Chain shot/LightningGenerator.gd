@@ -25,7 +25,7 @@ func _ready():
 	max_redirects = PlayerStats.attacks.ChainShot.stats.redirects
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	global_position = Vector2(0,0)
 
 func createLightning(pos = get_parent().global_position, exceptions = []):
@@ -61,7 +61,7 @@ func createLightning(pos = get_parent().global_position, exceptions = []):
 		forks_array.append(lightning_instance)
 		
 		if sub_fork_count > 0:
-			for sub_fork in range(0,sub_fork_count):
+			for _sub_fork in range(0,sub_fork_count):
 				var picked_fork = forks_array[int(rand_range(0, (forks_array.size() - 1)))]
 				sub_forkyfy(normal, picked_fork.get_point_position(rand_range(0, picked_fork.get_point_count() - 1)))
 

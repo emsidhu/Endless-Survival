@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Attacks/Sprites/basic shot/shot 1.png" type="Texture" id=1]
 [ext_resource path="res://Attacks/Sprites/basic shot/shot 3.png" type="Texture" id=2]
@@ -8,6 +8,11 @@
 [ext_resource path="res://Hit-Hurtboxes/Hitbox.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Music and Sounds/fireball spawn.wav" type="AudioStream" id=7]
 [ext_resource path="res://Music and Sounds/firaball hit.wav" type="AudioStream" id=8]
+[ext_resource path="res://addons/smoothing/smoothing_2d.gd" type="Script" id=9]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 2.99999
+height = 2.00001
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -17,42 +22,44 @@ animations = [ {
 "speed": 15.0
 } ]
 
-[sub_resource type="CapsuleShape2D" id=2]
-radius = 8.0
-height = 10.0
+[node name="BasicShotContainer" type="Node2D"]
 
-[node name="Basic Shot" type="KinematicBody2D" groups=["Attacks"]]
-modulate = Color( 0.95, 0.95, 0.95, 1 )
-scale = Vector2( 0.3, 0.3 )
+[node name="Basic Shot" type="KinematicBody2D" parent="." groups=["Attacks"]]
 collision_layer = 8
 collision_mask = 4
 script = ExtResource( 5 )
 damage = 80
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 0, 1 )
-scale = Vector2( 0.5, 0.5 )
-frames = SubResource( 1 )
-playing = true
+[node name="Hitbox" parent="Basic Shot" instance=ExtResource( 6 )]
 
-[node name="Hitbox" parent="." instance=ExtResource( 6 )]
-visible = false
-
-[node name="CollisionShape2D" parent="Hitbox" index="0"]
-position = Vector2( 7, 0 )
+[node name="CollisionShape2D" parent="Basic Shot/Hitbox" index="0"]
+position = Vector2( 2, 0 )
 rotation = 1.5708
 shape = SubResource( 2 )
 
-[node name="SpawnSound" type="AudioStreamPlayer2D" parent="."]
+[node name="SpawnSound" type="AudioStreamPlayer2D" parent="Basic Shot"]
 stream = ExtResource( 7 )
 volume_db = -7.0
 autoplay = true
 
-[node name="HitSound" type="AudioStreamPlayer2D" parent="."]
+[node name="HitSound" type="AudioStreamPlayer2D" parent="Basic Shot"]
 stream = ExtResource( 8 )
 volume_db = -5.0
 
-[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
-[connection signal="finished" from="HitSound" to="." method="_on_HitSound_finished"]
+[node name="Smoothing2D" type="Node2D" parent="."]
+script = ExtResource( 9 )
+target = NodePath("../Basic Shot")
+flags = 15
 
-[editable path="Hitbox"]
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Smoothing2D"]
+modulate = Color( 0.95, 0.95, 0.95, 1 )
+position = Vector2( 0, 0.3 )
+scale = Vector2( 0.15, 0.15 )
+frames = SubResource( 1 )
+frame = 2
+playing = true
+
+[connection signal="area_entered" from="Basic Shot/Hitbox" to="Basic Shot" method="_on_Hitbox_area_entered"]
+[connection signal="finished" from="Basic Shot/HitSound" to="Basic Shot" method="_on_HitSound_finished"]
+
+[editable path="Basic Shot/Hitbox"]
