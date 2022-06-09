@@ -14,7 +14,7 @@ var attacks = {
 	"Lightning": {"name": "lightning",
 "upgradeInfo": {"title": "Lightning", "upgradeText": "Lightning strikes the enemies nearest you", "icon": "icon"},  
 "level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeLightning"), 
-"stats": {"damage": 500, "knockback_power": 0, "amount": 2, "cooldown": 3}, "type": "Attack"},
+"stats": {"damage": 500, "knockback_power": 0, "amount": 2, "cooldown": 1.5}, "type": "Attack"},
 
 	"Orbit": {"name": "orbit",
 "upgradeInfo": {"title": "Orbit", "upgradeText": "A damaging orb revolves around you", "icon": "icon"},  
@@ -43,7 +43,7 @@ var attacks = {
 		"ChainShot": {"name": "chainShot",
 "upgradeInfo": {"title": "Chain Shot", "upgradeText": "Shoots lightning that chains between enemies", "icon": "icon"},  
 "level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeChainShot"), 
-"stats": {"damage": 100, "knockback_power": 0, "cooldown": 4, "redirects": 4}, "type": "Attack"},
+"stats": {"damage": 120, "knockback_power": 0, "cooldown": 1, "redirects": 4}, "type": "Attack"},
 }
 
 onready var stats = {
@@ -155,7 +155,7 @@ func level_up():
 	if num_max <= attacks.size() + stats.size():
 		emit_signal("level_up")
 		
-		self.max_xp = base_max_xp * (level+2)/(2.3-level*.04)
+		self.max_xp = base_max_xp * 0.4 * level + 500
 		level += 1
 		self.xp -= used_xp
 		
@@ -192,7 +192,7 @@ func upgradeBasicShot():
 	var basicShot = attacks.BasicShot
 	basicShot.stats.damage *= 1.2
 	basicShot.stats.speed *= 1.05
-	basicShot.upgradeInfo.upgradeText = "+20% Damage \n +1.05% Speed"
+	basicShot.upgradeInfo.upgradeText = "+20% Damage \n +5% Speed"
 
 func upgradeVortex():
 	var vortex = attacks.Vortex
@@ -235,10 +235,13 @@ func upgradeLaser():
 	var laser = attacks.Laser
 	if laser.level == 3 or laser.level == 5:
 		laser.stats.amount += 1
-		laser.upgradeInfo.upgradeText = "+1 laser"
+		laser.upgradeInfo.upgradeText = "+10% Damage"
 	else:
 		laser.stats.damage *= 1.1
-		laser.upgradeInfo.upgradeText = "+10% Damage"
+		if laser.level == 2 or laser.level == 4:
+			laser.upgradeInfo.upgradeText = "+1 laser"
+		else:
+			laser.upgradeInfo.upgradeText = "+10% Damage"
 
 
 func upgradeArmageddon():
@@ -254,5 +257,5 @@ func upgradeChainShot():
 	var chainShot = attacks.ChainShot
 	chainShot.stats.damage *= 1.1
 	chainShot.stats.cooldown *= 0.9
-	chainShot.stats.redirects += 1
-	chainShot.upgradeInfo.upgradeText = "+10% Damage \n -10% Cooldown Timer \n +1 Redirects"
+	chainShot.stats.redirects += 3
+	chainShot.upgradeInfo.upgradeText = "+10% Damage \n -10% Cooldown Timer \n +3 Redirects"

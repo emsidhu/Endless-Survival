@@ -11,7 +11,8 @@ func _ready():
 	while(i < amount):
 		var lightning = LIGHTNING.instance()
 		if enemies.size() > i:
-			lightning.position = enemies[i].position
-		get_parent().get_parent().get_parent().add_child(lightning)
+			lightning.global_position = enemies[i].global_position
+		get_parent().get_parent().get_parent().get_parent().add_child(lightning)
 		i += 1
+		print("spawnLightning")
 	queue_free()

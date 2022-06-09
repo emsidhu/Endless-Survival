@@ -2,7 +2,7 @@ extends "res://Attacks/Projectile.gd"
 
 onready var softCollision = $SoftCollision
 onready var mouse_pos = get_global_mouse_position()
-export var SUCKPOWER = 400
+export var SUCKPOWER = 500
 
 func _ready():
 	$CPUParticles2D.scale *= PlayerStats.attacks.Vortex.scale

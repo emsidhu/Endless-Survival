@@ -83,6 +83,7 @@ func sub_forkyfy(normal, point):
 func _on_Timer_timeout():
 	redirects = 0
 	exceptions = []
+	max_redirects = PlayerStats.attacks.ChainShot.stats.redirects
 	if EnemyStats.enemies:
 		createLightning()
 

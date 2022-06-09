@@ -9,7 +9,7 @@
 radius = 8.06226
 
 [sub_resource type="CircleShape2D" id=9]
-radius = 31.0644
+radius = 32.0
 
 [sub_resource type="CanvasItemMaterial" id=8]
 blend_mode = 1
@@ -18,6 +18,7 @@ blend_mode = 1
 modulate = Color( 0.7, 0.7, 0.7, 0.705882 )
 script = ExtResource( 2 )
 damage = 100
+SUCKPOWER = 750
 
 [node name="Hitbox" parent="." instance=ExtResource( 3 )]
 visible = false

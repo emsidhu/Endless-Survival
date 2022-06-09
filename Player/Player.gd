@@ -32,6 +32,8 @@ var error
 
 var velocity = Vector2.ZERO
 
+signal died
+
 func _ready():
 	#pause the timers for attacks player doesn't start with
 	#basicShotTimer.paused = true
@@ -115,7 +117,10 @@ func die():
 		PlayerStats.health = PlayerStats.max_health
 		stats.Revive.canRevive = false
 		return
-	error = get_tree().change_scene("res://Menus/GameOver.tscn")
+	
+	emit_signal("died")
+
+	
 
 #allows player to start using an attack when it's unlocked
 func can_shoot(attack):

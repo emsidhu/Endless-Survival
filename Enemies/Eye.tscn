@@ -95,7 +95,7 @@ animations = [ {
 "speed": 3.0
 } ]
 
-[node name="EyeContainer" type="Node2D"]
+[node name="EyeContainer" type="Node2D" groups=["Enemies"]]
 
 [node name="Eye" type="KinematicBody2D" parent="." groups=["Enemies"]]
 script = ExtResource( 3 )
