@@ -4,6 +4,7 @@ onready var enemyTimer = $EnemyTimer
 onready var pickupTimer = $PickupTimer
 onready var player = $YSort/PlayerContainer/Player
 onready var ySort = $YSort
+onready var gameOverMenu = $Camera2D/CanvasLayer/GameOver
 
 
 export var pickup_spawn_time = 2
@@ -11,6 +12,7 @@ export var pickup_spawn_amount = 2
 var can_spawn = false
 
 func ready():
+	player.connect("died", self, "gameOver")
 	randomize()
 
 
@@ -36,7 +38,7 @@ func create_child(instance, x_change, y_change):
 
 func create_pos(bounds, x_change, y_change):
 	
-	print(bounds)
+
 	var x = rand_range(bounds[0] - x_change, bounds[1] + x_change)
 	var y = rand_range(bounds[2] - y_change, bounds[3] + y_change)
 	var rand_pos = Vector2(x,y)
@@ -55,5 +57,8 @@ func create_bounds():
 	var bottom_bound = player.position.y + ((get_viewport_rect().size.y / 2) * 1.3)
 	return [left_bound, right_bound, top_bound, bottom_bound]
 
-
-
+func gameOver():
+	gameOverMenu.visible = true
+	gameOverMenu.nameInput.grab_focus()
+	gameOverMenu._ready()
+	get_tree().paused = true

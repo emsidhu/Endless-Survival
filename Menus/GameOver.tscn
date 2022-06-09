@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://UI/background.png" type="Texture" id=1]
-[ext_resource path="res://UI/Buttons/QuitBtn.tscn" type="PackedScene" id=2]
+[ext_resource path="res://UI/Buttons/Button.png" type="Texture" id=1]
 [ext_resource path="res://UI/Buttons/ChangeSceneBtn.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Menus/GameOver.gd" type="Script" id=4]
 [ext_resource path="res://Music and Sounds/333040__christopherderp__videogame-menu-button-clicking-sound-11.wav" type="AudioStream" id=5]
@@ -18,57 +17,412 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="background" type="TextureRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-texture = ExtResource( 1 )
-expand = true
+color = Color( 0, 0, 0, 0.247059 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Menu" type="VBoxContainer" parent="."]
+[node name="DeathScreen" type="Control" parent="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameInput" type="LineEdit" parent="ColorRect/DeathScreen"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -38.5
-margin_top = -10.4297
-margin_right = 38.5
-margin_bottom = 48.5703
+margin_left = -63.9662
+margin_top = -3.07538
+margin_right = 1.03375
+margin_bottom = 17.9246
+align = 1
+max_length = 10
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ChangeSceneBtn" parent="Menu" instance=ExtResource( 3 )]
-margin_bottom = 17.0
-text = "Play Again"
-next_scene_path = "res://World/World.tscn"
-
-[node name="ChangeSceneBtn2" parent="Menu" instance=ExtResource( 3 )]
-margin_top = 21.0
-margin_bottom = 38.0
-text = "Main Menu"
-next_scene_path = "res://Menus/MainMenu.tscn"
-
-[node name="QuitBtn" parent="Menu" instance=ExtResource( 2 )]
-margin_top = 42.0
-margin_bottom = 59.0
-
-[node name="Title" parent="." instance=ExtResource( 7 )]
-anchor_top = 0.5
-anchor_bottom = 0.5
+[node name="Score" parent="ColorRect/DeathScreen" instance=ExtResource( 7 )]
 margin_left = -129.5
-margin_top = -45.0812
+margin_top = 25.4558
 margin_right = 129.5
-margin_bottom = -29.0812
+margin_bottom = 41.4558
 text = "Your Score Was"
+
+[node name="Title" parent="ColorRect/DeathScreen" instance=ExtResource( 7 )]
+margin_left = -129.5
+margin_top = 42.7799
+margin_right = 129.5
+margin_bottom = 58.7799
+text = "Please Enter Your Name"
+
+[node name="Confirm" type="Button" parent="ColorRect/DeathScreen"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 21.2463
+margin_top = -2.0
+margin_right = 68.2463
+margin_bottom = 17.0
+text = "Confirm"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Leaderboard" type="Control" parent="ColorRect"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" parent="ColorRect/Leaderboard" instance=ExtResource( 7 )]
+margin_left = -38.0
+margin_top = 4.24311
+margin_right = 38.0
+margin_bottom = 20.2431
+text = "High Scores"
+
+[node name="ColorRect" type="TextureRect" parent="ColorRect/Leaderboard"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -70.5
+margin_top = -74.9811
+margin_right = 70.5
+margin_bottom = 80.0189
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 6
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/Leaderboard/ColorRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -68.5
+margin_top = -68.5
+margin_right = 68.5
+margin_bottom = 66.5
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Column Names" type="HBoxContainer" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer"]
+margin_right = 137.0
+margin_bottom = 11.0
+size_flags_stretch_ratio = 0.48
+
+[node name="Scorer Number" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Column Names"]
+margin_right = 20.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.46
+text = "No."
+align = 1
+
+[node name="Scorer Name" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Column Names"]
+margin_left = 24.0
+margin_right = 88.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.41
+text = "Name"
+align = 1
+
+[node name="Scorer Score" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Column Names"]
+margin_left = 92.0
+margin_right = 137.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+text = "Score"
+align = 1
+
+[node name="Person 1" type="HBoxContainer" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer"]
+margin_top = 15.0
+margin_right = 137.0
+margin_bottom = 26.0
+size_flags_stretch_ratio = 0.48
+
+[node name="Scorer Number" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 1"]
+margin_right = 20.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.46
+text = "1"
+align = 1
+
+[node name="Scorer Name" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 1"]
+margin_left = 24.0
+margin_right = 88.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.41
+text = "N/A"
+align = 1
+
+[node name="Scorer Score" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 1"]
+margin_left = 92.0
+margin_right = 137.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+text = "N/A"
+align = 1
+
+[node name="Person 2" type="HBoxContainer" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer"]
+margin_top = 30.0
+margin_right = 137.0
+margin_bottom = 41.0
+size_flags_stretch_ratio = 0.48
+
+[node name="Scorer Number" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 2"]
+margin_right = 20.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.46
+text = "2"
+align = 1
+
+[node name="Scorer Name" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 2"]
+margin_left = 24.0
+margin_right = 88.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.41
+text = "N/A"
+align = 1
+
+[node name="Scorer Score" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 2"]
+margin_left = 92.0
+margin_right = 137.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+text = "N/A"
+align = 1
+
+[node name="Person 3" type="HBoxContainer" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer"]
+margin_top = 45.0
+margin_right = 137.0
+margin_bottom = 56.0
+size_flags_stretch_ratio = 0.48
+
+[node name="Scorer Number" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 3"]
+margin_right = 20.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.46
+text = "3"
+align = 1
+
+[node name="Scorer Name" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 3"]
+margin_left = 24.0
+margin_right = 88.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.41
+text = "N/A"
+align = 1
+
+[node name="Scorer Score" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 3"]
+margin_left = 92.0
+margin_right = 137.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+text = "N/A"
+align = 1
+
+[node name="Person 4" type="HBoxContainer" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer"]
+margin_top = 60.0
+margin_right = 137.0
+margin_bottom = 71.0
+size_flags_stretch_ratio = 0.48
+
+[node name="Scorer Number" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 4"]
+margin_right = 20.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.46
+text = "4"
+align = 1
+
+[node name="Scorer Name" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 4"]
+margin_left = 24.0
+margin_right = 88.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.41
+text = "N/A"
+align = 1
+
+[node name="Scorer Score" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 4"]
+margin_left = 92.0
+margin_right = 137.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+text = "N/A"
+align = 1
+
+[node name="Person 5" type="HBoxContainer" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer"]
+margin_top = 75.0
+margin_right = 137.0
+margin_bottom = 86.0
+size_flags_stretch_ratio = 0.48
+
+[node name="Scorer Number" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 5"]
+margin_right = 20.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.46
+text = "5"
+align = 1
+
+[node name="Scorer Name" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 5"]
+margin_left = 24.0
+margin_right = 88.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.41
+text = "N/A"
+align = 1
+
+[node name="Scorer Score" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 5"]
+margin_left = 92.0
+margin_right = 137.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+text = "N/A"
+align = 1
+
+[node name="Gap" type="HBoxContainer" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer"]
+margin_top = 90.0
+margin_right = 137.0
+margin_bottom = 90.0
+size_flags_stretch_ratio = 0.48
+
+[node name="Person 6" type="HBoxContainer" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer"]
+margin_top = 94.0
+margin_right = 137.0
+margin_bottom = 105.0
+size_flags_stretch_ratio = 0.48
+
+[node name="Scorer Number" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 6"]
+margin_right = 20.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.46
+text = "?"
+align = 1
+
+[node name="Scorer Name" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 6"]
+margin_left = 24.0
+margin_right = 88.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.41
+text = "N/A"
+align = 1
+
+[node name="Scorer Score" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 6"]
+margin_left = 92.0
+margin_right = 137.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+text = "N/A"
+align = 1
+
+[node name="Person 7" type="HBoxContainer" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer"]
+margin_top = 109.0
+margin_right = 137.0
+margin_bottom = 120.0
+size_flags_stretch_ratio = 0.48
+
+[node name="Scorer Number" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 7"]
+margin_right = 20.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.46
+text = "?"
+align = 1
+
+[node name="Scorer Name" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 7"]
+margin_left = 24.0
+margin_right = 88.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.41
+text = "N/A"
+align = 1
+
+[node name="Scorer Score" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 7"]
+margin_left = 92.0
+margin_right = 137.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+text = "N/A"
+align = 1
+
+[node name="Person 8" type="HBoxContainer" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer"]
+margin_top = 124.0
+margin_right = 137.0
+margin_bottom = 135.0
+size_flags_stretch_ratio = 0.48
+
+[node name="Scorer Number" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 8"]
+margin_right = 20.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.46
+text = "?"
+align = 1
+
+[node name="Scorer Name" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 8"]
+margin_left = 24.0
+margin_right = 88.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.41
+text = "N/A"
+align = 1
+
+[node name="Scorer Score" type="Label" parent="ColorRect/Leaderboard/ColorRect/VBoxContainer/Person 8"]
+margin_left = 92.0
+margin_right = 137.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+text = "N/A"
+align = 1
+
+[node name="ChangeSceneBtn" parent="ColorRect/Leaderboard" instance=ExtResource( 3 )]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -53.0
+margin_top = -18.7869
+margin_right = 53.0
+margin_bottom = -1.78693
+text = "Return To Main Menu"
+next_scene_path = "res://Menus/MainMenu.tscn"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
 
-[connection signal="button_down" from="Menu/ChangeSceneBtn" to="." method="_on_button_down"]
-[connection signal="button_up" from="Menu/ChangeSceneBtn" to="." method="_on_ChangeSceneBtn_button_up"]
-[connection signal="button_down" from="Menu/ChangeSceneBtn2" to="." method="_on_button_down"]
-[connection signal="button_down" from="Menu/QuitBtn" to="." method="_on_button_down"]
+[connection signal="button_down" from="ColorRect/DeathScreen/Confirm" to="." method="_on_button_down"]
+[connection signal="button_up" from="ColorRect/DeathScreen/Confirm" to="." method="_on_Confirm_button_up"]
 [connection signal="finished" from="AudioStreamPlayer" to="." method="_on_AudioStreamPlayer_finished"]

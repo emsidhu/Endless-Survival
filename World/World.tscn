@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://UI/PlayerUI.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://World/World.gd" type="Script" id=4]
 [ext_resource path="res://Shaders/blink.gdshader" type="Shader" id=5]
 [ext_resource path="res://default_env.tres" type="Environment" id=6]
+[ext_resource path="res://Menus/GameOver.tscn" type="PackedScene" id=7]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -38,6 +39,10 @@ smoothing_speed = 8.0
 
 [node name="PlayerUI" parent="Camera2D/CanvasLayer" instance=ExtResource( 2 )]
 
+[node name="GameOver" parent="Camera2D/CanvasLayer" instance=ExtResource( 7 )]
+pause_mode = 2
+visible = false
+
 [node name="EnemyTimer" type="Timer" parent="."]
 autostart = true
 
@@ -47,7 +52,7 @@ autostart = true
 
 [node name="AnimatedSprite" parent="YSort/PlayerContainer/Smoothing2D" index="0"]
 material = SubResource( 1 )
-frame = 1
+frame = 2
 
 [node name="RemoteTransform2D" parent="YSort/PlayerContainer/Player" index="3"]
 remote_path = NodePath("../../../../Camera2D")
@@ -59,9 +64,11 @@ autostart = true
 environment = ExtResource( 6 )
 
 [connection signal="timeout" from="EnemyTimer" to="." method="_on_EnemyTimer_timeout"]
+[connection signal="died" from="YSort/PlayerContainer/Player" to="." method="gameOver"]
 [connection signal="timeout" from="PickupTimer" to="." method="_on_PickupTimer_timeout"]
 
 [editable path="Camera2D/CanvasLayer/PlayerUI"]
+[editable path="Camera2D/CanvasLayer/GameOver"]
 [editable path="YSort/PlayerContainer"]
 [editable path="YSort/PlayerContainer/Player/Hurtbox"]
 [editable path="YSort/PlayerContainer/Player/SoftCollision"]
