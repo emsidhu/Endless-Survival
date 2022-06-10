@@ -4,7 +4,7 @@ var attacks = {
 	"BasicShot": {"name": "basicShot",
 "upgradeInfo": {"title": "Basic Shot", "upgradeText": "Upgrades your basic shot", "icon": "icon"}, 
 "level": 1, "max_level": 6, "funcRef": funcref(self, "upgradeBasicShot"), 
-"stats": {"damage": 120, "knockback_power": 150, "speed": 180, "shots": 1},  "type": "Attack"},
+"stats": {"damage": 150, "knockback_power": 150, "speed": 180, "shots": 1},  "type": "Attack"},
 
 	"Vortex": {"name": "vortex",
 "upgradeInfo": {"title": "Vortex", "upgradeText": "A spinning blade cuts through all in it's path", "icon": "icon"},  
@@ -134,7 +134,7 @@ func set_health(value):
 func set_xp(value):
 	xp = value
 	emit_signal("xp_changed", xp)
-	if xp >= max_xp:
+	if xp >= max_xp and level <= 50:
 		level_up()
 
 func set_max_xp(value):
@@ -190,10 +190,10 @@ func upgradeMaxHealth():
 	
 func upgradeBasicShot():
 	var basicShot = attacks.BasicShot
-	basicShot.stats.damage *= 1.2
+	basicShot.stats.damage *= 1.25
 	basicShot.stats.speed *= 1.05
 	basicShot.stats.shots += 1
-	basicShot.upgradeInfo.upgradeText = "+20% Damage \n +5% Speed \n +1 shot"
+	basicShot.upgradeInfo.upgradeText = "+25% Damage \n +5% Speed \n +1 shot"
 
 func upgradeVortex():
 	var vortex = attacks.Vortex

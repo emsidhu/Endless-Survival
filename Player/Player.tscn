@@ -88,7 +88,7 @@ playing = true
 
 [node name="Player" type="KinematicBody2D" parent="." groups=["Player"]]
 script = ExtResource( 5 )
-SOFTPOWER = 1500
+SOFTPOWER = 2000
 
 [node name="Hurtbox" parent="Player" instance=ExtResource( 6 )]
 visible = false
