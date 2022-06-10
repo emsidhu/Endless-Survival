@@ -52,6 +52,7 @@ autostart = true
 
 [node name="AnimatedSprite" parent="YSort/PlayerContainer/Smoothing2D" index="0"]
 material = SubResource( 1 )
+frame = 2
 
 [node name="RemoteTransform2D" parent="YSort/PlayerContainer/Player" index="3"]
 remote_path = NodePath("../../../../Camera2D")

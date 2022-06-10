@@ -197,18 +197,18 @@ func upgradeBasicShot():
 
 func upgradeVortex():
 	var vortex = attacks.Vortex
-	vortex.stats.damage *= 1.05
+	vortex.stats.damage *= 1.1
 	vortex.scale *= 1.1
-	
+	vortex.upgradeInfo.upgradeText = "+10% Damage \n +10% size"
 	if vortex.level == 6:
 		vortex.canSuck = true
 
 func upgradeLightning():
 	var lightning = attacks.Lightning
-	lightning.stats.damage *= 1.05
+	lightning.stats.damage *= 1.1
 	lightning.stats.amount += 1
 	lightning.stats.cooldown *= 0.9
-	lightning.upgradeInfo.upgradeText = "+5% Damage \n +1 strike \n -10% Cooldown"
+	lightning.upgradeInfo.upgradeText = "+10% Damage \n +1 strike \n -10% Cooldown"
 	emit_signal("cooldownChange", {"timer": "LightningTimer", 
 "cooldown": lightning.stats.cooldown})
 
@@ -220,9 +220,9 @@ func upgradeOrbit():
 
 func upgradeFlame():
 	var flame = attacks.Flame
-	flame.stats.damage *= 1.05
+	flame.stats.damage *= 1.1
 	flame.stats.cooldown *= 0.95
-	flame.upgradeInfo.upgradeText = "+5% Damage \n -5% Cooldown"
+	flame.upgradeInfo.upgradeText = "+10% Damage \n -5% Cooldown"
 	
 	if flame.level >= 3:
 		flame.stats.burn = true
@@ -237,12 +237,12 @@ func upgradeLaser():
 	if laser.level == 3 or laser.level == 5:
 		laser.stats.amount += 1
 	else:
-		laser.stats.damage *= 1.05
+		laser.stats.damage *= 1.1
 		
 	if laser.level == 2 or laser.level == 4:
 		laser.upgradeInfo.upgradeText = "+1 laser"
 	else:
-		laser.upgradeInfo.upgradeText = "+5% Damage"
+		laser.upgradeInfo.upgradeText = "+10% Damage"
 
 
 func upgradeArmageddon():
