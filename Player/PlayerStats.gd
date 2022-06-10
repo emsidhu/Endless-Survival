@@ -4,7 +4,7 @@ var attacks = {
 	"BasicShot": {"name": "basicShot",
 "upgradeInfo": {"title": "Basic Shot", "upgradeText": "Upgrades your basic shot", "icon": "icon"}, 
 "level": 1, "max_level": 6, "funcRef": funcref(self, "upgradeBasicShot"), 
-"stats": {"damage": 120, "knockback_power": 150, "speed": 180},  "type": "Attack"},
+"stats": {"damage": 120, "knockback_power": 150, "speed": 180, "shots": 1},  "type": "Attack"},
 
 	"Vortex": {"name": "vortex",
 "upgradeInfo": {"title": "Vortex", "upgradeText": "A spinning blade cuts through all in it's path", "icon": "icon"},  
@@ -14,11 +14,11 @@ var attacks = {
 	"Lightning": {"name": "lightning",
 "upgradeInfo": {"title": "Lightning", "upgradeText": "Lightning strikes the enemies nearest you", "icon": "icon"},  
 "level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeLightning"), 
-"stats": {"damage": 500, "knockback_power": 0, "amount": 2, "cooldown": 1.5}, "type": "Attack"},
+"stats": {"damage": 500, "knockback_power": 0, "amount": 3, "cooldown": 2}, "type": "Attack"},
 
 	"Orbit": {"name": "orbit",
 "upgradeInfo": {"title": "Orbit", "upgradeText": "A damaging orb revolves around you", "icon": "icon"},  
-"level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeOrbit"), 
+"level": 0, "max_level": 8, "funcRef": funcref(self, "upgradeOrbit"), 
 "stats": {"damage": 200, "knockback_power": 0, "amount": 0}, "type": "Attack"},
 
 	"Flame": {"name": "flame", 
@@ -38,18 +38,18 @@ var attacks = {
 	"Shield": {"name": "shield", 
 "upgradeInfo": {"title": "Shield", "upgradeText": "An energy shield protects you from harm", "icon": "icon"},  
 "level": 0, "max_level": 3, "funcRef": funcref(self, "upgradeShield"), 
-"stats": {"rechargeTime": 5, "maxCharges": 0, "damage": 0}, "type": "Attack"},
+"stats": {"rechargeTime": 6, "maxCharges": 0, "damage": 0}, "type": "Attack"},
 
 		"ChainShot": {"name": "chainShot",
 "upgradeInfo": {"title": "Chain Shot", "upgradeText": "Shoots lightning that chains between enemies", "icon": "icon"},  
 "level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeChainShot"), 
-"stats": {"damage": 120, "knockback_power": 0, "cooldown": 1, "redirects": 4}, "type": "Attack"},
+"stats": {"damage": 120, "knockback_power": 0, "cooldown": 1, "redirects": 3}, "type": "Attack"},
 }
 
 onready var stats = {
 	"Regen": {"name": "regenHealth", "level": 0, "max_level": 6,
 "upgradeInfo": {"title": "Regenerate", "upgradeText": "+1% regen/sec", "icon": "icon"}, 
- "amount": 0, "upgrade_amount": base_max_health * 0.01, "type": "Stat"},
+ "amount": 0, "upgrade_amount": base_max_health * 0.005, "type": "Stat"},
 
 	"Ghost": {"name": "ghost", "level": 0, "max_level": 1,
 "upgradeInfo": {"title": "Ghost", "upgradeText": "Move through enemies", "icon": "icon"},  
@@ -64,8 +64,8 @@ onready var stats = {
 "amount": 1, "upgrade_amount": -0.1, "type": "Stat"},
 
 	"MaxHealth": {"name": "maxhealth", "level": 0, "max_level": 5, 
-"upgradeInfo": {"title": "Max Health", "upgradeText": "Max Health increases by 20%", "icon": "icon"},  
-"funcRef": funcref(self, "upgradeMaxHealth"), "upgrade_amount": base_max_health * 0.2, "type": "Stat"},
+"upgradeInfo": {"title": "Max Health", "upgradeText": "Max Health increases by 15%", "icon": "icon"},  
+"funcRef": funcref(self, "upgradeMaxHealth"), "upgrade_amount": base_max_health * 0.15, "type": "Stat"},
 
 	"Revive": {"name": "revive", "level": 0, "max_level": 1, 
 "upgradeInfo": {"title": "Revive", "upgradeText": "Defy death one time", "icon": "icon"},  
@@ -155,7 +155,7 @@ func level_up():
 	if num_max <= attacks.size() + stats.size():
 		emit_signal("level_up")
 		
-		self.max_xp = base_max_xp * 0.4 * level + 500
+		self.max_xp = base_max_xp * 0.65 * level + 1000
 		level += 1
 		self.xp -= used_xp
 		
@@ -192,11 +192,12 @@ func upgradeBasicShot():
 	var basicShot = attacks.BasicShot
 	basicShot.stats.damage *= 1.2
 	basicShot.stats.speed *= 1.05
-	basicShot.upgradeInfo.upgradeText = "+20% Damage \n +5% Speed"
+	basicShot.stats.shots += 1
+	basicShot.upgradeInfo.upgradeText = "+20% Damage \n +5% Speed \n +1 shot"
 
 func upgradeVortex():
 	var vortex = attacks.Vortex
-	vortex.stats.damage *= 1.1
+	vortex.stats.damage *= 1.05
 	vortex.scale *= 1.1
 	
 	if vortex.level == 6:
@@ -204,24 +205,24 @@ func upgradeVortex():
 
 func upgradeLightning():
 	var lightning = attacks.Lightning
-	lightning.stats.damage *= 1.1
+	lightning.stats.damage *= 1.05
 	lightning.stats.amount += 1
 	lightning.stats.cooldown *= 0.9
-	lightning.upgradeInfo.upgradeText = "+10% Damage \n +1 strike \n -10% Cooldown"
+	lightning.upgradeInfo.upgradeText = "+5% Damage \n +1 strike \n -10% Cooldown"
 	emit_signal("cooldownChange", {"timer": "LightningTimer", 
 "cooldown": lightning.stats.cooldown})
 
 func upgradeOrbit():
 	var orbit = attacks.Orbit
-	orbit.stats.damage *= 1.1
+	orbit.stats.damage *= 1.05
 	orbit.stats.amount += 1
-	orbit.upgradeInfo.upgradeText = "+1 orb \n +10% Damage"
+	orbit.upgradeInfo.upgradeText = "+1 orb \n +5% Damage"
 
 func upgradeFlame():
 	var flame = attacks.Flame
-	flame.stats.damage *= 1.1
-	flame.stats.cooldown *= 0.9
-	flame.upgradeInfo.upgradeText = "+10% Damage \n -10% Cooldown"
+	flame.stats.damage *= 1.05
+	flame.stats.cooldown *= 0.95
+	flame.upgradeInfo.upgradeText = "+5% Damage \n -5% Cooldown"
 	
 	if flame.level >= 3:
 		flame.stats.burn = true
@@ -235,13 +236,13 @@ func upgradeLaser():
 	var laser = attacks.Laser
 	if laser.level == 3 or laser.level == 5:
 		laser.stats.amount += 1
-		laser.upgradeInfo.upgradeText = "+10% Damage"
 	else:
-		laser.stats.damage *= 1.1
-		if laser.level == 2 or laser.level == 4:
-			laser.upgradeInfo.upgradeText = "+1 laser"
-		else:
-			laser.upgradeInfo.upgradeText = "+10% Damage"
+		laser.stats.damage *= 1.05
+		
+	if laser.level == 2 or laser.level == 4:
+		laser.upgradeInfo.upgradeText = "+1 laser"
+	else:
+		laser.upgradeInfo.upgradeText = "+5% Damage"
 
 
 func upgradeArmageddon():
@@ -255,7 +256,7 @@ func upgradeShield():
 	
 func upgradeChainShot():
 	var chainShot = attacks.ChainShot
-	chainShot.stats.damage *= 1.1
-	chainShot.stats.cooldown *= 0.9
-	chainShot.stats.redirects += 3
-	chainShot.upgradeInfo.upgradeText = "+10% Damage \n -10% Cooldown Timer \n +3 Redirects"
+	chainShot.stats.damage *= 1.05
+	chainShot.stats.cooldown *= 0.95
+	chainShot.stats.redirects += 2
+	chainShot.upgradeInfo.upgradeText = "+5% Damage \n -5% Cooldown Timer \n +2 Redirects"

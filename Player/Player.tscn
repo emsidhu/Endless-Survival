@@ -79,7 +79,7 @@ material = SubResource( 10 )
 position = Vector2( 0.56123, 0 )
 scale = Vector2( 0.16, 0.16 )
 frames = SubResource( 11 )
-frame = 1
+frame = 3
 playing = true
 
 [node name="Shield" parent="Smoothing2D" instance=ExtResource( 8 )]
@@ -88,6 +88,7 @@ playing = true
 
 [node name="Player" type="KinematicBody2D" parent="." groups=["Player"]]
 script = ExtResource( 5 )
+SOFTPOWER = 1500
 
 [node name="Hurtbox" parent="Player" instance=ExtResource( 6 )]
 visible = false

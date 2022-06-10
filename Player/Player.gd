@@ -35,6 +35,8 @@ var velocity = Vector2.ZERO
 signal died
 
 func _ready():
+	print((0.01 * 600) + 1)
+	print((0.001 * 600) + 1)
 	#pause the timers for attacks player doesn't start with
 	#basicShotTimer.paused = true
 	lightningTimer.paused = true
@@ -83,9 +85,17 @@ func followAttack(ATTACK):
 	add_child(attack)
 
 func projectileAttack(ATTACK):
-	var attack = get(ATTACK).instance()
-	attack.position = position
-	get_parent().get_parent().add_child(attack)
+	if ATTACK == "BASICSHOT":
+		var i = 0
+		while i < PlayerStats.attacks.BasicShot.stats.shots:
+			var attack = get(ATTACK).instance()
+			attack.position = position
+			get_parent().get_parent().add_child(attack)
+			i += 1
+	else:
+		var attack = get(ATTACK).instance()
+		attack.position = position
+		get_parent().get_parent().add_child(attack)
 
 func Spawner(SPAWNER):
 	var spawner = get(SPAWNER).instance()
