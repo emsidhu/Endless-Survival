@@ -14,5 +14,5 @@ func _ready():
 			lightning.global_position = enemies[i].global_position
 		get_parent().get_parent().get_parent().get_parent().add_child(lightning)
 		i += 1
-		print("spawnLightning")
+
 	queue_free()

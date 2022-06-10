@@ -27,7 +27,7 @@ texture = ExtResource( 1 )
 expand = true
 
 [node name="Title" parent="." instance=ExtResource( 5 )]
-text = "Placeholder"
+text = "Monster Mash"
 
 [node name="Menu" type="VBoxContainer" parent="."]
 anchor_left = 0.5

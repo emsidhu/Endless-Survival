@@ -37,3 +37,4 @@ func _on_Confirm_button_up():
 	updateLeaderboard()
 	$ColorRect/Leaderboard.visible = true
 	Globals.saveScores()
+	$ColorRect/Leaderboard/ChangeSceneBtn.grab_focus()

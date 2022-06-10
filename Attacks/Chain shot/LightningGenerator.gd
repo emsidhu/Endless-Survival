@@ -93,6 +93,7 @@ func hit_enemy(pos, enemy):
 	if redirects < max_redirects:
 		exceptions.append(enemy)
 		createLightning(pos, exceptions)
+
 		redirects += 1
 
 

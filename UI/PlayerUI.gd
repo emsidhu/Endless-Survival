@@ -68,8 +68,16 @@ func _unhandled_input(event):
 	if event.is_action_pressed("pause") and !upgradeScreen.visible:
 		get_tree().paused = !get_tree().paused
 		pauseMenu.visible = !pauseMenu.visible
-		resumeBtn.grab_focus()
 		
+		if resumeBtn.visible != true:
+			for child in vBoxContainer.get_children():
+				child.visible = !child.visible
+				optionsBtn.visible = true
+				optionsBtn.grab_focus()
+		else:
+			resumeBtn.grab_focus()
+		
+			
 func _on_ResumeBtn_button_up():
 	get_tree().paused = false
 	pauseMenu.visible = false
@@ -130,8 +138,9 @@ func choose_upgrade(array, type):
 
 
 func _on_OptionsBtn_button_up():
+
 	for child in vBoxContainer.get_children():
-		child.visible = !child.visible
+			child.visible = !child.visible
 	optionsBtn.visible = true
 	if resumeBtn.visible == true:
 		optionsBtn.text = "Options"
