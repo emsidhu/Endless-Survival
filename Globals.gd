@@ -4,7 +4,7 @@ const SAVE_DIR = "user://saves/"
 var save_path = SAVE_DIR + "save.dat"
 
 var player
-var mouseControls = true
+var mouseControls = false
 var scoreboardName
 
 var time = 0.0

@@ -3,17 +3,19 @@ extends Node
 var enemies setget , get_enemies
 var damageModifier = 1
 var healthModifier = 1
+var speedModifier = 1
 var enemySpawnTime = 0.7
 var enemySpawnAmount = 1
 var object_position
 
 func _process(_delta):
 
+	
 
-
-	damageModifier = (0.01 * Globals.time) + 1
-	healthModifier = (0.01 * Globals.time) + 1
-	enemySpawnAmount = 20 * atan((Globals.time/60) - 0.05) + 2
+	damageModifier = (0.011 * Globals.time) + 1
+	healthModifier = (0.011 * Globals.time) + 1
+	speedModifier = (0.002 * Globals.time) + 1
+	enemySpawnAmount = 21 * atan((Globals.time/60) - 0.05) + 2
 #	if enemySpawnAmount > 5:
 #		enemySpawnTime /= 5
 #		enemySpawnAmount /= 5
@@ -27,15 +29,13 @@ func sort_enemies(a, b):
 	
 func get_closest_enemy_pos(position, exceptions = []):
 	if self.enemies:
-		var closest_enemy = self.enemies[0].get_child(0)
+		var closest_enemy = self.enemies[0]
 		
-		for enemyC in enemies:
-			var enemy = enemyC.get_child(0)
+		for enemy in enemies:
 			var is_exception = false
-	
 			if enemy.global_position.distance_to(position) < closest_enemy.global_position.distance_to(position):
 				for exception in exceptions:
-					if enemy.get_parent() == exception:
+					if enemy == exception:
 						is_exception = true
 						break
 				if !is_exception:
@@ -43,7 +43,10 @@ func get_closest_enemy_pos(position, exceptions = []):
 		for exception in exceptions:
 			if closest_enemy == exception:
 				return false
+
 		return closest_enemy.global_position
+		
+
 
 func get_enemies():
 	enemies = get_tree().get_nodes_in_group("Enemies")

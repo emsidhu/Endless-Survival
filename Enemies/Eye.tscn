@@ -95,12 +95,12 @@ animations = [ {
 "speed": 3.0
 } ]
 
-[node name="EyeContainer" type="Node2D" groups=["Enemies"]]
+[node name="EyeContainer" type="Node2D"]
 
 [node name="Eye" type="KinematicBody2D" parent="." groups=["Enemies"]]
 script = ExtResource( 3 )
-minSpeed = 55
-maxSpeed = 80
+minSpeed = 70
+maxSpeed = 95
 SOFTPOWER = 900
 
 [node name="Hitbox" parent="Eye" instance=ExtResource( 4 )]
@@ -139,6 +139,7 @@ material = SubResource( 12 )
 rotation = 1.5708
 scale = Vector2( 0.1, 0.1 )
 frames = SubResource( 13 )
+frame = 1
 playing = true
 
 [connection signal="invincibility_ended" from="Eye/Hurtbox" to="Eye" method="_on_Hurtbox_invincibility_ended"]

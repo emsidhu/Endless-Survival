@@ -41,8 +41,12 @@ signal died(xp)
 
 func _ready():
 	blinkAnimationPlayer.play("Stop")
+	EnemyStats.speedModifier = min(EnemyStats.speedModifier, 2.1)
 	damage *= EnemyStats.damageModifier
 	health *= EnemyStats.healthModifier
+	maxSpeed *= EnemyStats.speedModifier
+	minSpeed *= EnemyStats.speedModifier
+	damage = min(damage, PlayerStats.base_max_health * 2)
 	error = connect("died", player, "killed_enemy")
 	if is_instance_valid(player):
 		direction = global_position.direction_to(player.global_position)
