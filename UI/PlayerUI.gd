@@ -77,15 +77,25 @@ func _unhandled_input(event):
 		else:
 			resumeBtn.grab_focus()
 		
+
+		if Globals.mouseControls:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		else:
+			Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 			
 func _on_ResumeBtn_button_up():
 	get_tree().paused = false
 	pauseMenu.visible = false
+	if Globals.mouseControls:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
 
 func level_up():
 	get_tree().paused = true
 	upgradeScreen.visible = true
+
 	
 	var num_attacks = range(PlayerStats.attacks.size())
 	var num_stats = range(PlayerStats.stats.size())
@@ -117,7 +127,8 @@ func level_up():
 		upgradeBtn.title.text = upgradeInfo[1].upgradeInfo.title
 		upgradeBtn.upgradeText.text = upgradeInfo[1].upgradeInfo.upgradeText
 		upgradeBtn.level.text = "LV " + str(upgradeInfo[1].level)
-	#	upgradeBtn.upgradeIcon.texture = upgradeInfo[1].upgradeInfo.icon
+		if upgradeInfo[1].upgradeInfo.icon != "icon":
+			upgradeBtn.upgradeIcon.texture = load(upgradeInfo[1].upgradeInfo.icon)
 		
 		i += 1
 	upgradeBtn1.grab_focus()
@@ -128,6 +139,10 @@ func _on_UpgradeBtn_button_up(number):
 	
 	get_tree().paused = false
 	upgradeScreen.visible = false
+	if Globals.mouseControls:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	
 func choose_upgrade(array, type):
 	var number = array[randi() % array.size()]

@@ -5,7 +5,7 @@ onready var pickupTimer = $PickupTimer
 onready var player = $YSort/PlayerContainer/Player
 onready var ySort = $YSort
 onready var gameOverMenu = $Camera2D/CanvasLayer/GameOver
-
+onready var playerUI = $Camera2D/CanvasLayer/PlayerUI
 
 export var pickup_spawn_time = 2
 export var pickup_spawn_amount = 2
@@ -14,6 +14,11 @@ var can_spawn = false
 func ready():
 	player.connect("died", self, "gameOver")
 	randomize()
+	if Globals.mouseControls:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+
 
 
 func _on_EnemyTimer_timeout():
@@ -58,7 +63,9 @@ func create_bounds():
 	return [left_bound, right_bound, top_bound, bottom_bound]
 
 func gameOver():
+	playerUI.visible = false
 	gameOverMenu.visible = true
 	gameOverMenu.nameInput.grab_focus()
 	gameOverMenu._ready()
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	get_tree().paused = true

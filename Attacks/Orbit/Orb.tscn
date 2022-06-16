@@ -155,16 +155,16 @@ radius = 5.0
 [node name="Orb" type="Position2D" groups=["Attacks"]]
 script = ExtResource( 2 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="OrbSprite" type="AnimatedSprite" parent="."]
 self_modulate = Color( 0.92, 0.92, 0.92, 1 )
 position = Vector2( -33, -3.58423e-05 )
 scale = Vector2( 0.03, 0.03 )
 z_index = 1
 frames = SubResource( 27 )
-frame = 14
+frame = 18
 playing = true
 
-[node name="Trail" parent="AnimatedSprite" instance=ExtResource( 3 )]
+[node name="Trail" parent="OrbSprite" instance=ExtResource( 3 )]
 visible = false
 width = 5.0
 width_curve = SubResource( 28 )

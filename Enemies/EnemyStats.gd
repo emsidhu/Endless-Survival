@@ -15,7 +15,7 @@ func _process(_delta):
 	damageModifier = (0.011 * Globals.time) + 1
 	healthModifier = (0.011 * Globals.time) + 1
 	speedModifier = (0.002 * Globals.time) + 1
-	enemySpawnAmount = 21 * atan((Globals.time/60) - 0.05) + 2
+	enemySpawnAmount = 22 * atan((Globals.time/60) - 0.05) + 2
 #	if enemySpawnAmount > 5:
 #		enemySpawnTime /= 5
 #		enemySpawnAmount /= 5

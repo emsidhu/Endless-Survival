@@ -5,7 +5,6 @@
 [node name="MouseControlsBtn\'" type="CheckBox"]
 margin_right = 95.0
 margin_bottom = 24.0
-pressed = true
 text = "Mouse Controls"
 script = ExtResource( 1 )
 __meta__ = {

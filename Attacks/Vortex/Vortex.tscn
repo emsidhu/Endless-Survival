@@ -15,9 +15,11 @@ radius = 32.0
 blend_mode = 1
 
 [node name="vortex" type="KinematicBody2D" groups=["Attacks"]]
-modulate = Color( 0.7, 0.7, 0.7, 0.705882 )
+modulate = Color( 0.701961, 0.701961, 0.701961, 0.717647 )
 script = ExtResource( 2 )
+knockback_power = null
 damage = 100
+speed = null
 SUCKPOWER = 750
 
 [node name="Hitbox" parent="." instance=ExtResource( 3 )]
@@ -27,6 +29,7 @@ visible = false
 shape = SubResource( 7 )
 
 [node name="SoftCollision" parent="." instance=ExtResource( 4 )]
+visible = false
 collision_layer = 512
 collision_mask = 20
 
@@ -34,7 +37,7 @@ collision_mask = 20
 shape = SubResource( 9 )
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
-modulate = Color( 1, 21.5, 100, 1 )
+modulate = Color( 1, 21.502, 100, 0.862745 )
 material = SubResource( 8 )
 scale = Vector2( 0.08, 0.08 )
 amount = 1

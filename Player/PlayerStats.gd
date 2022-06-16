@@ -2,32 +2,32 @@ extends Node
 
 var attacks = {
 	"BasicShot": {"name": "basicShot",
-"upgradeInfo": {"title": "Basic Shot", "upgradeText": "Upgrades your basic shot", "icon": "icon"}, 
+"upgradeInfo": {"title": "Basic Shot", "upgradeText": "+25% Damage \n +5% Speed \n +1 shot", "icon": "res://UI/Icons/Basic Shot Icon.png"}, 
 "level": 1, "max_level": 6, "funcRef": funcref(self, "upgradeBasicShot"), 
 "stats": {"damage": 150, "knockback_power": 150, "speed": 180, "shots": 1},  "type": "Attack"},
 
 	"Vortex": {"name": "vortex",
-"upgradeInfo": {"title": "Vortex", "upgradeText": "A spinning blade cuts through all in it's path", "icon": "icon"},  
+"upgradeInfo": {"title": "Vortex", "upgradeText": "A spinning blade cuts through all in it's path", "icon": "res://UI/Icons/Vortex Icon.png"},  
 "level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeVortex"), "scale": 1, "canSuck": false,
 "stats": {"damage": 125, "knockback_power": 150, "speed": 150}, "type": "Attack"}, 
 
 	"Lightning": {"name": "lightning",
-"upgradeInfo": {"title": "Lightning", "upgradeText": "Lightning strikes the enemies nearest you", "icon": "icon"},  
+"upgradeInfo": {"title": "Lightning", "upgradeText": "Lightning strikes the enemies nearest you", "icon": "res://UI/Icons/Lightning Icon.png"},  
 "level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeLightning"), 
 "stats": {"damage": 500, "knockback_power": 0, "amount": 3, "cooldown": 2}, "type": "Attack"},
 
 	"Orbit": {"name": "orbit",
-"upgradeInfo": {"title": "Orbit", "upgradeText": "A damaging orb revolves around you", "icon": "icon"},  
+"upgradeInfo": {"title": "Orbit", "upgradeText": "A damaging orb revolves around you", "icon": "res://UI/Icons/Orbit Icon.png"},  
 "level": 0, "max_level": 8, "funcRef": funcref(self, "upgradeOrbit"), 
 "stats": {"damage": 200, "knockback_power": 0, "amount": 0}, "type": "Attack"},
 
 	"Flame": {"name": "flame", 
-"upgradeInfo": {"title": "Flame", "upgradeText": "Flames spew forth from your body", "icon": "icon"},  
+"upgradeInfo": {"title": "Flame", "upgradeText": "Flames spew forth from your body", "icon": "res://UI/Icons/Flame Icon.png"},  
 "level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeFlame"), "isTripled": false,
 "stats": {"damage": 120, "knockback_power": 175, "length": 4, "cooldown": 4, "burn": false}, "type": "Attack"},
 
 	"Laser": {"name": "laser",
-"upgradeInfo": {"title": "Laser", "upgradeText": "A penetrating laser cuts through your enemies", "icon": "icon"},  
+"upgradeInfo": {"title": "Laser", "upgradeText": "A penetrating laser cuts through your enemies", "icon": "res://UI/Icons/Laser Icon.PNG"},  
 "level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeLaser"),
 "stats": {"damage": 150, "knockback_power": 0, "length": 5, "cooldown": 5, "amount": 1}, "type": "Attack"},
 
@@ -36,39 +36,39 @@ var attacks = {
 #https://www.youtube.com/watch?v=usLIlbk9P88 circle timer tutorial for armageddon use
 
 	"Shield": {"name": "shield", 
-"upgradeInfo": {"title": "Shield", "upgradeText": "An energy shield protects you from harm", "icon": "icon"},  
+"upgradeInfo": {"title": "Shield", "upgradeText": "An energy shield protects you from harm", "icon": "res://UI/Icons/Shield Icon.png"},  
 "level": 0, "max_level": 3, "funcRef": funcref(self, "upgradeShield"), 
-"stats": {"rechargeTime": 6, "maxCharges": 0, "damage": 0}, "type": "Attack"},
+"stats": {"rechargeTime": 12, "maxCharges": 0, "damage": 0}, "type": "Attack"},
 
 		"ChainShot": {"name": "chainShot",
-"upgradeInfo": {"title": "Chain Shot", "upgradeText": "Shoots lightning that chains between enemies", "icon": "icon"},  
+"upgradeInfo": {"title": "Chain Shot", "upgradeText": "Shoots lightning that chains between enemies", "icon": "res://UI/Icons/Chain Lightning Icon.png"},  
 "level": 0, "max_level": 6, "funcRef": funcref(self, "upgradeChainShot"), 
 "stats": {"damage": 120, "knockback_power": 0, "cooldown": 1, "redirects": 3}, "type": "Attack"},
 }
 
 onready var stats = {
 	"Regen": {"name": "regenHealth", "level": 0, "max_level": 6,
-"upgradeInfo": {"title": "Regenerate", "upgradeText": "+1% regen/sec", "icon": "icon"}, 
+"upgradeInfo": {"title": "Regenerate", "upgradeText": "+1% regen/sec", "icon": "res://UI/Icons/Regen Icon.png"}, 
  "amount": 0, "upgrade_amount": base_max_health * 0.005, "type": "Stat"},
 
 	"Ghost": {"name": "ghost", "level": 0, "max_level": 1,
-"upgradeInfo": {"title": "Ghost", "upgradeText": "Move through enemies", "icon": "icon"},  
+"upgradeInfo": {"title": "Ghost", "upgradeText": "Move through enemies", "icon": "res://UI/Icons/Ghost Icon.png"},  
 "funcRef": funcref(self, "upgradeGhost"), "type": "Stat"},
 
 	"Speed": {"name": "speed", "level": 0, "max_level": 5, 
-"upgradeInfo": {"title": "Speed", "upgradeText": "+10% movement speed", "icon": "icon"},  
+"upgradeInfo": {"title": "Speed", "upgradeText": "+10% movement speed", "icon": "res://UI/Icons/Speed Icon.png"},  
 "amount": base_max_speed, "upgrade_amount": base_max_speed * 0.1, "type": "Stat"},
 
 	"Defense": {"name": "defense", "level": 0, "max_level": 5, 
-"upgradeInfo": {"title": "Defense", "upgradeText": "Take 10% less damage", "icon": "icon"},  
+"upgradeInfo": {"title": "Defense", "upgradeText": "Take 10% less damage", "icon": "res://UI/Icons/Defense Icon.png"},  
 "amount": 1, "upgrade_amount": -0.1, "type": "Stat"},
 
 	"MaxHealth": {"name": "maxhealth", "level": 0, "max_level": 5, 
-"upgradeInfo": {"title": "Max Health", "upgradeText": "Max Health increases by 15%", "icon": "icon"},  
+"upgradeInfo": {"title": "Max Health", "upgradeText": "Max Health increases by 15%", "icon": "res://UI/Icons/Max Health Icon.png"},  
 "funcRef": funcref(self, "upgradeMaxHealth"), "upgrade_amount": base_max_health * 0.15, "type": "Stat"},
 
 	"Revive": {"name": "revive", "level": 0, "max_level": 1, 
-"upgradeInfo": {"title": "Revive", "upgradeText": "Defy death one time", "icon": "icon"},  
+"upgradeInfo": {"title": "Revive", "upgradeText": "Defy death one time", "icon": "res://UI/Icons/Revive Icon.png"},  
 "funcRef": funcref(self, "upgradeRevive"),"canRevive": false, "type": "Stat"}
 }
 
@@ -95,22 +95,19 @@ signal max_xp_changed(value)
 signal level_up
 signal upgradeAttack
 signal cooldownChange(value)
-
+var baseAttacks
+var baseStats
 
 func _ready():
-	resetStats()
+	baseAttacks = attacks
+	baseStats = stats
+
 	
 
 		
 func resetStats():
-	for key in attacks:
-		attacks[key].baseStats = attacks[key].stats
-		attacks[key].level = 0
-		attacks.BasicShot.level = 1
-		
-	for key in stats:
-		stats[key].level = 0
-		stats.Defense.amount = 1
+	attacks = baseAttacks
+	stats = baseStats
 		
 	self.max_health = base_max_health
 	self.health = max_health

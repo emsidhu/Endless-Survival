@@ -7,6 +7,7 @@ export var SUCKPOWER = 500
 func _ready():
 	$CPUParticles2D.scale *= PlayerStats.attacks.Vortex.scale
 	$Hitbox.scale *= PlayerStats.attacks.Vortex.scale
+	print(PlayerStats.stats.Speed.amount)
 	
 	if Globals.mouseControls:
 		get_direction(mouse_pos)

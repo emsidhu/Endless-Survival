@@ -2,6 +2,7 @@ extends Line2D
 
 export var length = 50
 var point 
+var active = false
 
 func _ready():
 	clear_points()

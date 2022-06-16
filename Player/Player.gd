@@ -17,7 +17,7 @@ onready var flameTimer = $Timers/FlameTimer
 onready var laserTimer = $Timers/LaserTimer
 
 onready var shield = get_node("../Smoothing2D/Shield")
-onready var orbit = get_node("../Smoothing2D/Orbit")
+onready var orbit = $Orbit
 
 
 export var SOFTPOWER = 700

@@ -26,8 +26,29 @@ func updateLeaderboard():
 		places[i].get_child(1).text = player.name
 		places[i].get_child(2).text = str(player.score)
 		i += 1
-		
-	
+	i = 1
+	for player in allScores:
+		if i > 5 and player.name == nameInput.text and player.score == Globals.score:
+
+			places[8].get_child(0).text = str(allScores.find(player) + 1)
+			places[8].get_child(1).text = player.name
+			places[8].get_child(2).text = str(player.score)
+			
+			var prev = allScores[allScores.find(player) - 1]
+			places[7].get_child(0).text = str(allScores.find(prev) + 1)
+			places[7].get_child(1).text = prev.name
+			places[7].get_child(2).text = str(prev.score)
+
+			if allScores.find(player) < allScores.size() - 1:
+				
+				var next = allScores[allScores.find(player) + 1]
+				places[9].get_child(0).text = str(allScores.find(next) + 1)
+				places[9].get_child(1).text = next.name
+				places[9].get_child(2).text = str(next.score)
+			
+			break
+
+		i += 1
 
 
 func _on_Confirm_button_up():

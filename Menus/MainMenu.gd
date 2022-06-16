@@ -9,7 +9,8 @@ func _ready():
 	PlayerStats.resetStats()
 	$Menu/PlayBtn.grab_focus()
 	Globals.loadScores()
-	
+
+
 
 
 func _on_AudioStreamPlayer_finished():

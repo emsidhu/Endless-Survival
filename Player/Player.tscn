@@ -79,12 +79,9 @@ material = SubResource( 10 )
 position = Vector2( 0.56123, 0 )
 scale = Vector2( 0.16, 0.16 )
 frames = SubResource( 11 )
-frame = 3
 playing = true
 
 [node name="Shield" parent="Smoothing2D" instance=ExtResource( 8 )]
-
-[node name="Orbit" parent="Smoothing2D" instance=ExtResource( 10 )]
 
 [node name="Player" type="KinematicBody2D" parent="." groups=["Player"]]
 script = ExtResource( 5 )
@@ -139,6 +136,8 @@ autostart = true
 
 [node name="Timer" parent="Player/LightningGenerator" index="0"]
 autostart = false
+
+[node name="Orbit" parent="Player" instance=ExtResource( 10 )]
 
 [connection signal="area_entered" from="Player/Hurtbox" to="Player" method="_on_Hurtbox_area_entered"]
 [connection signal="invincibility_ended" from="Player/Hurtbox" to="Player" method="_on_Hurtbox_invincibility_ended"]

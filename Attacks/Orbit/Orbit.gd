@@ -24,6 +24,9 @@ func set_amount(value):
 		i += 1
 		orbs.add_child(orb)
 
+	
+	
+		
 
 func _on_Timer_timeout():
 	self.amount += 1

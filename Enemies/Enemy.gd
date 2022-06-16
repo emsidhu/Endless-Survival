@@ -51,6 +51,7 @@ func _ready():
 	if is_instance_valid(player):
 		direction = global_position.direction_to(player.global_position)
 		look_at(player.global_position)
+		
 
 func _physics_process(delta):
 	
@@ -63,7 +64,7 @@ func _physics_process(delta):
 	rotation = 0
 	if (velocity != Vector2.ZERO):
 		rotate(velocity.angle())
-	
+
 
 	knockback = knockback.move_toward(Vector2.ZERO, FRICTION*delta)
 	knockback = move_and_slide(knockback)
@@ -75,7 +76,7 @@ func _physics_process(delta):
 		get(status + "Ref").call_func()
 
 func _on_Hurtbox_invincibility_started():
-	
+
 	blinkAnimationPlayer.play("Start")
 
 func _on_Hurtbox_invincibility_ended():
