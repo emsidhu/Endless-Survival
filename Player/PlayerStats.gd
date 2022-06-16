@@ -99,6 +99,7 @@ var baseAttacks
 var baseStats
 
 func _ready():
+	resetStats()
 	baseAttacks = attacks
 	baseStats = stats
 
@@ -106,8 +107,9 @@ func _ready():
 
 		
 func resetStats():
-	attacks = baseAttacks
-	stats = baseStats
+	if baseAttacks and baseStats:
+		attacks = baseAttacks
+		stats = baseStats
 		
 	self.max_health = base_max_health
 	self.health = max_health
