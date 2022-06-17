@@ -83,7 +83,6 @@ material = SubResource( 10 )
 position = Vector2( 0.56123, 0 )
 scale = Vector2( 0.16, 0.16 )
 frames = SubResource( 11 )
-frame = 2
 playing = true
 
 [node name="Shield" parent="Smoothing2D" instance=ExtResource( 8 )]

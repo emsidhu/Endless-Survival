@@ -2,8 +2,13 @@ extends Control
 
 onready var audioStreamPlayer = $AudioStreamPlayer
 onready var nameInput = $ColorRect/DeathScreen/NameInput
+onready var deathScreen = $ColorRect/DeathScreen
+onready var leaderboard = $ColorRect/Leaderboard
 
 func _ready() -> void:
+	visible = false
+	deathScreen.visible = true
+	leaderboard.visible = false
 	$ColorRect/DeathScreen/Score.text = "Your Score Was " + str(Globals.score) + "!"
 	Globals.loadScores()
 

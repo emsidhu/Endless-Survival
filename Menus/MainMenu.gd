@@ -6,7 +6,7 @@ onready var audioStreamPlayer = $AudioStreamPlayer
 
 func _ready():
 	get_tree().paused = false
-	PlayerStats.ready()
+	PlayerStats._ready()
 	$Menu/PlayBtn.grab_focus()
 	Globals.loadScores()
 
