@@ -179,7 +179,7 @@ func upgradeRevive():
 	stats.Revive.canRevive = true
 
 func upgradeGhost():
-	Globals.player.SOFTPOWER = 0
+	Globals.player.collisionShape.disabled = true
 
 func upgradeMaxHealth():
 	var upgradeAmount = stats.MaxHealth.upgrade_amount

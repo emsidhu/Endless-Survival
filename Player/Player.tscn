@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Player/Sprite/output-onlinepngtools.png" type="Texture" id=1]
 [ext_resource path="res://Player/Sprite/output-onlinepngtools (3).png" type="Texture" id=2]
@@ -27,8 +27,8 @@ animations = [ {
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
-radius = 8.0
-height = 6.0
+radius = 6.81255
+height = 7.21626
 
 [sub_resource type="Animation" id=7]
 resource_name = "Start"
@@ -66,6 +66,10 @@ tracks/0/keys = {
 radius = 8.71833
 height = 4.73106
 
+[sub_resource type="CapsuleShape2D" id=12]
+radius = 5.23588
+height = 10.7901
+
 [node name="PlayerContainer" type="Node2D"]
 
 [node name="Smoothing2D" type="Node2D" parent="."]
@@ -79,6 +83,7 @@ material = SubResource( 10 )
 position = Vector2( 0.56123, 0 )
 scale = Vector2( 0.16, 0.16 )
 frames = SubResource( 11 )
+frame = 2
 playing = true
 
 [node name="Shield" parent="Smoothing2D" instance=ExtResource( 8 )]
@@ -88,12 +93,10 @@ script = ExtResource( 5 )
 SOFTPOWER = 2000
 
 [node name="Hurtbox" parent="Player" instance=ExtResource( 6 )]
-visible = false
 collision_layer = 32
 collision_mask = 64
 
 [node name="CollisionShape2D" parent="Player/Hurtbox" index="0"]
-position = Vector2( 1, 0 )
 shape = SubResource( 2 )
 
 [node name="BlinkAnimationPlayer" type="AnimationPlayer" parent="Player"]
@@ -138,6 +141,9 @@ autostart = true
 autostart = false
 
 [node name="Orbit" parent="Player" instance=ExtResource( 10 )]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource( 12 )
 
 [connection signal="area_entered" from="Player/Hurtbox" to="Player" method="_on_Hurtbox_area_entered"]
 [connection signal="invincibility_ended" from="Player/Hurtbox" to="Player" method="_on_Hurtbox_invincibility_ended"]

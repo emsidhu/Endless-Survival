@@ -15,6 +15,7 @@ onready var basicShotTimer = $Timers/ShotTimer
 onready var lightningTimer = $Timers/LightningTimer
 onready var flameTimer = $Timers/FlameTimer
 onready var laserTimer = $Timers/LaserTimer
+onready var collisionShape = $CollisionShape2D
 
 onready var shield = get_node("../Smoothing2D/Shield")
 onready var orbit = $Orbit
